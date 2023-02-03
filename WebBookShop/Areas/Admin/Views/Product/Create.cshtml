@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "Thêm mới sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@model WebBookShop.Models.ProductModel
+
+<div class="container-fluid">
+    <div>
+        <p>
+            <a href="/admin/product" class="text-info">Quay lại </a>
+            <span class="active">/ Thêm mới sản phẩm</span>
+        </p>
+    </div>
+
+    @if (TempData["CREATE_PRODUCT"] != null)
+    {
+        <div class="alert alert-@TempData["ALEART"] alert-dismissible fade show " id="alo123">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Thông báo!</strong> <br />
+            <span>@TempData["CREATE_PRODUCT"].</span>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title mb-4">
+                <h4>Thêm mới sản phẩm</h4>
+            </div>
+            <div class="basic-form">
+                @using (Html.BeginForm("Create", "Product", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true, "")
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Tên sản phẩm</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control reloadtext", @placeholder = "Nhập tên sản phẩm" })
+                            @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Ảnh sản phẩm</label>
+                        <div class="col-sm-10">
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Danh sách ảnh</label>
+                        <div class="col-sm-10">
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Thể loại</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownListFor(m => m.CategoryId, (SelectList)ViewBag.CateList, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Tác giả</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.AuthorName, new { @class = "form-control reloadtext", @placeholder = "Nhập tên tác giả" })
+                            @Html.ValidationMessageFor(m => m.AuthorName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Giá sản phẩm</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.Price, new { @class = "form-control reloadtext", @placeholder = "Nhập giá sản phẩm" })
+                            @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Số trang</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.NumberPage, new { @type = "number", @class = "form-control reloadtext", @placeholder = "Nhập số trang" })
+                            @Html.ValidationMessageFor(m => m.NumberPage, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nhà xuất bản</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.PublishingCompany, new { @class = "form-control reloadtext", @placeholder = "Nhập tên nhà xuất bản" })
+                            @Html.ValidationMessageFor(m => m.PublishingCompany, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Mô tả</label>
+                        <div class="col-sm-10">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control reloadtext", @placeholder = "Nhập mô tả" ,@style="height:200px"})
+                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" id="btnsave" class="btn btn-dark mt-3 mr-5">Thêm mới</button>
+                            <button type="button" id="btnreload" class="btn btn-light mt-3 ml-5">Nhập lại</button>
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

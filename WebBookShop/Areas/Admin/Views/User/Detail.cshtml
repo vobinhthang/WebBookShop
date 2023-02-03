@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model WebBookShop.Models.UserModel
+<div class="container-fluid">
+
+    <div class="mx-4">
+        <p>
+            <a href="/admin/user" class="text-info">Quay lại </a>
+            <span class="active">/ Chi tiết người dùng người dùng</span>
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <a href="/admin/user/edit/@Model.Id" class="btn mb-4 btn-info">Sửa thông tin</a>
+
+            <h4 class="card-title">Chi tiết người dùng có Email - @Model.Email</h4>
+
+            <div class="basic-list-group">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item ">
+                        <p class="font-weight-bold">Họ tên</p>
+                        <span>@Model.Fullname</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Email</p>
+                        <span>@Model.Email</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Mật khẩu</p>
+                        <span>@Model.Password</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Chức vụ</p>
+                        <span>@Model.RoleName</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Số điện thoại</p>
+                        <span>@Model.Phone</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Địa chỉ</p>
+                        <span>@Model.Address</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Thời gian tạo</p>
+                        <span>@Model.CreateDate</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Thời gian sửa</p>
+                        <span>@Model.UpdateDate</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

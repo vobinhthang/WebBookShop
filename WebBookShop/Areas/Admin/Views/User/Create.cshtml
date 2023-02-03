@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Thêm mới người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model WebBookShop.Models.UserModel
+
+<div class="container-fluid">
+    <div>
+        <p>
+            <a href="/admin/user" class="text-info">Quay lại </a>
+            <span class="active">/ Thêm mới người dùng</span>
+        </p>
+    </div>
+
+    @if (TempData["CREATEUSER"] != null)
+    {
+        <div class="alert alert-@TempData["ALEART"] alert-dismissible fade show " id="alo123">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Thông báo!</strong> <br />
+            <span>@TempData["CREATEUSER"].</span>
+        </div>
+    }
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title mb-4">
+                <h4>Thêm mới người dùng</h4>
+            </div>
+            <div class="basic-form">
+                @using (Html.BeginForm("Create", "User", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true, "")
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control reloadtext", @placeholder = "Nhập email" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Mật khẩu</label>
+                        <div class="col-sm-10">
+
+                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control reloadtext", @placeholder = "Nhập mật khẩu" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Họ tên</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.Fullname, new { @class = "form-control reloadtext", @placeholder = "Nhập họ tên" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Chức vụ</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownListFor(m => m.RoleID, (SelectList)ViewBag.RoleList, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Số điện thoại</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control reloadtext", @placeholder = "Nhập số điện thoại" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Địa chỉ</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control reloadtext", @placeholder = "Nhập địa chỉ" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" id="btnsave" class="btn btn-dark mt-3 mr-5">Thêm mới</button>
+                            <button type="button" id="btnreload" class="btn btn-light mt-3 ml-5">Nhập lại</button>
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

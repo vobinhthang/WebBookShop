@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách thể loại";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using PagedList
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebBookShop.Models.CateModel>
+<div class="container-fluid">
+    <div class="mx-4">
+        <p>
+            <a href="/admin/cate" class="text-info">Trang chủ </a>
+            <span class="active">/ Quản lý danh sách thể loại</span>
+        </p>
+    </div>
+
+    <div id="DataSearching">
+    </div>
+
+    @using (Html.BeginForm("index", "cate", FormMethod.Post))
+    {
+        <div style="width:100%;height:85px">
+            <div class="form-group">
+                <input type="text" name="keyword" value="@ViewBag.SearchCate" style="width:20%" class="form-control input-default float-right" placeholder="Tìm kiếm">
+                <button type="submit" class="btn mb-1 btn-outline-light float-right">
+                    <i class="mdi mdi-magnify" style="font-size:20px"></i>
+                </button>
+            </div>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h4>Quản lý danh sách thể loại</h4>
+            </div>
+            <div>
+                <a href="/admin/cate/create" class="btn btn-success my-3">Thêm mới</a>
+            </div>
+            <div class="d-flex d-inline align-items-center">
+                <span>Hiển thị</span>
+                @Html.DropDownList("showpagesize", TempData["showpagesize"] as List<SelectListItem>, new { @onchange = "location = this.value", @class = "form-control mt-1 mx-1", @id = "sel1", @style = "width:5%;height:1px; padding:9px" })
+                <span>thông tin trên một trang</span>
+            </div>
+            <div class="table-responsive" id="datatable">
+                <table class="table table-hover mb-5">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>
+                                <a class="text-bg-info" href="/admin/cate?sort=@ViewBag.SortCate&sortBy=catename&page=@ViewBag.PageCate&pageSize=@ViewBag.PageSizeCate&keyword=@ViewBag.SearchCate">
+                                    Tên thể loại
+                                    <i class="mdi mdi-arrow-@TempData["IconSortCateName"]"></i>
+                                </a>
+                            </th>
+                            <th>
+                                Thể loại cha
+                            </th>
+                            <th>
+                                Thứ tự sắp xếp
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>
+                                <a class="text-bg-info" href="/admin/cate?sort=@ViewBag.SortCate&sortBy=createdate&page=@ViewBag.PageCate&pageSize=@ViewBag.PageSizeCate&keyword=@ViewBag.SearchCate">
+                                    Thời gian tạo
+                                    <i class="mdi mdi-arrow-@TempData["IconSortCateCreate"]"></i>
+                                </a>
+                            </th>
+                            <th>
+                                <a class="text-bg-info" href="/admin/cate?sort=@ViewBag.SortCate&sortBy=updatedate&page=@ViewBag.PageCate&pageSize=@ViewBag.PageSizeCate&keyword=@ViewBag.SearchCate">
+                                    Thời gian sửa
+                                    <i class="mdi mdi-arrow-@TempData["IconSortCateUpdate"]"></i>
+                                </a>
+
+                            </th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    @{ int index = 1;}
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.Id">
+                                <td>@index</td>
+                                <td>@item.CategoryName</td>
+                                <td>@item.ParentID</td>
+                                <td>@item.Sort</td>
+                                <td>
+                                    @if (item.Status == true)
+                                    {
+                                        <a href="#" class="badge badge-success px-2 btn-active" data-id="@item.Id">Kích hoạt</a>
+                                    }
+                                    @if (item.Status == false)
+                                    {
+                                        <a href="#" class="badge badge-light px-2 btn-active" data-id="@item.Id">Tạm ẩn</a>
+                                    }
+                                </td>
+                                <td>@item.CreatedDate</td>
+                                <td>@item.UpdateDate</td>
+                                <td>
+                                    <div style="font-size:18px">
+                                        <a class="mr-4" style="color:#ef8832" href="/admin/cate/edit/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
+                                            <i class="fa fa-pencil color-muted m-r-5"></i>
+                                        </a>
+                                        @Ajax.ActionLink(" ", "Delete", new { @id = item.Id }, new AjaxOptions
+                                   {
+
+                                       Confirm = "Bạn có muốn xóa thông tin có tên: " + item.CategoryName + "?",
+                                       OnComplete = "$('#row_" + item.Id + "').remove()",
+                                       HttpMethod = "Delete",
+                                       OnSuccess = "OnSuccess",
+
+                                   }, new { @id = "toastr-success-top-right", @class = "fa fa-trash", @style = "color: #ff5e5e" })
+
+                                    </div>
+                                </td>
+                            </tr>
+
+                            index++;
+                        }
+                    </tbody>
+                </table>
+
+                <div class="paging">
+
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { @sort = ViewBag.SortPageCate, @sortBy = ViewBag.SortByPageCate, page, @pageSize = ViewBag.PageSizeCate, @keyword = ViewBag.SearchCate }), new PagedListRenderOptions
+                        {
+                            LiElementClasses = new string[] { "page-item" },
+                            UlElementClasses = new string[] { "pagination" },
+                            MaximumPageNumbersToDisplay = 3,
+                        })
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section ADMINSCRIPT{
+    <script src="/assets/admin/controller/cateController.js"></script>
+    <script>
+        function OnSuccess() {
+            var SetData = $("#DataSearching");
+            SetData.html("<div class=" + "'alert alert-success alert-dismissible fade show'" + ">" +
+                "<button type=" + "button" + " class=" + "close" + " data-dismiss=" + "alert" + " aria-label=" + "Close" + ">" +
+                "<span aria-hidden=" + "true" + ">×</span>" +
+                "</button>" +
+                "<strong>Thông báo!</strong> <br />" +
+                "<span>Xóa thông tin thành công.</span>" +
+                "</div>"
+
+            );
+        }
+
+    </script>
+    <style>
+        .pagination a {
+            position: relative;
+            display: block;
+            padding: 0.5rem 0.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #7571f9;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .paging .active {
+            color: white;
+        }
+
+            .paging .active a {
+                background-color: #7571f9;
+            }
+    </style>
+
+}
