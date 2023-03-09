@@ -13,6 +13,7 @@ namespace WebBookShop.EF
         }
 
         public virtual DbSet<tbl_Category> tbl_Category { get; set; }
+        public virtual DbSet<tbl_ImageProduct> tbl_ImageProduct { get; set; }
         public virtual DbSet<tbl_Order> tbl_Order { get; set; }
         public virtual DbSet<tbl_OrderDetail> tbl_OrderDetail { get; set; }
         public virtual DbSet<tbl_Product> tbl_Product { get; set; }

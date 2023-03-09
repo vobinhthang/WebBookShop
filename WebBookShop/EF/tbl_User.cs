@@ -28,8 +28,6 @@ namespace WebBookShop.EF
         [StringLength(500)]
         public string Avatar { get; set; }
 
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
 
         public DateTime? UpdateDate { get; set; }

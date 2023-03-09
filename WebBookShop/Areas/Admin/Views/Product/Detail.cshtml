@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using PagedList
+@using PagedList.Mvc
+@using WebBookShop.Services
+@model WebBookShop.Models.ProductModel
+
+<div class="container-fluid">
+
+    <div class="mx-4">
+        <p>
+            <a href="/admin/product" class="text-info">Quay lại </a>
+            <span class="active">/ Chi tiết người dùng người dùng</span>
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <a href="/admin/product/edit/@Model.Id" class="btn mb-4 btn-info">Sửa thông tin</a>
+
+            <h4 class="card-title">Chi tiết thông tin sản phẩm - @Model.ProductName</h4>
+
+            <div class="basic-list-group">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item ">
+                        <p class="font-weight-bold">Ảnh sản phẩm</p>
+                        @{ var rs = new ImageProductService().GetByThumbnail(Model.Id);
+                            if (rs != null)
+                            {
+                                <img src="@Url.Content(rs)" style="width:160px" />
+                            }
+                            else
+                            {
+                                <span>N/A</span>
+                            }
+                        }
+                        
+                    </li>
+                    <li class="list-group-item ">
+                        <p class="font-weight-bold">Tên sản phẩm</p>
+                        <span>@Model.ProductName</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Thể loại</p>
+                        <span>@Model.CategoryName</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Giá</p>
+                        <span>@Model.Price</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Số trang</p>
+                        <span>@Model.NumberPage</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Tác giả</p>
+                        <span>@Model.AuthorName</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Nhà xuất bản</p>
+                        <span>@Model.PublishCompany</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Mô tả</p>
+                        <span>@Model.Description</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Số lượng tồn</p>
+                        <span>@Model.Quantity</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Trạng thái</p>
+                        <span>@Model.Status</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Nổi bật</p>
+                        <span>@Model.Status</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Thời gian tạo</p>
+                        <span>@Model.CreatedDate</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">Thời gian sửa</p>
+                        <span>@Model.UpdateDate</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

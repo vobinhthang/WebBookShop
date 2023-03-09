@@ -3,10 +3,11 @@
     ViewBag.Title = "Danh sách sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@using System.Globalization;
 @using PagedList
 @using PagedList.Mvc
-
-@model IEnumerable<WebBookShop.Models.ProductModel>
+@using WebBookShop.Services
+@model PagedList.IPagedList<WebBookShop.Models.ProductModel>
 
 <div class="container-fluid">
 
@@ -41,7 +42,7 @@
             </div>
             <div class="d-flex d-inline align-items-center">
                 <span>Hiển thị</span>
-                @*@Html.DropDownList("showpagesize", TempData["showpagesize"] as List<SelectListItem>, new { @onchange = "location = this.value", @class = "form-control mt-1 mx-1", @id = "sel1", @style = "width:5%;height:1px; padding:9px" })*@
+                @Html.DropDownList("showpagesize", TempData["showpagesize"] as List<SelectListItem>, new { @onchange = "location = this.value", @class = "form-control mt-1 mx-1", @id = "sel1", @style = "width:5%;height:1px; padding:9px" })
                 <span>thông tin trên một trang</span>
             </div>
             <div class="table-responsive">
@@ -50,25 +51,31 @@
                         <tr>
                             <th>#</th>
                             <th>
-                                <a class="text-bg-info" href="/admin/product?sort=@ViewBag.SortUser&sortBy=email&page=@ViewBag.PageUser&pageSize=@ViewBag.PageSizeUser&keyword=@ViewBag.SearchUser">
+                                <a class="text-bg-info" href="/admin/product?sort=@ViewBag.Sort&sortBy=productname&page=@ViewBag.Page&pageSize=@ViewBag.PageSize&keyword=@ViewBag.Search">
                                     Tên sản phẩm
-                                    <i class="mdi mdi-arrow-@TempData["IconSortEmail"]"></i>
+                                    <i class="mdi mdi-arrow-@TempData["IconSortName"]"></i>
                                 </a>
                             </th>
                             <th>Ảnh</th>
-                            <th>Giá</th>
+                            <th>Thể loại</th>
+                            <th>
+                                <a class="text-bg-info" href="/admin/product?sort=@ViewBag.Sort&sortBy=price&page=@ViewBag.Page&pageSize=@ViewBag.PageSize&keyword=@ViewBag.Search">
+                                   Giá
+                                    <i class="mdi mdi-arrow-@TempData["IconSortPrice"]"></i>
+                                </a>
+                            </th>
                             <th>Nổi bật</th>
                             <th>Trạng thái</th>
                             <th>
-                                <a class="text-bg-info" href="/admin/product?sort=@ViewBag.SortUser&sortBy=createdate&page=@ViewBag.PageUser&pageSize=@ViewBag.PageSizeUser&keyword=@ViewBag.SearchUser">
+                                <a class="text-bg-info" href="/admin/product?sort=@ViewBag.Sort&sortBy=createdate&page=@ViewBag.Page&pageSize=@ViewBag.PageSize&keyword=@ViewBag.Search">
                                     Thời gian tạo
-                                    <i class="mdi mdi-arrow-@TempData["IconSortUserCreate"]"></i>
+                                    <i class="mdi mdi-arrow-@TempData["IconSortCreate"]"></i>
                                 </a>
                             </th>
                             <th>
-                                <a class="text-bg-info" href="/admin/product?sort=@ViewBag.SortUser&sortBy=updatedate&page=@ViewBag.PageUser&pageSize=@ViewBag.PageSizeUser&keyword=@ViewBag.SearchUser">
+                                <a class="text-bg-info" href="/admin/product?sort=@ViewBag.Sort&sortBy=updatedate&page=@ViewBag.Page&pageSize=@ViewBag.PageSize&keyword=@ViewBag.Search">
                                     Thời gian sửa
-                                    <i class="mdi mdi-arrow-@TempData["IconSortUserUpdate"]"></i>
+                                    <i class="mdi mdi-arrow-@TempData["IconSortUpdate"]"></i>
                                 </a>
                             </th>
                             <th>Thao tác</th>
@@ -81,23 +88,62 @@
                             <tr id="row_@item.Id">
                                 <td>@index</td>
                                 <td>@item.ProductName</td>
-                                <td></td>
-                                <td>@item.Price</td>
-                                <td>@item.Hot</td>
-                                <td>@item.Status</td>
+                                <td>
+                                    @{var rs = new ImageProductService().GetByThumbnail(item.Id);
+                                        if (rs != null)
+                                        {
+                                            <img src="@Url.Content(rs)" style="width:110px" />
+                                        }
+                                        else
+                                        {
+                                            <span>N/A</span>
+                                        }
+
+                                    }
+                                </td>
+                                <td>@item.CategoryName</td>
+                                <td>
+                                    @{
+                                        var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.Price);
+                                        @strPrice
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Hot == true)
+                                    {
+                                        <a href="#" class="badge badge-danger px-2 btn-active-hot" data-id="@item.Id">Hot</a>
+                                    }
+                                    @if (item.Hot == false)
+                                    {
+                                        <a href="#" class="badge badge-light px-2 btn-active-hot" data-id="@item.Id">Không</a>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Status == true)
+                                    {
+                                        <a href="#" class="badge badge-success px-2 btn-active" data-id="@item.Id">Kích hoạt</a>
+                                    }
+                                    @if (item.Status == false)
+                                    {
+                                        <a href="#" class="badge badge-light px-2 btn-active" data-id="@item.Id">Ẩn</a>
+                                    }
+                                </td>
                                 <td>@item.CreatedDate</td>
                                 <td>@item.UpdateDate</td>
                                 <td>
                                     <div style="font-size:18px">
-                                        <a class="mr-4" href="/admin/product/detail/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Chi tiết">
+                                        <a class="mr-3" href="/admin/product/image/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Quản lý ảnh">
+                                            <i class="mdi mdi-folder-multiple-image" style="color:rgb(9, 143, 244)"></i>
+                                        </a>
+                                        <a class="mr-3" href="/admin/product/detail/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Chi tiết">
                                             <i class="mdi mdi-information m-r-5"></i>
                                         </a>
-                                        <a class="mr-4" style="color:#ef8832" href="/admin/product/edit/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
+                                        <a class="mr-3" style="color:#ef8832" href="/admin/product/edit/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
                                             <i class="fa fa-pencil color-muted m-r-5"></i>
                                         </a>
                                         @Ajax.ActionLink(" ", "Delete", new { @id = item.Id }, new AjaxOptions
                                         {
-                                            Confirm = "Bạn có muốn xóa thông tin có tên: " + item.ProductName + "?",
+                                            Confirm = "Bạn có muốn xóa sản phẩm có tên: " + item.ProductName + "?",
                                             OnComplete = "$('#row_" + item.Id + "').remove()",
                                             HttpMethod = "Delete",
                                             OnSuccess = "OnSuccess",
@@ -112,12 +158,12 @@
                 </table>
                 <div class="paging">
 
-                    @*@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { @sort = ViewBag.SortPageUser, @sortBy = ViewBag.SortByPageUser, page, @pageSize = ViewBag.PageSizeUser, @keyword = ViewBag.SearchUser }), new PagedListRenderOptions
-               {
-                   LiElementClasses = new string[] { "page-item" },
-                   UlElementClasses = new string[] { "pagination" },
-                   MaximumPageNumbersToDisplay = 3,
-               })*@
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { @sort = ViewBag.SortPage, @sortBy = ViewBag.SortByPage, page, @pageSize = ViewBag.PageSize, @keyword = ViewBag.Search }), new PagedListRenderOptions
+                        {
+                            LiElementClasses = new string[] { "page-item" },
+                            UlElementClasses = new string[] { "pagination" },
+                            MaximumPageNumbersToDisplay = 3,
+                        })
                 </div>
 
             </div>
@@ -127,7 +173,7 @@
 
 
 @section ADMINSCRIPT{
-
+    <script src="/assets/admin/controller/productController.js"></script>
     <script>
         function OnSuccess() {
             var SetData = $("#DataSearching");

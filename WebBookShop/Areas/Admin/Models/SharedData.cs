@@ -10,7 +10,9 @@ namespace WebBookShop.Areas.Admin.Models
     {
         public static int? RoleId { get; set; }
         public static int? OptionRoleId { get; set; }
-
+        public static int? ProductId { get; set; }
+        public static string ProductName { get; set; }
+        public static string Image { get; set; }
         public static List<SelectListItem> OptionPageNumber(string sort, string sortBy, int page, int pageSize, string keyword)
         {
 
@@ -29,5 +31,8 @@ namespace WebBookShop.Areas.Admin.Models
 
             return options;
         }
+
+        public static int? OrderId { get; set; }
+        public static int? DetailId { get; set; }
     }
 }

@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using System.Globalization;
+@model IEnumerable<WebBookShop.Models.OrderDetailModel>
+
+<div class="container-fluid">
+    <div class="mx-4">
+        <p>
+            <a href="/admin/order" class="text-info">Quay lại</a>
+            <span class="active">/ Quản lý chi tiết đơn hàng đơn hàng</span>
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h4>Quản lý chi tiết đơn hàng - Mã đơn hàng @TempData["ORDERID"]</h4>
+            </div>
+            <div>
+                <a href="/admin/order/createdetail/@TempData["ORDERID"]" class="btn btn-success my-3">Thêm sản phẩm</a>
+            </div>
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 col-lg-9 ">
+                    <div class="card" style="background-color: rgb(254, 254, 250) ">
+                        <div class="card-header">
+                            <h5 class="card-title d-flex justify-content-center">Chi tiết đơn hàng @TempData["ORDERID"]</h5>
+                            <h6 class="card-subtitle mb-2 text-muted d-flex justify-content-center">Thời gian: @TempData["ORDER_DATE"]</h6>
+                        </div>
+                        <img class="img-fluid" src="images/big/img1.jpg" alt="">
+                        <div class="card-body">
+                            <p class="card-text">Họ tên khách hàng: @TempData["NAME"]  </p>
+                            <p class="card-text">Email: @TempData["EMAIL"]</p>
+                            <p class="card-text float-left">Địa chỉ: @TempData["ADDRESS"]</p>
+                            <p class="card-text float-right" style="margin-right:150px">SĐT: @TempData["PHONE"]</p>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Ảnh</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>SL</th>
+                                            <th>Đơn giá</th>
+                                            <th>Thành tiền</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    @{ int index = 1;}
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr id="row_@item.Id">
+                                                <td>@index</td>
+                                                <td>1</td>
+                                                <td>@item.ProductName</td>
+                                                <td>@item.Quantity</td>
+                                                <td>
+                                                    @{
+                                                        var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.Price);
+                                                        @strPrice
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var totalPrice = item.Quantity * item.Price;
+                                                        var strTotalPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", totalPrice);
+
+                                                    }
+                                                    @strTotalPrice
+                                                </td>
+                                                <td>
+                                                    <a class="mr-3" style="color:#ef8832" href="/admin/order/editdetail?id=@TempData["ORDERID"]&detailid=@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
+                                                        <i class="fa fa-pencil color-muted m-r-5"></i>
+                                                    </a>
+                                                    @Ajax.ActionLink(" ", "DeleteDetail", new { @id = item.Id }, new AjaxOptions
+                                               {
+                                                   Confirm = "Bạn có muốn xóa sản phẩm có tên: " + item.ProductName + "?",
+                                                   OnComplete = "$('#row_" + item.Id + "').remove()",
+                                                   HttpMethod = "Delete",
+                                                   OnSuccess = "OnSuccess",
+                                               }, new { @class = "fa fa-trash", @style = "color: #ff5e5e" })
+                                                </td>
+                                            </tr>
+                                                            index++;
+
+                                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="card-text">Tổng số lượng: @Model.Sum(od=>od.Quantity)</p>
+                            <p class="card-text">
+                                Tổng tiền:
+                                @{
+                                 
+                                    var strTotal= string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", Model.Sum(od=>od.Quantity*od.Price));
+
+                                }
+                                @strTotal
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <p class="card-text d-inline">
+                                <small class="text-muted">Last updated 3 mins ago</small>
+                            </p><a href="#" class="card-link float-right"><small>Card link</small></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

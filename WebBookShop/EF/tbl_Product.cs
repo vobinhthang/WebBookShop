@@ -15,15 +15,9 @@ namespace WebBookShop.EF
         [StringLength(200)]
         public string ProductName { get; set; }
 
-        public bool? Status { get; set; }
-
-        [StringLength(500)]
-        public string Image { get; set; }
-
-        [Column(TypeName = "xml")]
-        public string ListImage { get; set; }
-
         public double? Price { get; set; }
+
+        public bool? Status { get; set; }
 
         public int? Quantity { get; set; }
 

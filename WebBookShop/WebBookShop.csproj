@@ -141,24 +141,31 @@
     <Compile Include="Areas\Admin\Controllers\CateController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Models\PageListModel.cs" />
     <Compile Include="Areas\Admin\Models\SharedData.cs" />
-    <Compile Include="Models\ProductModel.cs" />
-    <Compile Include="Services\CateService.cs" />
-    <Compile Include="Services\ProductService.cs" />
-    <Compile Include="Services\RoleService.cs" />
-    <Compile Include="Services\UserService.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="EF\MyDbContext.cs" />
     <Compile Include="EF\tbl_Category.cs" />
+    <Compile Include="EF\tbl_ImageProduct.cs" />
     <Compile Include="EF\tbl_Order.cs" />
     <Compile Include="EF\tbl_OrderDetail.cs" />
     <Compile Include="EF\tbl_Product.cs" />
     <Compile Include="EF\tbl_Role.cs" />
     <Compile Include="EF\tbl_User.cs" />
+    <Compile Include="Models\ImageProductModel.cs" />
+    <Compile Include="Models\OrderDetailModel.cs" />
+    <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Services\CateService.cs" />
+    <Compile Include="Services\ImageProductService.cs" />
+    <Compile Include="Services\OrderService.cs" />
+    <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -169,6 +176,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\admin\controller\cateController.js" />
+    <Content Include="Assets\admin\controller\imgController.js" />
+    <Content Include="Assets\admin\controller\productController.js" />
     <Content Include="Assets\admin\css\style.css" />
     <Content Include="Assets\admin\icons\cryptocoins\css\cryptocoins-colors.css" />
     <Content Include="Assets\admin\icons\cryptocoins\css\cryptocoins.css" />
@@ -5387,9 +5396,18 @@
     <Content Include="Areas\Admin\Views\User\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Cate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Cate\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Cate\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Image.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ImageCreate.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ImageEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\CreateDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Cate\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\EditDetail.cshtml" />
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />
     <Content Include="Scripts\jquery-3.6.3.min.js" />
@@ -5424,6 +5442,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="UploadImg\Product\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

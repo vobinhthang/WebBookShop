@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "Quuản lý ảnh sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<WebBookShop.Models.ImageProductModel>
+
+<div class="container-fluid">
+    <div class="mx-4">
+        <p>
+            <a href="/admin/product/" class="text-info">Quay lại</a>
+            <span class="active">/ Quản lý ảnh sản phẩm - @TempData["PRODUCT_NAME"]</span>
+        </p>
+    </div>
+
+    <div id="DataSearching">
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h4>Quản lý danh sách ảnh sản phẩm - @TempData["PRODUCT_NAME"]</h4>
+            </div>
+            <div>
+                <a href="/admin/product/imagecreate/@TempData["PRODUCT_ID"]" class="btn btn-success my-3">Thêm ảnh</a>
+            </div>
+            <div class="table-responsive" id="datatable">
+                <table class="table table-hover mb-5">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th style="width:500px">
+                                Ảnh sản phẩm
+                            </th>
+                            <th>Ảnh đại diện</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    @{ int index = 1;}
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.Id">
+                                <td>@index</td>
+                                <td>
+                                    @{
+                                        if (item.Image != null)
+                                        {
+                                            <img src="@Url.Content(item.Image)" style="width:180px" />
+                                        }
+                                        else
+                                        {
+                                            <span>N/A</span>
+                                        }
+                                    }
+                                </td>
+                                <td> 
+                                    @{                         
+                                        if (item.Thumbnail == true)
+                                        {
+                                            <input type="radio" checked="checked" name="thumbnail" class="btn-active mx-4" data-id="@item.Id" />
+
+                                        }
+                                        if (item.Thumbnail == false)
+                                        {
+                                            <input type="radio" class="btn-active mx-4" name="thumbnail" data-id="@item.Id" />
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <div style="font-size:18px">
+                                        <a class="mr-4" style="color:#ef8832" href="/admin/product/imageedit/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
+                                            <i class="fa fa-pencil color-muted m-r-5"></i>
+                                        </a>
+                                        @Ajax.ActionLink(" ", "ImageDelete", new { @id = item.Id }, new AjaxOptions
+                                   {
+
+                                       Confirm = "Bạn có muốn xóa ảnh này ?",
+                                       OnComplete = "$('#row_" + item.Id + "').remove()",
+                                       HttpMethod = "Delete",
+                                       OnSuccess = "OnSuccess",
+                                   }, new { @id = "toastr-success-top-right", @class = "fa fa-trash", @style = "color: #ff5e5e" })
+
+                                    </div>
+                                </td>
+                            </tr>
+
+                            index++;
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section ADMINSCRIPT{
+    <script src="/assets/admin/controller/imgController.js"></script>
+    <script>
+        function OnSuccess() {
+            var SetData = $("#DataSearching");
+            SetData.html("<div class=" + "'alert alert-success alert-dismissible fade show'" + " id=" + "alo123" + ">" +
+                "<button type=" + "button" + " class=" + "close" + " data-dismiss=" + "alert" + " aria-label=" + "Close" + ">" +
+                "<span aria-hidden=" + "true" + ">×</span>" +
+                "</button>" +
+                "<strong>Thông báo!</strong> <br />" +
+                "<span>Xóa thông tin thành công.</span>" +
+                "</div>"
+
+            );
+
+
+        }
+
+    </script>
+
+}
+
+

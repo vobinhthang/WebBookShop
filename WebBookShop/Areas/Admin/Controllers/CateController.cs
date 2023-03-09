@@ -178,7 +178,7 @@ namespace WebBookShop.Areas.Admin.Controllers
 
             var options = SharedData.OptionPageNumber(PageListModel.sort, PageListModel.sortBy, PageListModel.page, PageListModel.pageSize, PageListModel.keyword);
             TempData["showpagesize"] = options;
-            TempData["IconSortEmail"] = "up";
+            TempData["IconSortCateName"] = "up";
             TempData["IconSortCateUpdate"] = "up";
             TempData["IconSortCateCreate"] = "up";
         }

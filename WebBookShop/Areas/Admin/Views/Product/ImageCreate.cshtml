@@ -1,0 +1,56 @@
+﻿
+
+
+@model WebBookShop.Models.ImageProductModel
+
+@{
+    ViewBag.Title = "Thêm ảnh sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div>
+        <p>
+            <a href="/admin/product/image/@TempData["PRODUCT_ID"]" class="text-info">Quay lại </a>
+            <span class="active">/ Thêm ảnh sản phẩm - @TempData["PRODUCT_NAME"]</span>
+        </p>
+    </div>
+
+    @if (TempData["CREATE_IMAGE"] != null)
+    {
+        <div class="alert alert-@TempData["ALEART"] alert-dismissible fade show " id="alo123">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Thông báo!</strong> <br />
+            <span>@TempData["CREATE_IMAGE"].</span>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title mb-4">
+                <h4>Thêm ảnh sản phẩm - @TempData["PRODUCT_NAME"]</h4>
+            </div>
+            <div class="basic-form">
+                @using (Html.BeginForm("ImageCreate", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.ValidationSummary(true, "")
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Ảnh sản phẩm</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control-file" name="fileImage">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" id="btnsave" class="btn btn-dark mt-3 mr-5">Thêm mới</button>
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

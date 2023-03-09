@@ -96,7 +96,7 @@
                                     }
                                     @if (item.Status == false)
                                     {
-                                        <a href="#" class="badge badge-light px-2 btn-active" data-id="@item.Id">Tạm ẩn</a>
+                                        <a href="#" class="badge badge-light px-2 btn-active" data-id="@item.Id">Ẩn</a>
                                     }
                                 </td>
                                 <td>@item.CreatedDate</td>
@@ -124,7 +124,7 @@
                         }
                     </tbody>
                 </table>
-
+                
                 <div class="paging">
 
                     @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { @sort = ViewBag.SortPageCate, @sortBy = ViewBag.SortByPageCate, page, @pageSize = ViewBag.PageSizeCate, @keyword = ViewBag.SearchCate }), new PagedListRenderOptions
