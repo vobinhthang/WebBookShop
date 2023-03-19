@@ -22,6 +22,7 @@ namespace WebBookShop.Models
         public string CustomerName { get; set; }
         public double? TotalPrice { get; set; }
         public DateTime? OrderDate { get; set; }
+        public DateTime? DeliveredDate { get; set; }
 
     }
 }

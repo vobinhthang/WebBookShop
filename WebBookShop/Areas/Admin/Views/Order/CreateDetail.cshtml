@@ -35,8 +35,9 @@
                 <div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Lọc theo thể loại</label>
+                        <span id="orderid" class="d-none">@TempData["ORDERID"]</span>
                         <div class="col-sm-10 d-flex d-inline">
-                            @Html.DropDownList("cateid", (SelectList)ViewBag.CateList, "--- Tất cả ---", new { @onchange = "location = '/admin/order/createdetail?id=1&cateid='+this.value", @class = "form-control", @style = "width:250px" })
+                            @Html.DropDownList("cateid", (SelectList)ViewBag.CateList, "--- Tất cả ---", new { @onchange = "changeCateId()", @class = "form-control", @style = "width:250px" })
 
                         </div>
                     </div>
@@ -69,3 +70,15 @@
         </div>
     </div>
 </div>
+
+
+
+@section ADMINSCRIPT{
+    <script>
+        function changeCateId() {
+            let cateid = document.getElementById('cateid').value;
+            let orderid = document.getElementById('orderid').textContent;
+            location = '/admin/order/createdetail?id=' + orderid +'&cateid=' + cateid
+        }
+    </script>
+}

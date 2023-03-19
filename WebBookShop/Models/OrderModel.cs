@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +17,9 @@ namespace WebBookShop.Models
         public int? UserID { get; set; }
         public string CustomerName { get; set; }
         public string UserName { get; set; }
+        [Phone(ErrorMessage ="Số điện thoại không hợp lệ")]
+        [Required(ErrorMessage ="Xin mời nhập số điện thoại")]
+        [StringLength(15,ErrorMessage ="Độ dài số điện thoại phải >=10 và <=15",MinimumLength =10)]
         public string Phone { get; set; }
         public string UserPhone { get; set; }
         public string Email { get; set; }

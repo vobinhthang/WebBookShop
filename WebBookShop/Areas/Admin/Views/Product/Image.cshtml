@@ -74,15 +74,9 @@
                                         <a class="mr-4" style="color:#ef8832" href="/admin/product/imageedit/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
                                             <i class="fa fa-pencil color-muted m-r-5"></i>
                                         </a>
-                                        @Ajax.ActionLink(" ", "ImageDelete", new { @id = item.Id }, new AjaxOptions
-                                   {
-
-                                       Confirm = "Bạn có muốn xóa ảnh này ?",
-                                       OnComplete = "$('#row_" + item.Id + "').remove()",
-                                       HttpMethod = "Delete",
-                                       OnSuccess = "OnSuccess",
-                                   }, new { @id = "toastr-success-top-right", @class = "fa fa-trash", @style = "color: #ff5e5e" })
-
+                                        <a onclick="if (confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/product/imagedelete/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa                    ">
+                                            <i class="fa fa-trash color-muted m-r-5"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

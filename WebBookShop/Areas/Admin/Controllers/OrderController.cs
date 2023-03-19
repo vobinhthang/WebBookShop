@@ -13,27 +13,58 @@ namespace WebBookShop.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         // GET: Admin/Order
-        public ActionResult Index()
+        public ActionResult Index(string keyword,int page = 1, int pageSize=12 )
         {
-            var orders = new OrderService().GetAll();
+            var service = new OrderService();
+     
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
+
             
+            PageListModel.pageSize = pageSize;
+            PageListModel.page = page;
+            //ShowOption();
+            IEnumerable<OrderModel> orders;
+            if (keyword!=null)
+            {
+                ViewBag.Search = keyword;
+                PageListModel.keyword =keyword;
+
+                orders = service.Search(keyword, page, pageSize);
+            }
+            else
+            {
+                
+                orders = service.GetAll(page, pageSize);
+            }
             return View(orders);
         }
+        [HttpPost]
+        public ActionResult Index(string keyword)
+        {
+            var service = new OrderService();
+            var orders = service.Search(keyword, PageListModel.page, PageListModel.pageSize);
+            ViewBag.Search = keyword;
 
+            PageListModel.keyword = keyword;
+            //ShowOption();
+            return View(orders);
+        }
         public ActionResult Detail(int id)
         {
-            
+            SharedData.OrderId = id;
             var orderdetail = new OrderService().GetDetail(id);
             if(orderdetail.Count >0)
             {
                 var list = orderdetail.Take(1).SingleOrDefault(od => od.OrderId == id);
+                
                 TempData["ORDERID"] = list.OrderId;
                 TempData["ORDER_DATE"] = list.OrderDate;
                 TempData["NAME"] = list.CustomerName;
                 TempData["PHONE"] = list.Phone;
                 TempData["ADDRESS"] = list.Address;
                 TempData["EMAIL"] = list.Email;
-                
+                TempData["DeliveredDate"] = list.DeliveredDate;
                 return View(orderdetail);
             }
             else
@@ -46,6 +77,7 @@ namespace WebBookShop.Areas.Admin.Controllers
                 TempData["PHONE"] = list.Phone;
                 TempData["ADDRESS"] = list.Address;
                 TempData["EMAIL"] = list.Email;
+                TempData["DeliveredDate"] = list.DeliveredDate;
                 orderdetail2.RemoveAt(0);
                 return View(orderdetail2);
             }
@@ -158,19 +190,100 @@ namespace WebBookShop.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpDelete]
+        
         public ActionResult DeleteDetail(int id)
         {
+
             var service = new OrderService();
             var rs = service.DeleteDetail(id);
             if (rs)
             {
-                return RedirectToAction("detail");
+                return RedirectPermanent("/admin/order/detail/"+SharedData.OrderId.ToString());
             }
             else
             {
                 return View();
             }
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var order = new OrderService().GetOrderById(id);
+            return View(order);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(tbl_Order order, OrderModel model)
+        {
+            var service = new OrderService();
+
+            if (model.CustomerName != null && !model.CustomerName.StartsWith(" ") && model.Phone != null && 
+                model.Phone.Length>= 10 && model.Phone.Length<=15 && model.Address != null && model.Status != null && 
+                model.Delivered != null)
+            {
+                var rs = service.Update(order);
+                if (rs)
+                {
+
+                    TempData["CREATE"] = "Cập nhập thông tin đơn hàng thành công";
+                    TempData["ALEART"] = "success";
+                }
+                else
+                {
+                    TempData["CREATE"] = "Cập nhập thất bại";
+                    TempData["ALEART"] = "danger";
+                }
+            }
+
+            return View();
+        }
+
+        
+        public ActionResult Delete(int id)
+        {
+            var service = new OrderService();
+            var rs = service.Delete(id);
+            if (rs)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(tbl_Order order , OrderModel model)
+        {
+            var service = new OrderService();
+
+            if (model.CustomerName != null && !model.CustomerName.StartsWith(" ") && model.Phone != null &&
+               model.Phone.Length >= 10 && model.Phone.Length <= 15 && model.Address != null && model.Status != null &&
+               model.Delivered != null)
+            {
+                var rs = service.Create(order);
+                if (rs!=null)
+                {
+
+                    TempData["CREATE"] = "Thêm mới đơn hàng thành công";
+                    TempData["ALEART"] = "success";
+                }
+                else
+                {
+                    TempData["CREATE"] = "Thêm mới thất bại";
+                    TempData["ALEART"] = "danger";
+                }
+            }
+
+
+            return View();
         }
     }
 }

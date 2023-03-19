@@ -258,14 +258,14 @@ namespace WebBookShop.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpDelete]
+       
         public ActionResult Delete(int id)
         {
             var service = new CateService();
             var rs = service.Delete(id);
             if (rs)
             {
-                return RedirectToAction("index");
+                return RedirectToAction("Index");
             }
             else
             {

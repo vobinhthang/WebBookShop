@@ -298,7 +298,8 @@ namespace WebBookShop.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpDelete]
+        
+
         public ActionResult Delete(int id)
         {
             var rs = new ProductService().Delete(id);
@@ -382,8 +383,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             }
             catch
             {
-                TempData["CREATE_IMAGE"] = "Xin mời chọn ảnh cho sản phẩm";
-                TempData["ALEART"] = "warning";
+              
             }
 
             TempData["PRODUCT_NAME"] = SharedData.ProductName;
@@ -410,33 +410,36 @@ namespace WebBookShop.Areas.Admin.Controllers
             var service = new ImageProductService();
             try
             {
-                if (fileImage.ContentLength > 0)
+                if (fileImage != null)
                 {
                     string rootFolder = Server.MapPath("~/UploadImg/Product/");
                     string pathFile = rootFolder + fileImage.FileName;
                     fileImage.SaveAs(pathFile);
                     image.Image = "~/UploadImg/Product/" + fileImage.FileName;
-
-                    var rs = service.Update(image);
-                    if (rs)
-                    {
-                        TempData["IMAGE"] = image.Image;
-                        TempData["CREATE_IMAGE"] = "Cập nhật ảnh thành công";
-                        TempData["ALEART"] = "success";
-                    }
-                    else
-                    {
-                        TempData["IMAGE"] = SharedData.Image;
-                        TempData["CREATE_IMAGE"] = "Cập nhật thất bại";
-                        TempData["ALEART"] = "danger";
-                    }
                 }
+                else
+                {
+                    image.Image = SharedData.Image;
+                }
+                var rs = service.Update(image);
+                if (rs)
+                {
+                    TempData["IMAGE"] = image.Image;
+                    TempData["CREATE_IMAGE"] = "Cập nhật ảnh thành công";
+                    TempData["ALEART"] = "success";
+                }
+                else
+                {
+                    TempData["IMAGE"] = SharedData.Image;
+                    TempData["CREATE_IMAGE"] = "Cập nhật thất bại";
+                    TempData["ALEART"] = "danger";
+                }
+                
             }
             catch
             {
                 TempData["IMAGE"]=SharedData.Image;
-                TempData["CREATE_IMAGE"] = "Xin mời chọn ảnh cho sản phẩm";
-                TempData["ALEART"] = "warning";
+             
             }
             
             TempData["PRODUCT_ID"] = SharedData.ProductId;
@@ -461,7 +464,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             });
         }
 
-        [HttpDelete]
+        
         public ActionResult ImageDelete(int id)
         {
             var rs = new ImageProductService().Delete(id);

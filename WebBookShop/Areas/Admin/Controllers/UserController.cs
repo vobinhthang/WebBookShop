@@ -263,7 +263,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpDelete]
+    
         public ActionResult Delete(int id)
         {
             var service = new UserService();

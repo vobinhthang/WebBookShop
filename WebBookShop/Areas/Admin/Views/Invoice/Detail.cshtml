@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết hóa đơn nhập";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using WebBookShop.Services
+@using System.Globalization;
+@model IEnumerable<WebBookShop.Models.InvoiceDetailModel>
+
+<div class="container-fluid">
+    <div class="mx-4">
+        <p>
+            <a href="/admin/invoice" class="text-info">Quay lại</a>
+            <span class="active">/ Quản lý chi tiết hóa đơn nhập</span>
+        </p>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h4>Quản lý chi tiết hóa đơn nhập - Mã hóa đơn @TempData["INVOICE_ID"]</h4>
+            </div>
+            <div>
+                <a href="/admin/invoice/createdetail/@TempData["INVOICE_ID"]" class="btn btn-success my-3">Thêm sản phẩm</a>
+            </div>
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 col-lg-9 ">
+                    <div class="card" style="background-color: rgb(254, 254, 250) ">
+                        <div class="card-header">
+                            <h5 class="card-title d-flex justify-content-center">Chi tiết hóa đơn @TempData["INVOICE_ID"]</h5>
+                            <h6 class="card-subtitle mb-2 text-muted d-flex justify-content-center">Thời gian tạo: @TempData["CREATE_DATE"]</h6>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Ảnh</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>SL</th>
+                                            <th>Đơn giá</th>
+                                            <th>Thành tiền</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    @{ int index = 1;}
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr id="row_@item.Id">
+                                                <td>@index</td>
+                                                <td>
+                                                    @{var rs = new ImageProductService().GetByThumbnail((int)item.ProductId);
+                                                        if (rs != null)
+                                                        {
+                                                        <img src="@Url.Content(rs)" style="width:110px" />
+                                                        }
+                                                        else
+                                                        {
+                                                        <span>N/A</span>
+                                                            }
+                                                        }
+                                                </td>
+                                                <td>@item.Productname</td>
+                                                <td>@item.Quantity</td>
+                                                <td>
+                                                    @{
+                                                        var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.Price);
+                                                        @strPrice
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var totalPrice = item.Quantity * item.Price;
+                                                        var strTotalPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", totalPrice);
+
+                                                    }
+                                                    @strTotalPrice
+                                                </td>
+                                                <td>
+                                                    <a class="mr-3" style="color:#ef8832" href="/admin/invoice/editdetail?id=@TempData["INVOCIE_ID"]&detailid=@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
+                                                        <i class="fa fa-pencil color-muted m-r-5"></i>
+                                                    </a>
+                                                    <a onclick="if(confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/invoice/deletedetail/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa">
+                                                        <i class="fa fa-trash color-muted m-r-5"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            index++;
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="card-text">Tổng số lượng: @Model.Sum(od => od.Quantity)</p>
+                            <p class="card-text">
+                                Tổng tiền:
+                                @{
+
+                                    var strTotal = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", Model.Sum(od => od.Quantity * od.Price));
+
+                                }
+                                @strTotal
+                            </p>
+                          
+                        </div>
+                        <div class="card-footer">
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

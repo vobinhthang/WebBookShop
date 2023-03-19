@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách phản hồi";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using PagedList
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebBookShop.Models.FeedbackModel>
+<div class="container-fluid">
+    <div class="mx-4">
+        <p>
+            <a href="/admin/home" class="text-info">Trang chủ </a>
+            <span class="active">/ Quản lý danh sách phản hồi</span>
+        </p>
+    </div>
+
+    <div id="DataSearching">
+    </div>
+
+    @using (Html.BeginForm("index", "feedback", FormMethod.Post))
+    {
+        <div style="width:100%;height:85px">
+            <div class="form-group">
+                <input type="text" name="keyword" value="@ViewBag.Search" style="width:20%" class="form-control input-default float-right" placeholder="Tìm kiếm">
+                <button type="submit" class="btn mb-1 btn-outline-light float-right">
+                    <i class="mdi mdi-magnify" style="font-size:20px"></i>
+                </button>
+            </div>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h4>Quản lý danh sách phản hồi</h4>
+            </div>
+            <div class="d-flex d-inline align-items-center">
+                <span>Hiển thị</span>
+                @*@Html.DropDownList("showpagesize", TempData["showpagesize"] as List<SelectListItem>, new { @onchange = "location = this.value", @class = "form-control mt-1 mx-1", @id = "sel1", @style = "width:5%;height:1px; padding:9px" })*@
+                <span>thông tin trên một trang</span>
+            </div>
+            <div class="table-responsive" id="datatable">
+                <table class="table table-hover mb-5">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>
+                                Tên khách hàng
+                            </th>
+                            <th>
+                                SĐT
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Địa chỉ
+                            </th>
+                            <th>
+                                Nội dung
+                            </th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    @{ int index = 1;}
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.Id">
+                                <td>@index</td>
+                                <td>@item.Name</td>
+                                <td>@item.Phone</td>
+                                <td>@item.Email</td>
+                                <td>@item.Address</td>
+                                <td>@item.Detail</td>
+                                <td>
+                                    <div style="font-size:18px">
+
+                                        <a onclick="if (confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/feedback/delete/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa                    ">
+                                            <i class="fa fa-trash color-muted m-r-5"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            index++;
+                        }
+                    </tbody>
+                </table>
+
+                <div class="paging">
+
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { @page, @pageSize = ViewBag.PageSize, @keyword = ViewBag.Search }), new PagedListRenderOptions
+                        {
+                            LiElementClasses = new string[] { "page-item" },
+                            UlElementClasses = new string[] { "pagination" },
+                            MaximumPageNumbersToDisplay = 3,
+                        })
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section ADMINSCRIPT{
+    <style>
+        .pagination a {
+            position: relative;
+            display: block;
+            padding: 0.5rem 0.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #7571f9;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .paging .active {
+            color: white;
+        }
+
+            .paging .active a {
+                background-color: #7571f9;
+            }
+    </style>
+
+}
+
+

@@ -88,15 +88,18 @@
                                         <a class="mr-4" style="color:#ef8832" href="/admin/role/edit/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
                                             <i class="fa fa-pencil color-muted m-r-5"></i>
                                         </a>
-                                        @Ajax.ActionLink(" ", "Delete", new { @id = item.Id }, new AjaxOptions
-                                   {
+                                        @*@Ajax.ActionLink(" ", "Delete", new { @id = item.Id }, new AjaxOptions
+        {
 
-                                       Confirm = "Bạn có muốn xóa thông tin có tên: " + item.RoleName + "?",
-                                       OnComplete = "$('#row_" + item.Id + "').remove()",
-                                       HttpMethod = "Delete",
-                                       OnSuccess = "OnSuccess",
-                                   }, new { @id = "toastr-success-top-right", @class = "fa fa-trash", @style = "color: #ff5e5e" })
-
+            Confirm = "Bạn có muốn xóa thông tin có tên: " + item.RoleName + "?",
+            OnComplete = "$('#row_" + item.Id + "').remove()",
+            HttpMethod = "Post",
+            OnSuccess = "OnSuccess",
+        }, new { @id = "toastr-success-top-right", @class = "fa fa-trash", @style = "color: #ff5e5e" })*@
+                                        @*@Html.ActionLink(" ", "Delete", new { @id = item.Id }, new { @id = "toastr-success-top-right", @class = "fa fa-trash", @style = "color: #ff5e5e" })*@
+                                        <a onclick="if (confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/role/delete/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa                    ">
+                                            <i class="fa fa-trash color-muted m-r-5"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -123,23 +126,7 @@
 
 @section ADMINSCRIPT{
     
-        <script>
-            function OnSuccess() {
-                var SetData = $("#DataSearching");
-                SetData.html("<div class=" + "'alert alert-success alert-dismissible fade show'" + " id="+"alo123"+">" +
-                    "<button type=" + "button" + " class=" + "close" + " data-dismiss=" + "alert" + " aria-label=" + "Close" + ">" +
-                    "<span aria-hidden=" + "true" + ">×</span>" +
-                    "</button>" +
-                    "<strong>Thông báo!</strong> <br />" +
-                    "<span>Xóa thông tin thành công.</span>" +
-                    "</div>"
-
-                );
-                
-
-            }
-
-        </script>
+       
         <style>
             .pagination a {
                 position: relative;

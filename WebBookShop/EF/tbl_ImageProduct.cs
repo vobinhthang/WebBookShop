@@ -12,6 +12,7 @@ namespace WebBookShop.EF
 
         public int? ProductId { get; set; }
 
+        [Required(ErrorMessage ="M?i ch?n ?nh")]
         public string Image { get; set; }
 
         public bool? Thumbnail { get; set; }

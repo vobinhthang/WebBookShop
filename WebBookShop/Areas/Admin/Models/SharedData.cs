@@ -33,6 +33,7 @@ namespace WebBookShop.Areas.Admin.Models
         }
 
         public static int? OrderId { get; set; }
+        public static int? InvoiceId { get; set; }
         public static int? DetailId { get; set; }
     }
 }

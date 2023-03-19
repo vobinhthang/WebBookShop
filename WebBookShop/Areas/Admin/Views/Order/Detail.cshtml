@@ -3,6 +3,7 @@
     ViewBag.Title = "Chi tiết đơn hàng";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@using WebBookShop.Services
 @using System.Globalization;
 @model IEnumerable<WebBookShop.Models.OrderDetailModel>
 
@@ -13,7 +14,6 @@
             <span class="active">/ Quản lý chi tiết đơn hàng đơn hàng</span>
         </p>
     </div>
-
     <div class="card">
         <div class="card-body">
             <div class="card-title">
@@ -30,7 +30,6 @@
                             <h5 class="card-title d-flex justify-content-center">Chi tiết đơn hàng @TempData["ORDERID"]</h5>
                             <h6 class="card-subtitle mb-2 text-muted d-flex justify-content-center">Thời gian: @TempData["ORDER_DATE"]</h6>
                         </div>
-                        <img class="img-fluid" src="images/big/img1.jpg" alt="">
                         <div class="card-body">
                             <p class="card-text">Họ tên khách hàng: @TempData["NAME"]  </p>
                             <p class="card-text">Email: @TempData["EMAIL"]</p>
@@ -55,7 +54,19 @@
                                         {
                                             <tr id="row_@item.Id">
                                                 <td>@index</td>
-                                                <td>1</td>
+                                                <td>
+                                                    @{var rs = new ImageProductService().GetByThumbnail((int)item.ProductId);
+                                                        if (rs != null)
+                                                        {
+                                                            <img src="@Url.Content(rs)" style="width:110px" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>N/A</span>
+                                                        }
+
+                                                    }
+                                                </td>
                                                 <td>@item.ProductName</td>
                                                 <td>@item.Quantity</td>
                                                 <td>
@@ -76,36 +87,42 @@
                                                     <a class="mr-3" style="color:#ef8832" href="/admin/order/editdetail?id=@TempData["ORDERID"]&detailid=@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
                                                         <i class="fa fa-pencil color-muted m-r-5"></i>
                                                     </a>
-                                                    @Ajax.ActionLink(" ", "DeleteDetail", new { @id = item.Id }, new AjaxOptions
-                                               {
-                                                   Confirm = "Bạn có muốn xóa sản phẩm có tên: " + item.ProductName + "?",
-                                                   OnComplete = "$('#row_" + item.Id + "').remove()",
-                                                   HttpMethod = "Delete",
-                                                   OnSuccess = "OnSuccess",
-                                               }, new { @class = "fa fa-trash", @style = "color: #ff5e5e" })
+                                                    <a onclick="if(confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/order/deletedetail/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa">
+                                                        <i class="fa fa-trash color-muted m-r-5"></i>
+                                                    </a>
                                                 </td>
                                             </tr>
-                                                            index++;
+                                            index++;
 
-                                                        }
+                                        }
                                     </tbody>
                                 </table>
                             </div>
-                            <p class="card-text">Tổng số lượng: @Model.Sum(od=>od.Quantity)</p>
+                            <p class="card-text">Tổng số lượng: @Model.Sum(od => od.Quantity)</p>
                             <p class="card-text">
                                 Tổng tiền:
                                 @{
-                                 
-                                    var strTotal= string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", Model.Sum(od=>od.Quantity*od.Price));
+
+                                    var strTotal = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", Model.Sum(od => od.Quantity * od.Price));
 
                                 }
                                 @strTotal
                             </p>
+                            <p class="card-text text-center">
+                                Thời gian giao hàng:
+                                @{ if (TempData["DeliveredDate"] != null)
+                                    {
+                                        <span>@TempData["DeliveredDate"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Chờ giao hàng</span>
+                                    }
+                                }
+                            </p>
                         </div>
                         <div class="card-footer">
-                            <p class="card-text d-inline">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </p><a href="#" class="card-link float-right"><small>Card link</small></a>
+                         
                         </div>
                     </div>
                 </div>
