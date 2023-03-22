@@ -156,6 +156,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             TempData["ORDERID"] = id;
             SharedData.OrderId = id;
             SharedData.DetailId = detailid;
+            TempData["DETAIL_ID"] = detailid;
             ListProductId(null, cateid);
             ListCateId(cateid);
             var detail = new OrderService().GetDetailById(detailid);
@@ -168,6 +169,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             ListCateId();
             ListProductId();
             TempData["ORDERID"] = SharedData.OrderId;
+            TempData["DETAIL_ID"] = SharedData.DetailId;
             var service = new OrderService();
 
             if (model.Quantity != null && model.Quantity > 0 )

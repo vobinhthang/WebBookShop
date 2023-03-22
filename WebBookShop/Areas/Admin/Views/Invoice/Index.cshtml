@@ -6,7 +6,7 @@
 @using System.Globalization;
 @using PagedList
 @using PagedList.Mvc
-
+@using WebBookShop.Services;
 @model PagedList.IPagedList<WebBookShop.Models.InvoiceModel>
 
 <div class="container-fluid">
@@ -36,90 +36,95 @@
                 <h4>Quản lý danh sách hóa đơn nhập</h4>
             </div>
             <div>
-                <a href="/admin/invoice/create" class="btn btn-success my-3">Thêm mới</a>
-
-            <div class="d-flex d-inline align-items-center">
-                <span>Hiển thị</span>
-
-                <span>thông tin trên một trang</span>
-
-            </div>
-
-            <div class="row mt-4">
-                @if (Model != null)
+                @using (Html.BeginForm("create", "invoice", FormMethod.Post))
                 {
-                    foreach (var item in Model)
+                    <button class="btn btn-success my-3">Thêm mới</button>
+                }
+                <div class="d-flex d-inline align-items-center">
+                    <span>Hiển thị</span>
+
+                    <span>thông tin trên một trang</span>
+
+                </div>
+
+                <div class="row mt-4">
+                    @if (Model != null)
                     {
+                        foreach (var item in Model)
+                        {
 
-                        <div class="col-md-6 col-lg-3" id="row_@item.Id">
-                            <div class="card">
-                                <div class="card-header">
+                            <div class="col-md-6 col-lg-3" id="row_@item.Id">
+                                <div class="card">
+                                    <div class="card-header">
 
-                                    <a onclick="if (confirm('Bạn có muốn xóa hóa đơn này ?') == true) { location.href='/admin/invoice/delete/@item.Id' }" class="badge badge-danger float-right" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa                    ">
-                                        X
-                                    </a>
-                                    <h5 class="card-title">Mã hóa đơn @item.Id</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">@item.CreateDate</h6>
-                                </div>
-                                <div class="card-body text-dark">
-                                    <p class="card-text">
-                                        Trạng thái:                         
-                                        @if (item.Status == true)
-                                        {
-                                            <a href="#" class="badge badge-success px-2 btn-active" data-id="@item.Id">Đã nhập</a>
-                                        }
-                                        @if (item.Status == false)
-                                        {
-                                            <a href="#" class="badge badge-light px-2 btn-active" data-id="@item.Id">Chờ</a>
-                                        }
-                                    </p>
-                                    <div class="float-right">
+                                        <a onclick="if (confirm('Bạn có muốn xóa hóa đơn này ?') == true) { location.href='/admin/invoice/delete/@item.Id' }" class="badge badge-danger float-right" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa                    ">
+                                            X
+                                        </a>
+                                        <h5 class="card-title">Mã hóa đơn @item.Id</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">@item.CreateDate</h6>
+                                    </div>
+                                    <div class="card-body text-dark">
                                         <p class="card-text">
-                                            @{
-                                                var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.TotalPrice);
-                                                <span>Tổng tiền: @strPrice</span>
+                                            Trạng thái:
+                                            @if (item.Status == true)
+                                            {
+                                                <a href="#" class="badge badge-success px-2 btn-active" data-id="@item.Id">Đã nhập</a>
+                                            }
+                                            @if (item.Status == false)
+                                            {
+                                                <a href="#" class="badge badge-light px-2 btn-active" data-id="@item.Id">Chờ</a>
                                             }
                                         </p>
-                                    </div>
+                                        <div class="float-right">
+                                            <p class="card-text">
+                                                @{
+                                                    var detail = new InvoiceService().GetDetail(item.Id);
+                                                    var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", detail.Sum(d => d.Quantity * d.Price));
+                                                    <span>Tổng tiền: @strPrice</span>}
+                                            </p>
+                                        </div>
 
-                                </div>
-                                <div class="card-footer">
-                                    <p class="card-text">
-                                        Thời gian cập nhật:
-                                    </p>
-                                    <p class="card-text d-inline">
-                                        <a href="/admin/invoice/edit/@item.Id" class="card-link text-warning"><u><small>Cập nhật </small></u></a>
-                                    </p>
-                                    <a href="/admin/invoice/detail/@item.Id" class="card-link float-right"><u><small>Chi tiết hóa đơn -->></small></u></a>
+                                    </div>
+                                    <div class="card-footer">
+                                        <p class="card-text">
+                                            Thời gian cập nhật:
+                                            @if (item.UpdateDate != null)
+                                            {
+                                                <span>@item.UpdateDate</span>
+                                            }
+                                        </p>
+                                        <p class="card-text d-inline">
+                                        </p>
+                                        <a href="/admin/invoice/detail/@item.Id" class="card-link float-right"><u><small>Chi tiết hóa đơn -->></small></u></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
-                }
 
                     @if (Model == null)
-                {
-                    <p class="col-12 text-lg-center mt-lg-4" style="font-size:20px">DANH SÁCH HÓA ĐƠN NHẬP RỖNG !!!</p>
-                }
+                    {
+                        <p class="col-12 text-lg-center mt-lg-4" style="font-size:20px">DANH SÁCH HÓA ĐƠN NHẬP RỖNG !!!</p>
+                    }
+                </div>
+
+                <div class="paging">
+
+                    @if (Model != null)
+                    {
+                        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, @pageSize = ViewBag.PageSize, @keyword = ViewBag.Search }), new PagedListRenderOptions
+                    {
+                        LiElementClasses = new string[] { "page-item" },
+                        UlElementClasses = new string[] { "pagination" },
+                        MaximumPageNumbersToDisplay = 3,
+                    })
+                    }
+                </div>
+
             </div>
-
-            <div class="paging">
-
-                @if (Model != null)
-                {
-                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, @pageSize = ViewBag.PageSizeCate, @keyword = ViewBag.Search }), new PagedListRenderOptions
-               {
-                   LiElementClasses = new string[] { "page-item" },
-                   UlElementClasses = new string[] { "pagination" },
-                   MaximumPageNumbersToDisplay = 3,
-               })
-                }
-            </div>
-
         </div>
     </div>
 </div>
-    </div>
 
 
 @section ADMINSCRIPT{

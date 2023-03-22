@@ -5904,6 +5904,8 @@
     <Content Include="Areas\Admin\Views\Invoice\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Invoice\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Invoice\CreateDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\EditDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\Create.cshtml" />
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />
     <Content Include="Scripts\jquery-3.6.3.min.js" />

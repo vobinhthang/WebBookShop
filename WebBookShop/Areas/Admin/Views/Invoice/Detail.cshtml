@@ -80,7 +80,7 @@
                                                     @strTotalPrice
                                                 </td>
                                                 <td>
-                                                    <a class="mr-3" style="color:#ef8832" href="/admin/invoice/editdetail?id=@TempData["INVOCIE_ID"]&detailid=@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
+                                                    <a class="mr-3" style="color:#ef8832" href="/admin/invoice/editdetail?id=@TempData["INVOICE_ID"]&detailid=@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
                                                         <i class="fa fa-pencil color-muted m-r-5"></i>
                                                     </a>
                                                     <a onclick="if(confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/invoice/deletedetail/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa">

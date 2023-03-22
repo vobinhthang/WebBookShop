@@ -16,9 +16,9 @@ namespace WebBookShop.Areas.Admin.Controllers
         public ActionResult Index(string keyword, int page = 1, int pageSize = 10)
         {
             var service = new InvoiceService();
-
             ViewBag.PageSize = pageSize;
             ViewBag.Page = page;
+
 
 
             PageListModel.pageSize = pageSize;
@@ -43,7 +43,7 @@ namespace WebBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Index(string keyword)
         {
-            var service = new CommentService();
+            var service = new InvoiceService();
             var invoices = service.Search(keyword, PageListModel.page, PageListModel.pageSize);
             ViewBag.Search = keyword;
 
@@ -73,7 +73,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             var rs = new InvoiceService().ChangeStatus(id);
             return Json(new
             {
-                status = rs
+                status = rs,
             });
         }
 
@@ -176,5 +176,60 @@ namespace WebBookShop.Areas.Admin.Controllers
             }
         }
 
+        public ActionResult EditDetail(int id, int? cateid, int detailid)
+        {
+            TempData["INVOICE_ID"] = detailid;
+            SharedData.InvoiceId = id;
+            SharedData.DetailId = detailid;
+            TempData["DETAIL_ID"] = detailid;
+            ListProductId(null, cateid);
+            ListCateId(cateid);
+            var detail = new InvoiceService().GetDetailById(detailid);
+            SharedData.InvoiceId = detail.InvoiceId;
+            return View(detail);
+        }
+
+
+        [HttpPost]
+        public ActionResult EditDetail(tbl_InvoiceDetail detail , InvoiceDetailModel model)
+        {
+            ListCateId();
+            ListProductId();
+            TempData["INVOICE_ID"] = SharedData.InvoiceId;
+            TempData["DETAIL_ID"] = SharedData.DetailId;
+            detail.InvoiceId = SharedData.InvoiceId;
+          
+            var service = new InvoiceService();
+
+            if (model.Quantity != null && model.Quantity > 0 )
+            {
+                detail.Id = (int)SharedData.DetailId;
+                detail.InvoiceId = SharedData.InvoiceId;
+                var rs = service.UpdateDetail(detail);
+                if (rs)
+                {
+                    TempData["CREATE"] = "Cập nhật thành công";
+                    TempData["ALEART"] = "success";
+                }
+                else
+                {
+                    TempData["CREATE"] = "Cập nhật thất bại";
+                    TempData["ALEART"] = "danger";
+                }
+            }
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult Create()
+        {
+            var rs = new InvoiceService().Create();
+            if (rs)
+            {
+                return RedirectToAction("index");
+            }
+            return View();
+        }
     }
 }

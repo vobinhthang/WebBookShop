@@ -25,7 +25,8 @@ namespace WebBookShop.Services
                          Id = i.Id,
                         CreateDate = i.CreateDate,
                         Status = i.Status,
-                        UpdateDate = i.UpdateDate
+                        UpdateDate = i.UpdateDate,
+                        
                      };
             
             return qr.ToPagedList(page, pageSize);
@@ -37,7 +38,7 @@ namespace WebBookShop.Services
 
                 var qr = from i in dbcontext.tbl_Invoice
                          orderby i.CreateDate descending
-                         where i.CreateDate.ToString().Contains(keyword)
+                         where i.CreateDate.ToString().Contains(keyword) || i.Id.ToString().Equals(keyword)
                          select new InvoiceModel
                          {
                              Id = i.Id,
@@ -135,7 +136,9 @@ namespace WebBookShop.Services
             detail.Price = findPrice.Price;
             dbcontext.tbl_InvoiceDetail.Add(detail);
             dbcontext.SaveChanges();
-
+            var _invoice = dbcontext.tbl_Invoice.Find(detail.InvoiceId);
+            _invoice.UpdateDate = DateTime.Now;
+            dbcontext.SaveChanges();
             return new InvoiceDetailModel
             {
                 Id = detail.Id,
@@ -155,6 +158,57 @@ namespace WebBookShop.Services
                 dbcontext.tbl_InvoiceDetail.Remove(detail);
                 dbcontext.SaveChanges();
 
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public InvoiceDetailModel GetDetailById(int id)
+        {
+            var detail = dbcontext.tbl_InvoiceDetail.Find(id);
+            return new InvoiceDetailModel
+            {
+                Id = detail.Id,
+                InvoiceId = detail.InvoiceId,
+                ProductId = detail.ProductId,
+                Quantity = detail.Quantity,
+
+            };
+        }
+
+        public bool UpdateDetail(tbl_InvoiceDetail detail)
+        {
+            try
+            {
+                var _detail = dbcontext.tbl_InvoiceDetail.Find(detail.Id);
+                _detail.ProductId = detail.ProductId;
+                _detail.Quantity = detail.Quantity;
+                dbcontext.SaveChanges();
+                var _invoice = dbcontext.tbl_Invoice.Find(detail.InvoiceId);
+                _invoice.UpdateDate = DateTime.Now;
+                dbcontext.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool Create()
+        {
+            try
+            {
+                var detail = new tbl_Invoice
+                {
+                    CreateDate = DateTime.Now,
+                    Status = false
+                };
+                dbcontext.tbl_Invoice.Add(detail);
+                dbcontext.SaveChanges();
                 return true;
             }
             catch

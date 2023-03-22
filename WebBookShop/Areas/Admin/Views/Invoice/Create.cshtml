@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Thêm hóa đơn nhập";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@model WebBookShop.Models.InvoiceModel
+
+<div class="container-fluid">
+    <div>
+        <p>
+            <a href="/admin/invoice" class="text-info">Quay lại </a>
+            <span class="active">/ Thêm mới hóa đơn nhập</span>
+        </p>
+    </div>
+
+    @if (TempData["CREATE_CATE"] != null)
+    {
+        <div class="alert alert-@TempData["ALEART"] alert-dismissible fade show" id="alo123">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Thông báo!</strong> <br />
+            <span>@TempData["CREATE_CATE"].</span>
+        </div>
+    }
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title mb-4">
+                <h4>Thêm mới hóa đơn nhập</h4>
+            </div>
+            <div class="basic-form">
+                @using (Html.BeginForm("Create", "Invoice", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true, "")
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Trạng thái</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline mr-3" style="margin-top:10px">
+                                @Html.RadioButtonFor(m => m.Status, "True") 
+                            </label>
+                            <label class="radio-inline mr-3">
+                                @Html.RadioButtonFor(m => m.Status, "False") Ẩn
+                            </label>
+                            <br />
+                            @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" id="btnsave" class="btn btn-dark mt-3 mr-5">Thêm mới</button>
+                            <button type="button" id="btnreload" class="btn btn-light mt-3 ml-5">Nhập lại</button>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

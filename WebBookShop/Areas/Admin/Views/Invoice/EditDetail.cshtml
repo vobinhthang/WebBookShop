@@ -1,16 +1,17 @@
 ﻿
 @{
-    ViewBag.Title = "Cạp nhập chi tiết đơn hàng";
+    ViewBag.Title = "Cập nhật chi tiết hóa đơn nhập";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@model WebBookShop.Models.OrderDetailModel
+
+@model WebBookShop.Models.InvoiceDetailModel
 
 <div class="container-fluid">
     <div>
         <p>
-            <a href="/admin/order/detail/@TempData["ORDERID"]" class="text-info">Quay lại </a>
-            <span class="active">/ Cập nhập chi tiết đơn hàng</span>
+            <a href="/admin/invoice/detail/@TempData["INVOICE_ID"]" class="text-info">Quay lại </a>
+            <span class="active">/ Cập nhật chi tiết hóa đơn nhập</span>
         </p>
     </div>
 
@@ -28,12 +29,12 @@
     <div class="card">
         <div class="card-body">
             <div class="card-title mb-4">
-                <h4>Cập nhập chi tiết sản phẩm đơn hàng</h4>
+                <h4>Cập nhật chi tiết hóa đơn nhập - Mã đơn hàng: @TempData["INVOICE_ID"]</h4>
             </div>
             <div class="basic-form">
                 <div>
                     <div class="form-group row">
-                        <span id="orderid" class="d-none">@TempData["ORDERID"]</span>
+                        <span id="invoiceid" class="d-none">@TempData["INVOICE_ID"]</span>
                         <span id="detailid" class="d-none">@TempData["DETAIL_ID"]</span>
                         <label class="col-sm-2 col-form-label">Lọc theo thể loại</label>
                         <div class="col-sm-10 d-flex d-inline">
@@ -43,7 +44,7 @@
                     </div>
                 </div>
 
-                @using (Html.BeginForm("EditDetail", "Order", FormMethod.Post))
+                @using (Html.BeginForm("EditDetail", "Invoice", FormMethod.Post))
                 {
                     @Html.ValidationSummary(true, "")
                     <div class="form-group row">
@@ -62,6 +63,7 @@
                     <div class="form-group row">
                         <div class="col-sm-10">
                             <button type="submit" id="btnsave" class="btn btn-dark mt-3 mr-5">Cập nhật</button>
+                          
                         </div>
                     </div>
                 }
@@ -73,9 +75,9 @@
     <script>
         function changeCateId() {
             let cateid = document.getElementById('cateid').value;
-            let orderid = document.getElementById('orderid').textContent;
+            let invoiceid = document.getElementById('invoiceid').textContent;
             let detailid = document.getElementById('detailid').textContent;
-            location = '/admin/order/editdetail?id=' + orderid + '&cateid=' + cateid + '&detailid=' + detailid
+            location = '/admin/invoice/editdetail?id=' + invoiceid + '&cateid=' + cateid + '&detailid=' + detailid
         }
     </script>
 
