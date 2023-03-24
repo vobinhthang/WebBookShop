@@ -31,7 +31,24 @@ namespace WebBookShop.Areas.Admin.Models
 
             return options;
         }
+        public static List<SelectListItem> Option(int page, int pageSize, string keyword)
+        {
 
+            List<SelectListItem> options = new List<SelectListItem>();
+            for (int i = 5; i <= 20; i += 5)
+            {
+                if (pageSize == i)
+                {
+                    options.Add(new SelectListItem { Text = Convert.ToString(i), Value = Convert.ToString("?page=" + page + "&pageSize=" + i + "&keyword=" + keyword), Selected = true });
+                }
+                else
+                {
+                    options.Add(new SelectListItem { Text = Convert.ToString(i), Value = Convert.ToString("?page=" + page + "&pageSize=" + i + "&keyword=" + keyword) });
+                }
+            }
+
+            return options;
+        }
         public static int? OrderId { get; set; }
         public static int? InvoiceId { get; set; }
         public static int? DetailId { get; set; }

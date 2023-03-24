@@ -80,8 +80,23 @@
                                 <td>@item.Email</td>
                                 <td>@item.Password</td>
                                 <td>@item.RoleName</td>
-                                <td>@item.CreateDate</td>
-                                <td>@item.UpdateDate</td>
+                                <td>
+                                    @{
+                                        var str = item.CreateDate.ToString().Substring(0, 10);
+                                    }
+                                    @str
+                                </td>
+                                <td>
+                                    @{
+                                        if (item.UpdateDate != null)
+                                        {
+                                            var str2 = item.UpdateDate.ToString().Substring(0, 10);
+                                            <span>@str2</span>
+                                        }
+
+                                    }
+
+                                </td>
                                 <td>
                                     <div style="font-size:18px">
                                         <a class="mr-4" href="/admin/user/detail/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Chi tiết">

@@ -195,14 +195,16 @@ namespace WebBookShop.Areas.Admin.Controllers
             ListRoleId();
 
             var email = service.FindEmail(model.Email);
-
+            //model.Phone != null &&
+            //   model.Phone.Length >= 10 && model.Phone.Length <= 15
             if (model.Email == email && model.Email!=null && model.Password!=null)
             {
                 TempData["CREATEUSER"] = "Email đã tồn tại";
                 TempData["ALEART"] = "warning";
             }
 
-            if(model.Email!=null && !model.Email.StartsWith(" ") && model.Email!=email && model.Password!=null && model.Password.StartsWith(" "))
+            if(model.Email!=null && !model.Email.StartsWith(" ") && model.Email!=email && model.Password!=null && !model.Password.StartsWith(" ")
+                && model.Password.Length>=6)
             {
                 var _user = service.Create(user);
                 if (_user != null)

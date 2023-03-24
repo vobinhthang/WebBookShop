@@ -18,6 +18,7 @@ namespace WebBookShop.Models
         public DateTime? CreateDate { get; set; }
         [Required(ErrorMessage = "Xin mời nhập số lượng")]
         public int? Quantity { get; set; }
+        [Required(ErrorMessage = "Xin mời nhập giá nhập")]
 
         public double? Price { get; set; }
     }

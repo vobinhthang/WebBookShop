@@ -317,5 +317,17 @@ namespace WebBookShop.Services
             }
             return null;
         }
+
+        public int CountUserMonth()
+        {
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime endOfMonth = startOfMonth.AddMonths(1);
+
+            var qr = from u in dbcontext.tbl_User
+                     where u.CreateDate >= startOfMonth && u.CreateDate < endOfMonth
+                     select u;
+
+            return qr.ToList().Count();
+        }
     }
 }

@@ -118,6 +118,7 @@ namespace WebBookShop.Services
                      {
                          Id = i.Id,
                          CreateDate = i.CreateDate,
+                         
                      };
             return qr.ToList();
         }
@@ -132,8 +133,8 @@ namespace WebBookShop.Services
         }
         public InvoiceDetailModel CreateDetail(tbl_InvoiceDetail detail)
         {
-            var findPrice = dbcontext.tbl_Product.Find(detail.ProductId);
-            detail.Price = findPrice.Price;
+            //var findPrice = dbcontext.tbl_Product.Find(detail.ProductId);
+            //detail.Price = findPrice.Price;
             dbcontext.tbl_InvoiceDetail.Add(detail);
             dbcontext.SaveChanges();
             var _invoice = dbcontext.tbl_Invoice.Find(detail.InvoiceId);
@@ -175,7 +176,7 @@ namespace WebBookShop.Services
                 InvoiceId = detail.InvoiceId,
                 ProductId = detail.ProductId,
                 Quantity = detail.Quantity,
-
+                Price = detail.Price
             };
         }
 
@@ -186,6 +187,8 @@ namespace WebBookShop.Services
                 var _detail = dbcontext.tbl_InvoiceDetail.Find(detail.Id);
                 _detail.ProductId = detail.ProductId;
                 _detail.Quantity = detail.Quantity;
+                _detail.Price = detail.Price;
+
                 dbcontext.SaveChanges();
                 var _invoice = dbcontext.tbl_Invoice.Find(detail.InvoiceId);
                 _invoice.UpdateDate = DateTime.Now;
@@ -215,6 +218,18 @@ namespace WebBookShop.Services
             {
                 return false;
             }
+        }
+
+        public double TotalPriceMonth()
+        {
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime endOfMonth = startOfMonth.AddMonths(1);
+            var qr = from d in dbcontext.tbl_InvoiceDetail
+                     join i in dbcontext.tbl_Invoice on d.InvoiceId equals i.Id
+                     where i.CreateDate >= startOfMonth && i.CreateDate < endOfMonth && i.Status == true
+                     select d;
+
+            return (double)qr.Sum(d=>d.Quantity*d.Price);
         }
     }
 }

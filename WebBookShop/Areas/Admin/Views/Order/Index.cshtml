@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Danh sách đơn hàng";
+    ViewBag.Title = "Danh sách đơn đặt hàng";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @using System.Globalization;
@@ -13,7 +13,7 @@
     <div class="mx-4">
         <p>
             <a href="/admin/home" class="text-info">Trang chủ </a>
-            <span class="active">/ Quản lý danh sách đơn hàng</span>
+            <span class="active">/ Quản lý danh sách đơn đặt hàng</span>
         </p>
     </div>
 
@@ -33,7 +33,7 @@
     <div class="card">
         <div class="card-body">
             <div class="card-title">
-                <h4>Quản lý danh sách đơn hàng</h4>
+                <h4>Quản lý danh sách đơn đặt hàng</h4>
             </div>
             <div>
                 <a href="/admin/order/create" class="btn btn-success my-3">Thêm mới</a>
@@ -55,7 +55,7 @@
 
             <div class="d-flex d-inline align-items-center">
                 <span>Hiển thị</span>
-
+                @Html.DropDownList("showpagesize", TempData["showpagesize"] as List<SelectListItem>, new { @onchange = "location = this.value", @class = "form-control mt-1 mx-1", @id = "sel1", @style = "width:6%;height:1px; padding:9px" })
                 <span>thông tin trên một trang</span>
 
             </div>

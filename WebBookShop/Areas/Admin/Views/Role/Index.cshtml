@@ -81,8 +81,23 @@
                             <tr id="row_@item.Id">
                                 <td>@index</td>
                                 <td>@item.RoleName</td>
-                                <td>@item.CreatedDate</td>
-                                <td>@item.UpdateDate</td>
+                                <td>
+                                    @{
+                                        var str = item.CreatedDate.ToString().Substring(0, 10);
+                                    }
+                                    @str
+                                </td>
+                                <td>
+                                    @{
+                                        if (item.UpdateDate != null)
+                                        {
+                                            var str2 = item.UpdateDate.ToString().Substring(0, 10);
+                                            <span>@str2</span>
+                                        }
+
+                                    }
+
+                                </td>
                                 <td>
                                     <div style="font-size:18px">
                                         <a class="mr-4" style="color:#ef8832" href="/admin/role/edit/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Cập nhật đơn hàng";
+    ViewBag.Title = "Cập nhật đơn đặt hàng";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +10,7 @@
     <div>
         <p>
             <a href="/admin/order/" class="text-info">Quay lại </a>
-            <span class="active">/ Cập nhập đơn hàng</span>
+            <span class="active">/ Cập nhập đơn đặt hàng</span>
         </p>
     </div>
 
@@ -28,7 +28,7 @@
     <div class="card">
         <div class="card-body">
             <div class="card-title mb-4">
-                <h4>Cập nhập đơn hàng</h4>
+                <h4>Cập nhập đơn đặt hàng</h4>
             </div>
             <div class="basic-form">
                 @using (Html.BeginForm("Edit", "Order", FormMethod.Post))

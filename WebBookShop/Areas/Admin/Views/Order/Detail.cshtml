@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Chi tiết đơn hàng";
+    ViewBag.Title = "Chi tiết đơn đặt hàng";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @using WebBookShop.Services
@@ -11,16 +11,17 @@
     <div class="mx-4">
         <p>
             <a href="/admin/order" class="text-info">Quay lại</a>
-            <span class="active">/ Quản lý chi tiết đơn hàng đơn hàng</span>
+            <span class="active">/ Quản lý chi tiết đơn đặt hàng</span>
         </p>
     </div>
     <div class="card">
         <div class="card-body">
             <div class="card-title">
-                <h4>Quản lý chi tiết đơn hàng - Mã đơn hàng @TempData["ORDERID"]</h4>
+                <h4>Quản lý chi tiết đơn đặt hàng - Mã đơn hàng @TempData["ORDERID"]</h4>
             </div>
             <div>
                 <a href="/admin/order/createdetail/@TempData["ORDERID"]" class="btn btn-success my-3">Thêm sản phẩm</a>
+                <a href="/admin/order/edit/@TempData["ORDERID"]" class="btn btn-warning ml-3">Sửa thông tin</a>
             </div>
 
             <div class="row d-flex justify-content-center">

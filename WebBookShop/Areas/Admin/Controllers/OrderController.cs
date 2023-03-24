@@ -13,7 +13,7 @@ namespace WebBookShop.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         // GET: Admin/Order
-        public ActionResult Index(string keyword,int page = 1, int pageSize=12 )
+        public ActionResult Index(string keyword,int page = 1, int pageSize=10 )
         {
             var service = new OrderService();
      
@@ -23,7 +23,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             
             PageListModel.pageSize = pageSize;
             PageListModel.page = page;
-            //ShowOption();
+            ShowOption();
             IEnumerable<OrderModel> orders;
             if (keyword!=null)
             {
@@ -47,7 +47,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             ViewBag.Search = keyword;
 
             PageListModel.keyword = keyword;
-            //ShowOption();
+            ShowOption();
             return View(orders);
         }
         public ActionResult Detail(int id)
@@ -84,6 +84,12 @@ namespace WebBookShop.Areas.Admin.Controllers
             
         }
 
+        public void ShowOption()
+        {
+            var options = SharedData.Option(PageListModel.page, PageListModel.pageSize, PageListModel.keyword);
+            TempData["showpagesize"] = options;
+
+        }
         [HttpGet]
         public ActionResult CreateDetail(int id, int? cateid)
         {

@@ -23,7 +23,7 @@ namespace WebBookShop.Areas.Admin.Controllers
 
             PageListModel.pageSize = pageSize;
             PageListModel.page = page;
-            //ShowOption();
+            ShowOption();
             IEnumerable<InvoiceModel> invoices;
             if (keyword != null)
             {
@@ -48,10 +48,15 @@ namespace WebBookShop.Areas.Admin.Controllers
             ViewBag.Search = keyword;
 
             PageListModel.keyword = keyword;
-            //ShowOption();
+            ShowOption();
             return View(invoices);
         }
+        public void ShowOption()
+        {
+            var options = SharedData.Option(PageListModel.page, PageListModel.pageSize, PageListModel.keyword);
+            TempData["showpagesize"] = options;
 
+        }
         public ActionResult Delete(int id)
         {
             var service = new InvoiceService();
@@ -144,7 +149,7 @@ namespace WebBookShop.Areas.Admin.Controllers
                 TempData["ALEART"] = "warning";
             }
 
-            if (model.Quantity != null && model.Quantity > 0 && model.ProductId != findProductId)
+            if (model.Quantity != null && model.Quantity > 0 && model.Price > 0 && model.Price != null && model.ProductId != findProductId)
             {
 
                 var rs = service.CreateDetail(detail);
@@ -178,7 +183,7 @@ namespace WebBookShop.Areas.Admin.Controllers
 
         public ActionResult EditDetail(int id, int? cateid, int detailid)
         {
-            TempData["INVOICE_ID"] = detailid;
+            TempData["INVOICE_ID"] = id;
             SharedData.InvoiceId = id;
             SharedData.DetailId = detailid;
             TempData["DETAIL_ID"] = detailid;
@@ -201,7 +206,7 @@ namespace WebBookShop.Areas.Admin.Controllers
           
             var service = new InvoiceService();
 
-            if (model.Quantity != null && model.Quantity > 0 )
+            if (model.Quantity != null && model.Quantity > 0 && model.Price > 0 && model.Price != null)
             {
                 detail.Id = (int)SharedData.DetailId;
                 detail.InvoiceId = SharedData.InvoiceId;

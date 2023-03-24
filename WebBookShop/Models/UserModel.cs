@@ -12,11 +12,14 @@ namespace WebBookShop.Models
         [Required(ErrorMessage = "Xin mời nhập email")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Xin mời nhập mật khẩu")]
+        [MinLength(6,ErrorMessage ="Đọ dài mật khẩu phải >=6 ký tự")]
         public string Password { get; set; }
         public string Fullname { get;set; }
+        [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
+        [Required(ErrorMessage = "Xin mời nhập số điện thoại")]
+        [StringLength(15, ErrorMessage = "Độ dài số điện thoại phải >=10 và <=15", MinimumLength = 10)]
         public string Phone { get; set; }
         public string Address { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public int? RoleID { get; set; }

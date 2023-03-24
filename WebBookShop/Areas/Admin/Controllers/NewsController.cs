@@ -23,7 +23,7 @@ namespace WebBookShop.Areas.Admin.Controllers
 
             PageListModel.pageSize = pageSize;
             PageListModel.page = page;
-            //ShowOption();
+            ShowOption();
             IEnumerable<NewsModel> news;
             if (keyword != null)
             {
@@ -48,10 +48,15 @@ namespace WebBookShop.Areas.Admin.Controllers
             ViewBag.Search = keyword;
 
             PageListModel.keyword = keyword;
-            //ShowOption();
+            ShowOption();
             return View(news);
         }
+        public void ShowOption()
+        {
+            var options = SharedData.Option(PageListModel.page, PageListModel.pageSize, PageListModel.keyword);
+            TempData["showpagesize"] = options;
 
+        }
         public ActionResult Create()
         {
             return View();

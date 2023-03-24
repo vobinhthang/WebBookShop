@@ -40,12 +40,13 @@
                 {
                     <button class="btn btn-success my-3">Thêm mới</button>
                 }
-                <div class="d-flex d-inline align-items-center">
-                    <span>Hiển thị</span>
+            <div class="d-flex d-inline align-items-center">
+                <span>Hiển thị</span>
+                @Html.DropDownList("showpagesize", TempData["showpagesize"] as List<SelectListItem>, new { @onchange = "location = this.value", @class = "form-control mt-1 mx-1", @id = "sel1", @style = "width:6%;height:1px; padding:9px" })
 
-                    <span>thông tin trên một trang</span>
+                <span>thông tin trên một trang</span>
 
-                </div>
+            </div>
 
                 <div class="row mt-4">
                     @if (Model != null)

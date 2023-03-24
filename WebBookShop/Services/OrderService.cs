@@ -358,5 +358,30 @@ namespace WebBookShop.Services
                 Delivered = order.Delivered,
             };
         }
+
+        public int CountOrderMonth()
+        {
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime endOfMonth = startOfMonth.AddMonths(1);
+
+            var qr = from o in dbcontext.tbl_Order
+                     where o.OrderDate >= startOfMonth && o.OrderDate < endOfMonth && o.Delivered==true
+                     select o;
+
+            return qr.ToList().Count();
+        }
+
+        public double TotalPriceMonth()
+        {
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime endOfMonth = startOfMonth.AddMonths(1);
+
+            var qr = from o in dbcontext.tbl_Order
+                     where o.OrderDate >= startOfMonth && o.OrderDate < endOfMonth && o.Delivered == true
+                     select o;
+
+            return (double)qr.Sum(o=>o.TotalPrice);
+        }
+
     }
 }
