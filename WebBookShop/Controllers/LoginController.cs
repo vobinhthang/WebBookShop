@@ -15,7 +15,7 @@ namespace WebBookShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(int id, int alo)
+        public ActionResult Index(int id, int alo2)
         {
             return View();
         }
