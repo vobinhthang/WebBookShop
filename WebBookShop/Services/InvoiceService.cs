@@ -38,7 +38,7 @@ namespace WebBookShop.Services
 
                 var qr = from i in dbcontext.tbl_Invoice
                          orderby i.CreateDate descending
-                         where i.CreateDate.ToString().Contains(keyword) || i.Id.ToString().Equals(keyword)
+                         where i.Id.ToString().Equals(keyword)
                          select new InvoiceModel
                          {
                              Id = i.Id,
@@ -87,7 +87,7 @@ namespace WebBookShop.Services
             var invoice = dbcontext.tbl_Invoice.Find(id);
             invoice.Status = !invoice.Status;
             dbcontext.SaveChanges();
-
+            
             return (bool)invoice.Status;
         }
 
@@ -108,6 +108,8 @@ namespace WebBookShop.Services
                          Quantity = d.Quantity,
                          CreateDate = i.CreateDate,
                      };
+
+
             return qr.ToList();
         }
         public List<InvoiceDetailModel> GetDetailNotPr(int id)

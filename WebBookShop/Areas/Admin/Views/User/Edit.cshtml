@@ -38,48 +38,49 @@
                 @using (Html.BeginForm("Edit", "User", FormMethod.Post))
                 {
                     @Html.ValidationSummary(true, "")
+
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Họ tên</label>
+                        <label class="col-sm-2 col-form-label">Email <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.Fullname, new { @class = "form-control", @placeholder = "Nhập họ tên", @id = "reloadtext" })
-                        
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Nhập email", @id = "reloadtext" })
-                            
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Nhập email", @id = "reloadtext", @type = "email", required = "required" })
+
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Mật khẩu</label>
+                        <label class="col-sm-2 col-form-label">Mật khẩu <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Nhập mật khẩu", @id = "reloadtext" })
-                         
+                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Nhập mật khẩu", @id = "reloadtext", required = "required" })
+
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Họ tên</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.Fullname, new { @class = "form-control", @placeholder = "Nhập họ tên", @id = "reloadtext" })
+
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Chức vụ</label>
                         <div class="col-sm-10">
-                            @Html.DropDownListFor(m=>m.RoleID, (SelectList)ViewBag.RoleList, new {@class= "form-control" })
-                           
+                            @Html.DropDownListFor(m => m.RoleID, (SelectList)ViewBag.RoleList, new { @class = "form-control" })
+
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Số điện thoại</label>
                         <div class="col-sm-10">
                             @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Nhập số điện thoại", @id = "reloadtext" })
-                            
+
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Địa chỉ</label>
                         <div class="col-sm-10">
                             @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeholder = "Nhập địa chỉ", @id = "reloadtext" })
-                            
+
                         </div>
                     </div>
                     <div class="form-group row">

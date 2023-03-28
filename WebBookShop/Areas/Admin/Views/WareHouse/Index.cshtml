@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "Kho sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using System.Globalization;
+@using PagedList
+@using PagedList.Mvc
+@using WebBookShop.Services
+@model PagedList.IPagedList<WebBookShop.Models.ProductModel>
+
+<div class="container-fluid">
+
+    <div class="mx-4">
+        <p>
+            <a href="/admin/product" class="text-info">Trang chủ </a>
+            <span class="active">/ Kho sản phẩm</span>
+        </p>
+    </div>
+
+    <div id="DataSearching">
+    </div>
+
+    @using (Html.BeginForm("index", "warehouse", FormMethod.Post))
+    {
+        <div style="width:100%;height:85px">
+            <div class="form-group">
+                <input type="text" name="keyword" value="@ViewBag.Search" style="width:20%" class="form-control input-default float-right" placeholder="Tìm kiếm">
+                <button type="submit" class="btn mb-1 btn-outline-light float-right">
+                    <i class="mdi mdi-magnify" style="font-size:20px"></i>
+                </button>
+            </div>
+        </div>
+    }
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h4>Kho sản phẩm</h4>
+            </div>
+            <div>
+                <a href="/admin/product" class="btn btn-primary my-3">Danh sách sản phẩm</a>
+            </div>
+            <div class="d-flex d-inline align-items-center">
+                <span>Hiển thị</span>
+                @*@Html.DropDownList("showpagesize", TempData["showpagesize"] as List<SelectListItem>, new { @onchange = "location = this.value", @class = "form-control mt-1 mx-1", @id = "sel1", @style = "width:5%;height:1px; padding:9px" })*@
+                <span>thông tin trên một trang</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>
+                                Tên sản phẩm
+                            </th>
+                            <th>Ảnh</th>
+                            <th>Thể loại</th>
+                            <th>
+                                <a class="text-bg-info" href="/admin/product?sort=@ViewBag.Sort&sortBy=price&page=@ViewBag.Page&pageSize=@ViewBag.PageSize&keyword=@ViewBag.Search">
+                                    Giá
+                                    <i class="mdi mdi-arrow-@TempData["IconSortPrice"]"></i>
+                                </a>
+                            </th>
+                            <th>Số lượng tồn</th>
+                        </tr>
+                    </thead>
+                    @{int index = 1;}
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.Id">
+                                <td>@index</td>
+                                <td>
+                                    @{var rs = new ImageProductService().GetByThumbnail(item.Id);
+                                        if (rs != null)
+                                        {
+                                            <img src="@Url.Content(rs)" style="width:110px" />
+                                        }
+                                        else
+                                        {
+                                            <span>N/A</span>
+                                        }
+                                    }
+                                </td>
+                                <td>@item.ProductName</td>
+                                <td>@item.CategoryName</td>
+                                <td>
+                                    @{
+                                        var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.Price);
+                                        @strPrice
+                                    }
+                                </td>
+                                <td>
+                                    @item.Quantity
+                                </td>
+                            </tr>
+
+                            index++;
+                        }
+                    </tbody>
+                </table>
+                <div class="paging">
+
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, @pageSize = ViewBag.PageSize, @keyword = ViewBag.Search }), new PagedListRenderOptions
+                        {
+                            LiElementClasses = new string[] { "page-item" },
+                            UlElementClasses = new string[] { "pagination" },
+                            MaximumPageNumbersToDisplay = 3,
+                        })
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section ADMINSCRIPT{
+    <style>
+        .pagination a {
+            position: relative;
+            display: block;
+            padding: 0.5rem 0.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #7571f9;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .paging .active {
+            color: white;
+        }
+
+            .paging .active a {
+                background-color: #7571f9;
+            }
+    </style>
+}
+

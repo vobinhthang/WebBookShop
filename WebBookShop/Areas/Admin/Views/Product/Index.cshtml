@@ -39,7 +39,9 @@
             </div>
             <div>
                 <a href="/admin/product/create" class="btn btn-success my-3">Thêm mới</a>
+                <a href="/admin/warehouse" class="btn btn-primary float-right">Kho sản phẩm</a>
             </div>
+
             <div class="d-flex d-inline align-items-center">
                 <span>Hiển thị</span>
                 @Html.DropDownList("showpagesize", TempData["showpagesize"] as List<SelectListItem>, new { @onchange = "location = this.value", @class = "form-control mt-1 mx-1", @id = "sel1", @style = "width:5%;height:1px; padding:9px" })
@@ -60,7 +62,7 @@
                             <th>Thể loại</th>
                             <th>
                                 <a class="text-bg-info" href="/admin/product?sort=@ViewBag.Sort&sortBy=price&page=@ViewBag.Page&pageSize=@ViewBag.PageSize&keyword=@ViewBag.Search">
-                                   Giá
+                                    Giá
                                     <i class="mdi mdi-arrow-@TempData["IconSortPrice"]"></i>
                                 </a>
                             </th>
@@ -129,7 +131,7 @@
                                     }
                                 </td>
                                 <td>
-                                    @{ 
+                                    @{
                                         var str = item.CreatedDate.ToString().Substring(0, 10);
                                     }
                                     @str

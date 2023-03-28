@@ -146,7 +146,8 @@ namespace WebBookShop.Services
                          CustomerName=o.CustomerName,
                          TotalPrice=o.TotalPrice,
                          OrderDate=o.OrderDate,
-                         DeliveredDate=o.DeliveredDate
+                         DeliveredDate=o.DeliveredDate,
+                         Delivered=o.Delivered,
                      };
             return qr.ToList();
         }

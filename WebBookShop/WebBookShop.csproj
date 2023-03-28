@@ -140,8 +140,11 @@
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WareHouseController.cs" />
     <Compile Include="Areas\Admin\Models\PageListModel.cs" />
     <Compile Include="Areas\Admin\Models\SharedData.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="EF\MyDbContext.cs" />
     <Compile Include="EF\tbl_Banner.cs" />
     <Compile Include="EF\tbl_Category.cs" />
@@ -5518,6 +5521,35 @@
     <Content Include="Assets\admin\plugins\x-editable\dist\bootstrap3-editable\img\loading.gif" />
     <Content Include="Assets\admin\plugins\x-editable\dist\bootstrap3-editable\js\bootstrap-editable.min.js" />
     <Content Include="Assets\admin\plugins\xml\plugin.js" />
+    <Content Include="Assets\client\css\login.css" />
+    <Content Include="Assets\client\css\style.css" />
+    <Content Include="Assets\client\img\banner1.jpg" />
+    <Content Include="Assets\client\img\banner2.png" />
+    <Content Include="Assets\client\img\banner3.png" />
+    <Content Include="Assets\client\img\banner4.png" />
+    <Content Include="Assets\client\img\bannerdai1.png" />
+    <Content Include="Assets\client\img\bannerdai2.png" />
+    <Content Include="Assets\client\img\bannerduoi1.png" />
+    <Content Include="Assets\client\img\bg1.png" />
+    <Content Include="Assets\client\img\bg2.png" />
+    <Content Include="Assets\client\img\bg3.jpg" />
+    <Content Include="Assets\client\img\imgProductInfo1.jpg" />
+    <Content Include="Assets\client\img\img__slider1.jpg" />
+    <Content Include="Assets\client\img\img__slider2.jpg" />
+    <Content Include="Assets\client\img\img__slider3.png" />
+    <Content Include="Assets\client\img\img__slider4.png" />
+    <Content Include="Assets\client\img\img__slider5.png" />
+    <Content Include="Assets\client\img\logo BookHive.png" />
+    <Content Include="Assets\client\img\producthot1.jpg" />
+    <Content Include="Assets\client\img\producthot2.jpg" />
+    <Content Include="Assets\client\img\producthot3.jpg" />
+    <Content Include="Assets\client\img\producthot4.jpg" />
+    <Content Include="Assets\client\img\producthot5.jpg" />
+    <Content Include="Assets\client\img\producthot6.jpg" />
+    <Content Include="Assets\client\img\producthot7.jpg" />
+    <Content Include="Assets\client\img\producthot8.jpg" />
+    <Content Include="Assets\client\js\app.js" />
+    <Content Include="Assets\client\js\validate.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -5906,6 +5938,7 @@
     <Content Include="Areas\Admin\Views\Invoice\CreateDetail.cshtml" />
     <Content Include="Areas\Admin\Views\Invoice\EditDetail.cshtml" />
     <Content Include="Areas\Admin\Views\Invoice\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\WareHouse\Index.cshtml" />
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />
     <Content Include="Scripts\jquery-3.6.3.min.js" />
@@ -5929,6 +5962,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Web.Config" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Register\Index.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

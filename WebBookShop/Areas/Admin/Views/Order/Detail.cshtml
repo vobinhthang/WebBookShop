@@ -19,10 +19,16 @@
             <div class="card-title">
                 <h4>Quản lý chi tiết đơn đặt hàng - Mã đơn hàng @TempData["ORDERID"]</h4>
             </div>
-            <div>
-                <a href="/admin/order/createdetail/@TempData["ORDERID"]" class="btn btn-success my-3">Thêm sản phẩm</a>
-                <a href="/admin/order/edit/@TempData["ORDERID"]" class="btn btn-warning ml-3">Sửa thông tin</a>
-            </div>
+            @{
+                if (!ViewBag.Delivered)
+                {
+                    <div>
+                        <a href="/admin/order/createdetail/@TempData["ORDERID"]" class="btn btn-success my-3">Thêm sản phẩm</a>
+                        <a href="/admin/order/edit/@TempData["ORDERID"]" class="btn btn-warning ml-3">Sửa thông tin</a>
+                    </div>
+                }
+
+            }
 
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 col-lg-9 ">
@@ -85,12 +91,15 @@
                                                     @strTotalPrice
                                                 </td>
                                                 <td>
-                                                    <a class="mr-3" style="color:#ef8832" href="/admin/order/editdetail?id=@TempData["ORDERID"]&detailid=@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
-                                                        <i class="fa fa-pencil color-muted m-r-5"></i>
-                                                    </a>
-                                                    <a onclick="if(confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/order/deletedetail/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa">
-                                                        <i class="fa fa-trash color-muted m-r-5"></i>
-                                                    </a>
+                                                    @if (!ViewBag.Delivered)
+                                                    {
+                                                        <a class="mr-3" style="color:#ef8832" href="/admin/order/editdetail?id=@TempData["ORDERID"]&detailid=@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
+                                                            <i class="fa fa-pencil color-muted m-r-5"></i>
+                                                        </a>
+                                                        <a onclick="if(confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/order/deletedetail/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa">
+                                                            <i class="fa fa-trash color-muted m-r-5"></i>
+                                                        </a>
+                                                    }
                                                 </td>
                                             </tr>
                                             index++;
@@ -123,7 +132,7 @@
                             </p>
                         </div>
                         <div class="card-footer">
-                         
+
                         </div>
                     </div>
                 </div>

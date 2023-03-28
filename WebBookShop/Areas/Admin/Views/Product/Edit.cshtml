@@ -39,9 +39,9 @@
                 {
                     @Html.ValidationSummary(true, "")
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Tên sản phẩm</label>
+                        <label class="col-sm-2 col-form-label">Tên sản phẩm <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control ", @placeholder = "Nhập tên sản phẩm" })
+                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control ", @placeholder = "Nhập tên sản phẩm", required = "required" })
                             @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -52,30 +52,30 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Tác giả</label>
+                        <label class="col-sm-2 col-form-label">Tác giả <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.AuthorName, new { @class = "form-control ", @placeholder = "Nhập tên tác giả" })
+                            @Html.TextBoxFor(m => m.AuthorName, new { @class = "form-control ", @placeholder = "Nhập tên tác giả", required = "required" })
                             @Html.ValidationMessageFor(m => m.AuthorName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Giá sản phẩm</label>
+                        <label class="col-sm-2 col-form-label">Giá sản phẩm <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.Price, new { @type = "number", @class = "form-control ", @placeholder = "Nhập giá sản phẩm" })
+                            @Html.TextBoxFor(m => m.Price, new { @type = "number", @class = "form-control ", @placeholder = "Nhập giá sản phẩm", required = "required" })
                             @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Số trang</label>
+                        <label class="col-sm-2 col-form-label">Số trang <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.NumberPage, new { @type = "number", @class = "form-control ", @placeholder = "Nhập số trang" })
+                            @Html.TextBoxFor(m => m.NumberPage, new { @type = "number", @class = "form-control ", @placeholder = "Nhập số trang", required = "required" })
                             @Html.ValidationMessageFor(m => m.NumberPage, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Nhà xuất bản</label>
+                        <label class="col-sm-2 col-form-label">Nhà xuất bản <span class="text-danger">*</span> </label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.PublishCompany, new {  @class = "form-control ", @placeholder = "Nhập nhà xuát bản" })
+                            @Html.TextBoxFor(m => m.PublishCompany, new {  @class = "form-control ", @placeholder = "Nhập nhà xuát bản", required = "required" })
                             @Html.ValidationMessageFor(m => m.PublishCompany, "", new { @class = "text-danger" })
                         </div>
                     </div>

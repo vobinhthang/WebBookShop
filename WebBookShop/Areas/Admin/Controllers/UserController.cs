@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using WebBookShop.Areas.Admin.Models;
 using WebBookShop.EF;
@@ -37,8 +38,13 @@ namespace WebBookShop.Areas.Admin.Controllers
             else
             {
                 users = service.GetAll(page, pageSize);
+                
             }
-
+            if (users.ToList().Count==0)
+            {
+                 users = service.GetAllNotRole(page, pageSize);
+            }
+               
             if (TempData["IconSortEmail"] == null && TempData["IconSortUserUpdate"] == null && TempData["IconSortUserCreate"] == null)
             {
                 TempData["IconSortEmail"] = "up";
@@ -248,7 +254,8 @@ namespace WebBookShop.Areas.Admin.Controllers
             var service = new UserService();
             ListRoleId(user.RoleId);
 
-            if (model.Email != null && !model.Email.StartsWith(" ") && model.Password != null && !model.Password.StartsWith(" "))
+            if (model.Email != null && !model.Email.StartsWith(" ") && model.Password != null && !model.Password.StartsWith(" ")
+                 && model.Password.Length >= 6)
             {
                 var rs = service.Update(user);
                 if (rs)

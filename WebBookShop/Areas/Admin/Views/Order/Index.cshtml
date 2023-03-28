@@ -118,11 +118,23 @@
                                             {
                                                 <span>Chờ giao hàng</span>
                                             }
+
+
                                         }
                                     </p>
-                                    <p class="card-text d-inline">
-                                        <a href="/admin/order/edit/@item.Id" class="card-link text-warning"><u><small>Cập nhật </small></u></a>
-                                    </p>
+                                    @{
+                                        if (item.Delivered == false)
+                                        {
+                                            <p class="card-text d-inline">
+                                                <a href="/admin/order/edit/@item.Id" class="card-link text-warning"><u><small>Cập nhật </small></u></a>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="card-text d-inline text-success">Đơn hàng đã giao thành công!</p>
+                                        }
+                                    }
+
                                     <a href="/admin/order/detail/@item.Id" class="card-link float-right"><u><small>Chi tiết đơn hàng -->></small></u></a>
                                 </div>
                             </div>

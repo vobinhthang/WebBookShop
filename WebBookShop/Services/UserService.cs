@@ -51,6 +51,21 @@ namespace WebBookShop.Services
                         };
             return query.ToPagedList(page,pageSize);
         }
+        public IEnumerable<UserModel> GetAllNotRole(int page, int pageSize)
+        {
+            var query = from u in dbcontext.tbl_User
+  
+                        orderby u.CreateDate ascending
+                        select new UserModel
+                        {
+                            Id = u.Id,
+                            Email = u.Email,
+                            Password = u.Password,
+                            CreateDate = u.CreateDate,
+                            UpdateDate = u.UpdateDate,
+                        };
+            return query.ToPagedList(page, pageSize);
+        }
 
         public UserModel GetById(int id)
         {

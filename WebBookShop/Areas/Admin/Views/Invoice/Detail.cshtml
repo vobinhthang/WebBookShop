@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Chi tiết hóa đơn nhập";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+
+
 }
 @using WebBookShop.Services
 @using System.Globalization;
@@ -19,10 +22,18 @@
             <div class="card-title">
                 <h4>Quản lý chi tiết hóa đơn nhập - Mã hóa đơn @TempData["INVOICE_ID"]</h4>
             </div>
-            <div>
-                <a href="/admin/invoice/createdetail/@TempData["INVOICE_ID"]" class="btn btn-success my-3">Thêm sản phẩm</a>
-            </div>
-
+            @{
+                if (!ViewBag.Status)
+                {
+                    <div>
+                        <a href="/admin/invoice/createdetail/@TempData["INVOICE_ID"]" class="btn btn-success my-3">Thêm sản phẩm</a>
+                    </div>
+                }
+                else
+                {
+                    <span class="text-success font-weight-bold">Hóa đơn dã nhập về thành công !!</span>
+                }
+            }
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 col-lg-9 ">
                     <div class="card" style="background-color: rgb(254, 254, 250) ">
@@ -55,13 +66,13 @@
                                                     @{var rs = new ImageProductService().GetByThumbnail((int)item.ProductId);
                                                         if (rs != null)
                                                         {
-                                                        <img src="@Url.Content(rs)" style="width:110px" />
+                                                            <img src="@Url.Content(rs)" style="width:110px" />
                                                         }
                                                         else
                                                         {
-                                                        <span>N/A</span>
-                                                            }
+                                                            <span>N/A</span>
                                                         }
+                                                    }
                                                 </td>
                                                 <td>@item.Productname</td>
                                                 <td>@item.Quantity</td>
@@ -80,12 +91,15 @@
                                                     @strTotalPrice
                                                 </td>
                                                 <td>
-                                                    <a class="mr-3" style="color:#ef8832" href="/admin/invoice/editdetail?id=@TempData["INVOICE_ID"]&detailid=@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
-                                                        <i class="fa fa-pencil color-muted m-r-5"></i>
-                                                    </a>
-                                                    <a onclick="if(confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/invoice/deletedetail/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa">
-                                                        <i class="fa fa-trash color-muted m-r-5"></i>
-                                                    </a>
+                                                    @if (!ViewBag.Status)
+                                                    {
+                                                        <a class="mr-3" style="color:#ef8832" href="/admin/invoice/editdetail?id=@TempData["INVOICE_ID"]&detailid=@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa">
+                                                            <i class="fa fa-pencil color-muted m-r-5"></i>
+                                                        </a>
+                                                        <a onclick="if(confirm('Bạn có muốn xóa thông tin này ?') == true) { location.href='/admin/invoice/deletedetail/@item.Id' }" class="mr-4" style="color: #ff5e5e" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa">
+                                                            <i class="fa fa-trash color-muted m-r-5"></i>
+                                                        </a>
+                                                    }
                                                 </td>
                                             </tr>
                                             index++;
@@ -104,10 +118,10 @@
                                 }
                                 @strTotal
                             </p>
-                          
+
                         </div>
                         <div class="card-footer">
-                          
+
                         </div>
                     </div>
                 </div>

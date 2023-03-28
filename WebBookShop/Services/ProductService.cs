@@ -21,7 +21,7 @@ namespace WebBookShop.Services
 
             var qr = from p in dbcontext.tbl_Product
                      join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
-                     orderby p.CreateDate
+                     orderby p.CreateDate descending
                      select new ProductModel
                      {
 
@@ -46,7 +46,7 @@ namespace WebBookShop.Services
         {
             var qr = from p in dbcontext.tbl_Product
                      join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
-                     orderby p.ProductName
+                     orderby p.ProductName 
                      select new ProductModel
                      {
                          

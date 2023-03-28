@@ -76,6 +76,22 @@ namespace WebBookShop.Areas.Admin.Controllers
         public JsonResult ChangeStatus(int id)
         {
             var rs = new InvoiceService().ChangeStatus(id);
+
+            if (rs)
+            {
+                var dbcontext = new MyDbContext();
+
+                var details = from d in dbcontext.tbl_InvoiceDetail
+                              where d.InvoiceId == id
+                              select d;
+                foreach (var d in details)
+                {
+                    var product = dbcontext.tbl_Product.Find(d.ProductId);
+                    product.Quantity += d.Quantity;
+                };
+                dbcontext.SaveChanges();
+            }
+                
             return Json(new
             {
                 status = rs,
@@ -87,6 +103,10 @@ namespace WebBookShop.Areas.Admin.Controllers
             TempData["INVOICE_ID"] = id;
             SharedData.InvoiceId = id;
             var detail = new InvoiceService().GetDetail(id);
+
+            var invoice = new MyDbContext().tbl_Invoice.Find(id);
+            ViewBag.Status = invoice.Status;
+
             if (detail.Count > 0)
             {
                 TempData["CREATE_DATE"] = detail.Take(1).SingleOrDefault(d=>d.InvoiceId==id).CreateDate;

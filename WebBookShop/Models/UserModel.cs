@@ -12,7 +12,7 @@ namespace WebBookShop.Models
         [Required(ErrorMessage = "Xin mời nhập email")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Xin mời nhập mật khẩu")]
-        [MinLength(6,ErrorMessage ="Đọ dài mật khẩu phải >=6 ký tự")]
+        [MinLength(6,ErrorMessage ="Độ dài mật khẩu phải >=6 ký tự")]
         public string Password { get; set; }
         public string Fullname { get;set; }
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]

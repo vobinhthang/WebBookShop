@@ -19,11 +19,6 @@
                         btn.removeClass('badge-light');
                         btn.text('Đã nhập');
                     }
-                    else {
-                        btn.addClass('badge-light');
-                        btn.removeClass('badge-success');
-                        btn.text('Chờ');
-                    }
                 }
             });
         });
