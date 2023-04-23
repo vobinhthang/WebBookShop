@@ -68,34 +68,40 @@ namespace WebBookShop.Areas.Admin.Controllers
             var service = new BannerService();
             try
             {
-                if(fileImage.ContentLength>0 && model.BannerName !=null && model.Sort!=null && model.Status!=null)
+                if(fileImage.ContentLength>0 && model.BannerName !=null &&  model.Status!=null )
                 {
-                
-                    string rootFolder = Server.MapPath("~/UploadImg/Banner/");
-                    string pathFile = rootFolder + fileImage.FileName;
-                    fileImage.SaveAs(pathFile);
-                    banner.Image = "~/UploadImg/Banner/" + fileImage.FileName;
-
-
-                    var findImage = service.FindImage(banner.Image);
-                    if (banner.Image != findImage)
+                    if(model.BannerName.StartsWith("banner") || model.BannerName.StartsWith("slider"))
                     {
-                        var rs = service.Create(banner);
-                        if (rs != null)
+                        string rootFolder = Server.MapPath("~/UploadImg/Banner/");
+                        string pathFile = rootFolder + fileImage.FileName;
+                        fileImage.SaveAs(pathFile);
+                        banner.Image = "~/UploadImg/Banner/" + fileImage.FileName;
+
+
+                        var findImage = service.FindImage(banner.Image);
+                        if (banner.Image != findImage)
                         {
-                            TempData["CREATE"] = "Thêm banner thành công";
-                            TempData["ALEART"] = "success";
+                            var rs = service.Create(banner);
+                            if (rs != null)
+                            {
+                                TempData["CREATE"] = "Thêm banner thành công";
+                                TempData["ALEART"] = "success";
+                            }
+                            else
+                            {
+                                TempData["CREATE"] = "Thêm thất bại";
+                                TempData["ALEART"] = "danger";
+                            }
                         }
                         else
                         {
-                            TempData["CREATE"] = "Thêm thất bại";
-                            TempData["ALEART"] = "danger";
+                            TempData["CREATE"] = "Banner được thêm đã tồn tại";
+                            TempData["ALEART"] = "warning";
                         }
                     }
                     else
                     {
-                        TempData["CREATE"] = "Banner được thêm đã tồn tại";
-                        TempData["ALEART"] = "warning";
+                        TempData["MESSAGE"] = "Tên không hợp lệ!";
                     }
                 }
                 
@@ -147,37 +153,41 @@ namespace WebBookShop.Areas.Admin.Controllers
 
             try
             {
-                if ( model.BannerName != null && model.Sort != null && model.Status != null)
+                if ( model.BannerName != null  && model.Status != null && (model.BannerName.StartsWith("banner") || model.BannerName.StartsWith("slider")))
                 {
+                   
+                        if (fileImage != null)
+                        {
+                            string rootFolder = Server.MapPath("~/UploadImg/Product/");
+                            string pathFile = rootFolder + fileImage.FileName;
+                            fileImage.SaveAs(pathFile);
+                            banner.Image = "~/UploadImg/Product/" + fileImage.FileName;
+                        }
+                        else
+                        {
+                            banner.Image = SharedData.Image;
+                        }
 
-                    if (fileImage != null)
-                    {
-                        string rootFolder = Server.MapPath("~/UploadImg/Product/");
-                        string pathFile = rootFolder + fileImage.FileName;
-                        fileImage.SaveAs(pathFile);
-                        banner.Image = "~/UploadImg/Product/" + fileImage.FileName;
-                    }
-                    else
-                    {
-                        banner.Image = SharedData.Image;
-                    }
+                        var rs = service.Update(banner);
+                        if (rs)
+                        {
+                            TempData["IMAGE"] = banner.Image;
+                            TempData["CREATE"] = "Thêm banner thành công";
+                            TempData["ALEART"] = "success";
+                        }
+                        else
+                        {
+                            TempData["IMAGE"] = SharedData.Image;
+                            TempData["CREATE"] = "Thêm thất bại";
+                            TempData["ALEART"] = "danger";
+                        }
 
-                    var rs = service.Update(banner);
-                    if (rs)
-                    {
-                        TempData["IMAGE"] = banner.Image;
-                        TempData["CREATE"] = "Thêm banner thành công";
-                        TempData["ALEART"] = "success";
-                    }
-                    else
-                    {
-                        TempData["IMAGE"] = SharedData.Image;
-                        TempData["CREATE"] = "Thêm thất bại";
-                        TempData["ALEART"] = "danger";
-                    }
-              
                 }
-
+                else
+                {
+                    TempData["IMAGE"] = SharedData.Image;
+                    TempData["MESSAGE"] = "Tên không hợp lệ!";
+                }
             }
             catch
             {

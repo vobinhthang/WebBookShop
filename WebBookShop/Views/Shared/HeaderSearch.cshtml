@@ -1,0 +1,14 @@
+﻿@using WebBookShop.Commons;
+
+<div class="header__search">
+    <div class="header__input">
+        @using (Html.BeginForm("HeaderSearch", "Home", FormMethod.Post))
+        {
+            <div class="header__input--search">
+                <input required type="text" name="keyword" value="@SharedData.Keyword" class="input__search " placeholder="Tìm kiếm tại đây...">
+
+                <button type="submit" class="btn__search"><i style="font-size:18px" class="fa-solid fa-magnifying-glass icon__search"></i></button>
+            </div>
+        }
+    </div>
+</div>

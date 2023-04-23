@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model WebBookShop.Models.ProductModel
+@using WebBookShop.Services
+@using System.Globalization;
+<div class="navigation d-flex align-items-center" ><a href="/home" class="link_back_productinfor mr-2" >Trang chủ</a> > <a  class=" link_back_productinfor mx-2" href="/productcate?id=@ViewBag.ParentIdCates">@ViewBag.ParentIdCatesName </a> > <a class="link_back_productinfor mx-2" href="/productcate?id=@Model.CategoryId">@Model.CategoryName </a> > @Model.ProductName</div>
+
+<div class="product__info">
+    <div class="container-fluid">
+        <div class="row my-5" style="margin:0px 100px">
+            <div class="col-1 ">
+                @foreach (var item in ViewBag.Images)
+                {
+                    <div class="image_product_child mt-5">
+                        <img src="@Url.Content(item.Image)" alt="" style="width: 100%; height: 100%;">
+                    </div>
+                }
+                
+            </div>
+            <div class="col-5 product__img">
+                @{var rs = new ImageProductService().GetByThumbnail(Model.Id);
+                    if (rs != null)
+                    {
+                        <img src="@Url.Content(rs)" style="width: 100%;height:100%" />
+                    }
+
+                }
+            </div>
+
+            <div class="col-6 product__detail pl-5">
+                <p class="title-detail">@Model.ProductName</p>
+                <p class="details">Thể loại: <a style="color: #096B91" href="/productcate?id=@Model.CategoryId">@Model.CategoryName</a></p>
+                <p class="details">Tác giả/ Dịch giả: @Model.AuthorName</p>
+                <p class="details">Nhà Xuất Bản: @Model.PublishCompany</p>
+                <p class="details">Nhà Cung Cấp: BookHive</p>
+                <div class="price" style="font-size:27px">
+                    @{
+                        var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", Model.Price);
+                        @strPrice
+                    }
+                </div>
+                <p class="details">
+                    Chọn số lượng:
+                    <div class="form-group">
+                        <input type="number" class="form-control" style="font-size:14px;width:15%" name="" id="" value="1" min="1" max="10">
+                    </div>
+                </p>
+
+                <button class="btn btn-danger p-3 font-weight-bold" style="font-size:14px;">
+                    <i class="fa fa-shopping-cart"></i>
+                    Thêm vào giỏ hàng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product__info--detail col-8">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="title-detail font-weight-bold" style="font-size: 22px; ">Thông tin chi tiết</p>
+                <div style="font-size: 15px;">
+                    @MvcHtmlString.Create(Model.Description)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product__info--detail col-8 mt-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <p class="title-detail font-weight-bold" style="font-size: 22px; ">Thông tin sản phẩm</p>
+                <div class=" row ml-1" >
+                    <div class="col-6" style="font-size: 15px; color: #333333; font-weight:600">
+                        <p class="py-3">Tác giả/ Dịch giả</p>
+                        <p class="py-3">Thể loại</p>
+                        <p class="py-3">Nhà xuất bản</p>
+                        <p class="py-3">Số trang</p>
+                        <p class="py-3">Nhà cung cấp</p>
+                    </div>
+                    <div class="col-6 " style="font-size: 15px;">
+                        <p class="py-3">@Model.AuthorName</p>
+                        <p class="py-3"><a style="color: #096B91" href="/productcate?id=@Model.CategoryId">@Model.CategoryName</a></p>
+                        <p class="py-3">@Model.PublishCompany</p>
+                        <p class="py-3">@Model.NumberPage</p>
+                        <p class="py-3">BookHive</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin: 40px 0; font-size: 22px; font-weight: bold; padding: 0 130px; ">Có thể bạn quan tâm</div>
+<div class="product_sale">
+    <div class="owl-carousel product_sale--slice px-5">
+        @foreach (var item in ViewBag.ProductByCate)
+        {
+            <div class="product-item">
+                <a href="/productinfor?id=@item.Id" class="product-item--link">
+                    <div class="card" style="width: 100%; height: 100%;">
+                        @{var rs2 = new ImageProductService().GetByThumbnail((int)item.Id);
+                            if (rs2 != null)
+                            {
+                                <img src="@Url.Content(rs2)" style="width:100%" />
+                            }
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title " style="font-size:15px;color:gray">@item.ProductName</h5>
+                            <p class="card-text" style="color: #cf0525; font-weight: 600; font-size: 18px;">
+                                @{
+                                    var strPrice2 = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.Price);
+                                    @strPrice2
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+
+    </div>
+</div>

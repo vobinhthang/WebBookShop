@@ -35,41 +35,41 @@
                 {
                     @Html.ValidationSummary(true, "")
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Tên khách hàng</label>
+                        <label class="col-sm-2 col-form-label">Tên khách hàng <span class="text-danger">*</span> </label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control reloadtext", @placeholder = "Nhập tên khách hàng" })
+                            @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control reloadtext", @placeholder = "Nhập tên khách hàng", required = "required" })
                             @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">SĐT</label>
+                        <label class="col-sm-2 col-form-label">SĐT <span class="text-danger">*</span> </label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control reloadtext", @placeholder = "Nhập số điện thoại" })
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control reloadtext", @placeholder = "Nhập số điện thoại", required = "required" })
                             @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control reloadtext", @placeholder = "Nhập email" })
+                            @Html.TextBoxFor(m => m.Email, new { @type = "email", @class = "form-control reloadtext", @placeholder = "Nhập email" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Địa chỉ khách hàng</label>
+                        <label class="col-sm-2 col-form-label">Địa chỉ khách hàng <span class="text-danger">*</span> </label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control reloadtext", @placeholder = "Nhập địa chỉ" })
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control reloadtext", @placeholder = "Nhập địa chỉ", required = "required" })
                             @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Giảm giá (%) </label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.Discount, new { @type = "number", @class = "form-control reloadtext", @placeholder = "Nhập %", @style = "width:100px" })
+                            @Html.TextBoxFor(m => m.Discount, new { @type = "number", min = "0", @class = "form-control reloadtext", @placeholder = "Nhập %", @style = "width:100px" })
 
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Trạng thái đơn hàng</label>
+                        <label class="col-sm-2 col-form-label">Trạng thái đơn hàng <span class="text-danger">*</span> </label>
                         <div class="col-sm-10">
                             <label class="radio-inline mr-3" style="margin-top:10px">
                                 @Html.RadioButtonFor(m => m.Status, "True") Đang xử lý
@@ -83,7 +83,7 @@
                     </div>
                     
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Vận chuyển đơn hàng</label>
+                        <label class="col-sm-2 col-form-label">Vận chuyển đơn hàng <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
                             <label class="radio-inline mr-3" style="margin-top:10px">
                                 @Html.RadioButtonFor(m => m.Delivered, "True") Đã giao hàng

@@ -138,6 +138,7 @@
                     @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { @sort = ViewBag.SortPageCate, @sortBy = ViewBag.SortByPageCate, page, @pageSize = ViewBag.PageSizeCate, @keyword = ViewBag.SearchCate }), new PagedListRenderOptions
                         {
                             LiElementClasses = new string[] { "page-item" },
+                            
                             UlElementClasses = new string[] { "pagination" },
                             MaximumPageNumbersToDisplay = 3,
                         })

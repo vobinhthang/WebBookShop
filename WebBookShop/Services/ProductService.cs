@@ -69,7 +69,333 @@ namespace WebBookShop.Services
 
             return qr.ToList();
         }
+        public List<ProductModel> GetNews()
+        {
+            var qr = from p in dbcontext.tbl_Product
+                     join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                     orderby p.Id descending
+                     where p.Status == true
+                     select new ProductModel
+                     {
 
+                         Id = p.Id,
+                         ProductName = p.ProductName,
+                         Status = p.Status,
+                         Hot = p.Hot,
+                         CategoryId = p.CategoryID,
+                         CategoryName = c.CategoryName,
+                         Price = p.Price,
+                         Quantity = p.Quantity,
+                         Description = p.Description,
+                         AuthorName = p.AuthorName,
+                         PublishCompany = p.PublishCompany,
+                         NumberPage = p.NumberPage,
+                         CreatedDate = p.CreateDate,
+                         UpdateDate = p.UpdateDate,
+                     };
+
+
+            return qr.Take(10).ToList();
+        }
+        public IEnumerable<ProductModel> GetByName(string keyword,string sort, int page, int pageSize)
+        {
+            if (sort == "default")
+            {
+                var qr = from p in dbcontext.tbl_Product
+                         join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                         where p.ProductName.Contains(keyword)
+                         orderby p.Id descending
+                         select new ProductModel
+                         {
+
+                             Id = p.Id,
+                             ProductName = p.ProductName,
+                             Status = p.Status,
+                             Hot = p.Hot,
+                             CategoryId = p.CategoryID,
+                             CategoryName = c.CategoryName,
+                             Price = p.Price,
+                             Quantity = p.Quantity,
+                             Description = p.Description,
+                             AuthorName = p.AuthorName,
+                             PublishCompany = p.PublishCompany,
+                             NumberPage = p.NumberPage,
+                             CreatedDate = p.CreateDate,
+                             UpdateDate = p.UpdateDate,
+                         };
+
+
+                return qr.ToPagedList(page, pageSize);
+            }
+            else if (sort == "asc")
+            {
+
+                var qr = from p in dbcontext.tbl_Product
+                         join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                         where p.ProductName.Contains(keyword)
+                         orderby p.Price
+                         select new ProductModel
+                         {
+
+                             Id = p.Id,
+                             ProductName = p.ProductName,
+                             Status = p.Status,
+                             Hot = p.Hot,
+                             CategoryId = p.CategoryID,
+                             CategoryName = c.CategoryName,
+                             Price = p.Price,
+                             Quantity = p.Quantity,
+                             Description = p.Description,
+                             AuthorName = p.AuthorName,
+                             PublishCompany = p.PublishCompany,
+                             NumberPage = p.NumberPage,
+                             CreatedDate = p.CreateDate,
+                             UpdateDate = p.UpdateDate,
+                         };
+
+
+                return qr.ToPagedList(page, pageSize);
+            }
+            else if (sort == "des")
+            {
+
+                var qr = from p in dbcontext.tbl_Product
+                         join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                         where p.ProductName.Contains(keyword)
+                         orderby p.Price descending
+                         select new ProductModel
+                         {
+
+                             Id = p.Id,
+                             ProductName = p.ProductName,
+                             Status = p.Status,
+                             Hot = p.Hot,
+                             CategoryId = p.CategoryID,
+                             CategoryName = c.CategoryName,
+                             Price = p.Price,
+                             Quantity = p.Quantity,
+                             Description = p.Description,
+                             AuthorName = p.AuthorName,
+                             PublishCompany = p.PublishCompany,
+                             NumberPage = p.NumberPage,
+                             CreatedDate = p.CreateDate,
+                             UpdateDate = p.UpdateDate,
+                         };
+
+
+                return qr.ToPagedList(page, pageSize);
+            }
+            else
+            {
+
+                var qr = from p in dbcontext.tbl_Product
+                         join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                         where p.ProductName.Contains(keyword)
+                         orderby p.Id descending
+                         select new ProductModel
+                         {
+
+                             Id = p.Id,
+                             ProductName = p.ProductName,
+                             Status = p.Status,
+                             Hot = p.Hot,
+                             CategoryId = p.CategoryID,
+                             CategoryName = c.CategoryName,
+                             Price = p.Price,
+                             Quantity = p.Quantity,
+                             Description = p.Description,
+                             AuthorName = p.AuthorName,
+                             PublishCompany = p.PublishCompany,
+                             NumberPage = p.NumberPage,
+                             CreatedDate = p.CreateDate,
+                             UpdateDate = p.UpdateDate,
+                         };
+
+
+                return qr.ToPagedList(page, pageSize);
+            }
+
+        }
+        public IEnumerable<ProductModel> GetByCate(int cateId,string sort, int page,int pageSize)
+        {
+            var cate = dbcontext.tbl_Category.Find(cateId);
+
+            if (cate.ParentID != null)
+            {
+                if (sort == "default")
+                {
+                    var qr = from p in dbcontext.tbl_Product
+                             join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                             where p.CategoryID == cateId
+                             orderby p.Id descending
+                             select new ProductModel
+                             {
+
+                                 Id = p.Id,
+                                 ProductName = p.ProductName,
+                                 Status = p.Status,
+                                 Hot = p.Hot,
+                                 CategoryId = p.CategoryID,
+                                 Price = p.Price,
+                             };
+                    return qr.ToPagedList(page,pageSize);
+                }
+                else if (sort == "asc")
+                {
+                    var qr = from p in dbcontext.tbl_Product
+                             join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                             where p.CategoryID == cateId
+                             orderby p.Price
+                             select new ProductModel
+                             {
+
+                                 Id = p.Id,
+                                 ProductName = p.ProductName,
+                                 Status = p.Status,
+                                 Hot = p.Hot,
+                                 CategoryId = p.CategoryID,
+                                 Price = p.Price,
+                             };
+                    return qr.ToPagedList(page, pageSize);
+                }
+                else if (sort == "des")
+                {
+                    var qr = from p in dbcontext.tbl_Product
+                             join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                             where p.CategoryID == cateId
+                             orderby p.Price descending
+                             select new ProductModel
+                             {
+
+                                 Id = p.Id,
+                                 ProductName = p.ProductName,
+                                 Status = p.Status,
+                                 Hot = p.Hot,
+                                 CategoryId = p.CategoryID,
+                                 Price = p.Price,
+                             };
+                    return qr.ToPagedList(page, pageSize);
+                }
+                else
+                {
+                    var qr = from p in dbcontext.tbl_Product
+                             join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                             where p.CategoryID == cateId
+                             orderby p.Id descending
+                             select new ProductModel
+                             {
+
+                                 Id = p.Id,
+                                 ProductName = p.ProductName,
+                                 Status = p.Status,
+                                 Hot = p.Hot,
+                                 CategoryId = p.CategoryID,
+                                 Price = p.Price,
+                             };
+                    return qr.ToPagedList(page, pageSize);
+                }
+            }
+            else
+            {
+                if (sort == "default")
+                {
+                    var qr = from p in dbcontext.tbl_Product
+                             join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                             where c.ParentID == cate.Id
+                             orderby p.Id descending
+                             select new ProductModel
+                             {
+
+                                 Id = p.Id,
+                                 ProductName = p.ProductName,
+                                 Status = p.Status,
+                                 Hot = p.Hot,
+                                 CategoryId = p.CategoryID,
+                                 Price = p.Price,
+                             };
+
+                    return qr.ToPagedList(page, pageSize);
+                }
+                else if (sort == "asc")
+                {
+                    var qr = from p in dbcontext.tbl_Product
+                             join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                             where c.ParentID == cate.Id
+                             orderby p.Price
+                             select new ProductModel
+                             {
+
+                                 Id = p.Id,
+                                 ProductName = p.ProductName,
+                                 Status = p.Status,
+                                 Hot = p.Hot,
+                                 CategoryId = p.CategoryID,
+                                 Price = p.Price,
+                             };
+
+                    return qr.ToPagedList(page, pageSize);
+                }
+                else if (sort == "des")
+                {
+                    var qr = from p in dbcontext.tbl_Product
+                             join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                             where c.ParentID == cate.Id
+                             orderby p.Price descending
+                             select new ProductModel
+                             {
+
+                                 Id = p.Id,
+                                 ProductName = p.ProductName,
+                                 Status = p.Status,
+                                 Hot = p.Hot,
+                                 CategoryId = p.CategoryID,
+                                 Price = p.Price,
+                             };
+
+                    return qr.ToPagedList(page, pageSize);
+                }
+                else
+                {
+                    var qr = from p in dbcontext.tbl_Product
+                             join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                             where c.ParentID == cate.Id
+                             orderby p.Id descending
+                             select new ProductModel
+                             {
+
+                                 Id = p.Id,
+                                 ProductName = p.ProductName,
+                                 Status = p.Status,
+                                 Hot = p.Hot,
+                                 CategoryId = p.CategoryID,
+                                 Price = p.Price,
+                             };
+
+                    return qr.ToPagedList(page, pageSize);
+                }
+            }
+        }
+        public List<ProductModel> GetByCate(int cateId)
+        {
+            var qr = from p in dbcontext.tbl_Product
+                     join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                     where p.CategoryID == cateId
+                     orderby p.ProductName
+                     select new ProductModel
+                     {
+
+                         Id = p.Id,
+                         ProductName = p.ProductName,
+                         Status = p.Status,
+                         Hot = p.Hot,
+                         CategoryId = p.CategoryID,
+                         CategoryName = c.CategoryName,
+                         Price = p.Price,
+
+                     };
+
+            return qr.ToList();
+        }
         public string FindProductName(string productname)
         {
             var rs = dbcontext.tbl_Product.SingleOrDefault(p=>p.ProductName==productname);
@@ -90,12 +416,13 @@ namespace WebBookShop.Services
             dbcontext.tbl_Product.Add(product);
             dbcontext.SaveChanges();
 
-            tbl_ImageProduct imageProduct = new tbl_ImageProduct
-            {
-                ProductId = product.Id
-            };
-            dbcontext.tbl_ImageProduct.Add(imageProduct);
-            dbcontext.SaveChanges();
+            //tbl_ImageProduct imageProduct = new tbl_ImageProduct
+            //{
+            //    ProductId = product.Id,
+                
+            //};
+            //dbcontext.tbl_ImageProduct.Add(imageProduct);
+            //dbcontext.SaveChanges();
             return new ProductModel
             {
                 Id = product.Id,
@@ -116,30 +443,58 @@ namespace WebBookShop.Services
 
         public ProductModel GetById(int id)
         {
-            var qr = from p in dbcontext.tbl_Product
-                     join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
-                     join i in dbcontext.tbl_ImageProduct on p.Id equals i.ProductId
-                     where p.Id == id
-                     select new ProductModel
-                     {
-                         Id = p.Id,
-                         ProductName = p.ProductName,
-                         Status = p.Status,
-                         Image = i.Image,
-                         Hot = p.Hot,
-                         CategoryId = p.CategoryID,
-                         CategoryName = c.CategoryName,
-                         Price = p.Price,
-                         Quantity = p.Quantity,
-                         Description = p.Description,
-                         AuthorName = p.AuthorName,
-                         PublishCompany = p.PublishCompany,
-                         NumberPage = p.NumberPage,
-                         CreatedDate = p.CreateDate,
-                         UpdateDate = p.UpdateDate,
-                     };
-            ProductModel product = qr.First();
-            return product;
+            try
+            {
+                var qr = from p in dbcontext.tbl_Product
+                         join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                         join i in dbcontext.tbl_ImageProduct on p.Id equals i.ProductId
+                         where p.Id == id
+                         select new ProductModel
+                         {
+                             Id = p.Id,
+                             ProductName = p.ProductName,
+                             Status = p.Status,
+                             Image = i.Image,
+                             Hot = p.Hot,
+                             CategoryId = p.CategoryID,
+                             CategoryName = c.CategoryName,
+                             Price = p.Price,
+                             Quantity = p.Quantity,
+                             Description = p.Description,
+                             AuthorName = p.AuthorName,
+                             PublishCompany = p.PublishCompany,
+                             NumberPage = p.NumberPage,
+                             CreatedDate = p.CreateDate,
+                             UpdateDate = p.UpdateDate,
+                         };
+                ProductModel product = qr.First();
+                return product;
+            }
+            catch
+            {
+                var qr = from p in dbcontext.tbl_Product
+                         join c in dbcontext.tbl_Category on p.CategoryID equals c.Id
+                         where p.Id == id
+                         select new ProductModel
+                         {
+                             Id = p.Id,
+                             ProductName = p.ProductName,
+                             Status = p.Status,
+                             Hot = p.Hot,
+                             CategoryId = p.CategoryID,
+                             CategoryName = c.CategoryName,
+                             Price = p.Price,
+                             Quantity = p.Quantity,
+                             Description = p.Description,
+                             AuthorName = p.AuthorName,
+                             PublishCompany = p.PublishCompany,
+                             NumberPage = p.NumberPage,
+                             CreatedDate = p.CreateDate,
+                             UpdateDate = p.UpdateDate,
+                         };
+                ProductModel product = qr.First();
+                return product;
+            }
         }
         
         public bool ChangeThumbnail(int id , int productId)
@@ -222,6 +577,14 @@ namespace WebBookShop.Services
             {
                 var product = dbcontext.tbl_Product.Find(id);
                 dbcontext.tbl_Product.Remove(product);
+                dbcontext.SaveChanges();
+                var imageproduct = dbcontext.tbl_ImageProduct.Where(i=>i.ProductId==id).ToList();
+                foreach (var i in imageproduct)
+                {
+                    var model = dbcontext.tbl_ImageProduct.Single(img => img.ProductId == i.ProductId);
+                    dbcontext.tbl_ImageProduct.Remove(model);
+                   
+                }
                 dbcontext.SaveChanges();
                 return true;
             }
@@ -521,6 +884,7 @@ namespace WebBookShop.Services
             }
             return null;
         }
+        
         public List<ProductModel> SearchByCate(int cateid)
         {
             var qr = from p in dbcontext.tbl_Product

@@ -1,0 +1,38 @@
+﻿@model List<WebBookShop.Models.ProductModel>
+@using WebBookShop.Services
+@using System.Globalization;
+
+<div class="sale text-danger font-weight-bold mt-5">
+    TOP SẢN PHẨM MỚI
+</div>
+
+<div class="product_sale mb-5">
+    <div class="owl-carousel product_sale--slice  px-5">
+        @foreach (var item in Model)
+        {
+            <div class="product-item">
+                <a href="/productinfor?id=@item.Id" class="product-item--link">
+                    <div class="card" style="width: 100%; height: 100%;">
+                        @{var rs = new ImageProductService().GetByThumbnail((int)item.Id);
+                            if (rs != null)
+                            {
+                                <img src="@Url.Content(rs)"  style="width:100%" />
+                            }
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title " style="font-size:15px;color:gray">@item.ProductName</h5>
+                            <p class="card-text" style="color: #cf0525; font-weight: 600; font-size: 18px;">
+                                @{
+                                    var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.Price);
+                                    @strPrice
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+
+    </div>
+</div>

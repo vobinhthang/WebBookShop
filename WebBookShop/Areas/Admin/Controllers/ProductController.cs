@@ -227,6 +227,7 @@ namespace WebBookShop.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(tbl_Product product,ProductModel model)
         {
             ListCateId();
@@ -240,7 +241,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             }
             if(model.ProductName != null && !model.ProductName.StartsWith(" ") && model.ProductName!=productname
                 && model.Status!=null && model.Price!=null && model.Hot!=null && model.AuthorName!=null
-                && model.PublishCompany != null && model.NumberPage != null)
+                && model.PublishCompany != null && model.NumberPage != null && model.Description != null)
             {
                 var rs = service.Create(product);
                 if (rs != null)
@@ -268,12 +269,14 @@ namespace WebBookShop.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var product = new ProductService().GetById(id);
-
+            
             ListCateId(product.CategoryId);
+            ViewBag.Description = product.Description;
             return View(product);
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(tbl_Product product, ProductModel model)
         {
             ListCateId(product.CategoryID);
@@ -281,11 +284,12 @@ namespace WebBookShop.Areas.Admin.Controllers
 
             if (model.ProductName != null && !model.ProductName.StartsWith(" ")
                 && model.Price != null  && model.AuthorName != null
-                 && model.NumberPage != null)
+                 && model.NumberPage != null && model.Description != null)
             {
                 var rs = service.Update(product);
                 if (rs)
                 {
+                    ViewBag.Description = product.Description;
                     TempData["UPDATE"] = "Cập nhật sản phẩm thành công";
                     TempData["ALEART"] = "success";
                 }
@@ -316,15 +320,16 @@ namespace WebBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Image(int id)
         {
-            
             var image = new ImageProductService().GetByProductId(id);
-            var productname = image.Take(1).SingleOrDefault(m => m.ProductId == id);
-           
-           
+            var product = new ProductService().GetById(id);
             TempData["PRODUCT_ID"] = id;
-            TempData["PRODUCT_NAME"] = productname.ProductName;
-
-             SharedData.ProductName = productname.ProductName;
+            
+            if (product != null)
+            {
+                TempData["PRODUCT_NAME"] = product.ProductName;
+                SharedData.ProductName = product.ProductName;
+            }
+            
              SharedData.ProductId = id;
             return View(image);
         }
@@ -333,11 +338,14 @@ namespace WebBookShop.Areas.Admin.Controllers
         public ActionResult ImageCreate(int id)
         {
             var image = new ImageProductService().GetByProductId(id);
-            var productname = image.Take(1).SingleOrDefault(m => m.ProductId == id);
+            var product = new ProductService().GetById(id);
             TempData["PRODUCT_ID"] = id;
-            TempData["PRODUCT_NAME"] = productname.ProductName;
+            if (product != null)
+            {
+                TempData["PRODUCT_NAME"] = product.ProductName;
+                SharedData.ProductName = product.ProductName;
+            }
 
-            SharedData.ProductName = productname.ProductName;
             SharedData.ProductId = id;
             return View();
         }
@@ -451,7 +459,7 @@ namespace WebBookShop.Areas.Admin.Controllers
         {
             var service = new CateService();
             var cates = service.GetAll();
-            ViewBag.CateList = new SelectList(cates, "Id", "CategoryName", selectId);
+            ViewBag.CateList = new SelectList(cates.Where(c=>c.ParentID!=null), "Id", "CategoryName", selectId);
         }
 
         [HttpPost]

@@ -1,0 +1,15 @@
+﻿@model List<WebBookShop.Models.BannerModel>
+
+<div class="sliderShow col-md-9">
+    <div class="owl-carousel owl-theme sliders">
+        @foreach (var item in Model.Where(b=>b.Sort!=null).OrderBy(b=>b.Sort))
+        {
+            <div class="item">
+                <a href="@item.Link">
+                    <img src="@Url.Content(item.Image)" alt="">
+                </a>
+            </div>
+        }
+    </div>
+
+</div>

@@ -224,14 +224,21 @@ namespace WebBookShop.Services
 
         public double TotalPriceMonth()
         {
-            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            DateTime endOfMonth = startOfMonth.AddMonths(1);
-            var qr = from d in dbcontext.tbl_InvoiceDetail
-                     join i in dbcontext.tbl_Invoice on d.InvoiceId equals i.Id
-                     where i.CreateDate >= startOfMonth && i.CreateDate < endOfMonth && i.Status == true
-                     select d;
+            try
+            {
+                DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                DateTime endOfMonth = startOfMonth.AddMonths(1);
+                var qr = from d in dbcontext.tbl_InvoiceDetail
+                         join i in dbcontext.tbl_Invoice on d.InvoiceId equals i.Id
+                         where i.CreateDate >= startOfMonth && i.CreateDate < endOfMonth && i.Status == true
+                         select d;
 
-            return (double)qr.Sum(d=>d.Quantity*d.Price);
+                return (double)qr.Sum(d => d.Quantity * d.Price);
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

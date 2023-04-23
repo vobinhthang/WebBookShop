@@ -16,12 +16,12 @@ namespace WebBookShop.Services
             dbcontext = new MyDbContext();
         }
 
-        public bool Login(string _email, string _password)
+        public bool Login(string _email, string _password, string rolename)
         {
 
             var query = from u in dbcontext.tbl_User
                         join r in dbcontext.tbl_Role on u.RoleId equals r.Id
-                        where u.Email == _email && u.Password == _password && r.RoleName == "Admin"
+                        where u.Email == _email && u.Password == _password && r.RoleName == rolename
                         select new UserModel { 
                             Email = u.Email,
                             Password = u.Password,
@@ -166,7 +166,26 @@ namespace WebBookShop.Services
             };
             return user;
         }
-
+        public UserModel CreateClient(tbl_User _user)
+        {
+            _user.CreateDate = DateTime.Now;
+            var role = dbcontext.tbl_Role.Single(r => r.RoleName.Equals("Khách hàng"));
+            _user.RoleId = role.Id;
+            dbcontext.tbl_User.Add(_user);
+            dbcontext.SaveChanges();
+            var user = new UserModel
+            {
+                Id = _user.Id,
+                Fullname = _user.FullName,
+                Email = _user.Email,
+                Password = _user.Password,
+                RoleID = _user.RoleId,
+                Address = _user.Address,
+                Phone = _user.Phone,
+                CreateDate = _user.CreateDate,
+            };
+            return user;
+        }
         public bool Delete(int id)
         {
             try

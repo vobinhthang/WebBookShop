@@ -2,7 +2,7 @@
 @{
     Layout = null;
 }
-
+@model WebBookShop.Models.UserModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,45 +13,61 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Login</title>
-
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <form class="formLogin box">
+    @if (TempData["MESSAGE"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show mb-0 text-center" id="alo123">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button> 
+            <strong>Thông báo!</strong> @TempData["MESSAGE"]
+        </div>
+    }
+    @using (Html.BeginForm("index", "login", FormMethod.Post, new { @class = "formLogin box" }))
+    {
 
         <div class="containers">
 
             <div class="top">
-                <span><a href="~/register/" class="register__link">Bạn chưa có tài khoản?</a></span>
-                <header>ĐĂNG NHẬP</header>
+                <span><a href="~/register/" class="text-warning ">Bạn chưa có tài khoản?</a></span>
+                <header class="text-center">ĐĂNG NHẬP</header>
             </div>
 
             <div class="input-field">
-                <input id="username" type="email" class="inputLogin" placeholder="Email" required>
+                @Html.TextBoxFor(m => m.Email, new { type = "email", @class = "inputLogin", @placeholder = "Email", required = "required" })
                 <i class='bx bx-user'></i>
             </div>
 
             <div class="input-field">
-                <input id="password" type="Password" class="inputLogin" placeholder="Mật Khẩu" required>
+                @Html.TextBoxFor(m => m.Password, new { type = "password", @id = "password", @class = "inputLogin", @placeholder = "Mật Khẩu", required = "required" })
                 <i class='bx bx-lock-alt'></i>
             </div>
 
             <div class="input-field">
-                <button class="submit" type="submit">Đăng Nhập</button>
+                <button class="submit" type="submit">ĐĂNG NHẬP</button>
             </div>
 
             <div class="two-col">
                 <div class="one">
                     <!-- <input type="checkbox" name="" id="check">
-                <label for="check">Nhớ mật khẩu</label> -->
+                    <label for="check">Nhớ mật khẩu</label> -->
                 </div>
                 <div class="two">
-                    <label><a href="#">Quên mật khẩu?</a></label>
+                    <label><a href="#" class="text-warning">Quên mật khẩu?</a></label>
                 </div>
             </div>
         </div>
 
-    </form>
+    }
+    <script src="~/Assets/admin/plugins/common/common.min.js"></script>
+    <script src="~/Assets/admin/js/custom.min.js"></script>
+    <script src="/Assets/admin/myscript.js"></script>
     <script src="/Assets/client/js/app.js"></script>
+
 </body>
 </html>

@@ -22,6 +22,7 @@ namespace WebBookShop.Models
         public int? Quantity { get; set; }
         [Required(ErrorMessage = "Xin mời nhập thông tin")]
         public bool? Hot { get; set; }
+        [Required(ErrorMessage = "Xin mời nhập thông tin")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Xin mời nhập thông tin")]
         public string AuthorName { get; set; }

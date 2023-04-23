@@ -16,11 +16,13 @@ namespace WebBookShop.Services
         {
             dbcontext = new MyDbContext();
         }
+        
+
         public List<CateModel> GetAll()
         {
 
             var qr = from c in dbcontext.tbl_Category
-                     orderby c.CreateDate
+                     orderby c.CreateDate descending
                      select new CateModel
                      {
                          Id = c.Id,
@@ -38,7 +40,7 @@ namespace WebBookShop.Services
         {
 
             var qr = from c in dbcontext.tbl_Category
-                     orderby c.CreateDate
+                     orderby c.CreateDate descending
                      select new CateModel
                      {
                          Id=c.Id,
@@ -51,6 +53,73 @@ namespace WebBookShop.Services
                      };
             
             return qr.ToPagedList(page,pageSize);        
+        }
+        public List<CateModel> GetCateChildId(int id)
+        {
+            var cate = dbcontext.tbl_Category.Find(id);
+            
+            if (cate.ParentID != null)
+            {
+                 var qr = from c in dbcontext.tbl_Category
+                         where c.ParentID == cate.ParentID
+                         select new CateModel
+                         {
+                             Id = c.Id,
+                             CategoryName = c.CategoryName,
+                             Status = c.Status,
+                             Sort = c.Sort,
+                             ParentID = c.ParentID,
+                             CreatedDate = c.CreateDate,
+                             UpdateDate = c.UpdateDate,
+                         };
+                return qr.Where(c => c.Status == true).ToList();
+            }
+            else
+            {
+
+                 var qr = from c in dbcontext.tbl_Category
+                         where c.ParentID == cate.Id
+                         select new CateModel
+                         {
+                             Id = c.Id,
+                             CategoryName = c.CategoryName,
+                             Status = c.Status,
+                             Sort = c.Sort,
+                             ParentID = c.ParentID,
+                             CreatedDate = c.CreateDate,
+                             UpdateDate = c.UpdateDate,
+                         };
+                return qr.Where(c => c.Status == true).ToList();
+            }
+
+        }
+        public CateModel GetCateParentId(int id)
+        {
+            var childcate = dbcontext.tbl_Category.Find(id);
+            if (childcate.ParentID != null)
+            {
+                var parentcate = dbcontext.tbl_Category.SingleOrDefault(c => c.Id == childcate.ParentID && c.Status == true);
+                if (parentcate != null)
+                {
+                    return new CateModel()
+                    {
+                        Id = parentcate.Id,
+                        CategoryName = parentcate.CategoryName,
+                        Status = parentcate.Status,
+                    };
+                }
+            }
+            else
+            {
+                return new CateModel()
+                {
+                    Id = childcate.Id,
+                    CategoryName = childcate.CategoryName,
+                    Status = childcate.Status,
+                };
+            }
+
+            return null;
         }
 
         public bool ChangeStatus(int id)

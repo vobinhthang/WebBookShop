@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebBookShop.Models.ProductModel>
+@using System.Globalization;
+@using WebBookShop.Services
+<div class="category">
+    <div class="container-fluid">
+        <div class="mb-4 ml-5 " style="font-size: 14px; font-weight: 500; color: rgb(133 133 133)">
+            <span class="link_back2">
+                <a class="link_back" href="/home" style="color: rgb(133 133 133)"> << Quay lại trang chủ </a>
+            </span>
+        </div>
+        <div class="row padd">
+            <div class="div_menu_cate col-md-3">
+                @{Html.RenderAction("MainMenu", "Home"); }
+
+            </div>
+            <div class="col-md-9 search__product">
+                <div class="cart__title ">
+                    <span style="font-size:19px" class="font-weight-bold">@ViewBag.Keyword: </span>
+                    <span style="color: gray; font-size: 19px; font-weight: 400 ">@Model.Count() kết quả</span>
+                </div>
+                <div class="cart__title row border">
+                    <span class="col font-weight-bold ">Sắp xếp theo:</span>
+                    <span class="col" style="font-weight:500"><a href="/productcate/search?keyword=@ViewBag.Keyword&sort=default" class="link_sort" style="color:@TempData["COLOR_DF"]">Mặc định</a></span>
+                    <span class="col" style="font-weight:500"><a href="/productcate/search?keyword=@ViewBag.Keyword&sort=asc" class="link_sort" style="color:@TempData["COLOR_ASC"]">Giá từ thấp tới cao</a></span>
+                    <span class="col" style="font-weight:500"><a href="/productcate/search?keyword=@ViewBag.Keyword&sort=des" class="link_sort" style="color:@TempData["COLOR_DES"]">Giá từ cao tới thấp</a></span>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        @foreach (var item in Model.Where(x => x.Status == true))
+                        {
+                            <div class="product-item product__hot--item col-md-3 mt-3">
+                                <a href="/productinfor?id=@item.Id" class="product-item--link">
+                                    <div class="card" style="width: 100%; height: 100%;">
+                                        @{var rs = new ImageProductService().GetByThumbnail(item.Id);
+                                            if (rs != null)
+                                            {
+                                                <img src="@Url.Content(rs)" style="width: 100%" />
+                                            }
+
+                                        }
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="font-size:15px;color:gray">@item.ProductName</h5>
+                                            <p class="card-text" style="color: #cf0525; font-weight: 600; font-size: 18px;">
+                                                @{
+                                                    var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.Price);
+                                                    @strPrice
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                <div class="paging mt-5 d-flex align-items-center justify-content-center">
+
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { @id = TempData["CateId"], @sort = ViewBag.Sort, page, @pageSize = 2 }), new PagedListRenderOptions
+               {
+                   LiElementClasses = new string[] { "page-item" },
+                   UlElementClasses = new string[] { "pagination" },
+
+                   MaximumPageNumbersToDisplay = 5,
+               })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

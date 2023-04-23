@@ -79,7 +79,7 @@ namespace WebBookShop.Areas.Admin.Controllers
                 TempData["ADDRESS"] = list.Address;
                 TempData["EMAIL"] = list.Email;
                 TempData["DeliveredDate"] = list.DeliveredDate;
-                ViewBag.Delivered = list.Delivered;
+                
                 orderdetail2.RemoveAt(0);
                 return View(orderdetail2);
             }

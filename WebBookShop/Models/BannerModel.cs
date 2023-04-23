@@ -16,7 +16,7 @@ namespace WebBookShop.Models
         public string Link { get; set; }
         [Required(ErrorMessage = "Xin mời nhập thông tin")]
         public bool? Status { get; set; }
-        [Required(ErrorMessage = "Xin mời nhập thông tin")]
+        
         public int? Sort { get; set; }
 
     }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebBookShop.Commons;
+using WebBookShop.Models;
+using WebBookShop.Services;
 
 namespace WebBookShop.Controllers
 {
@@ -11,13 +14,42 @@ namespace WebBookShop.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            var user = new UserModel
+            {
+                Email = SharedData.Email,
+                Password = SharedData.Password,
+            };
+            if (user.Email != null && user.Password!=null)
+            {
+                return View(user);
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(int id, int alo)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Index(UserModel user)
         {
-            return View();
+            var service = new UserService();
+            var result = service.Login(user.Email, user.Password,"Khách hàng");
+
+            if (user.Email != null && user.Password != null)
+            {
+                if (result)
+                {
+                    Session["LOGIN_CLIENT"] = user.Email;
+                    SharedData.Email = null;
+                    SharedData.Password = null;
+                    return RedirectToAction("index", "home");
+                }
+                else
+                {
+                    TempData["MESSAGE"] = "Email hoặc mật khẩu không đúng.";
+                }
+            }
+
+
+            return View(user);
         }
     }
 }

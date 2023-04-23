@@ -45,8 +45,15 @@
                     <div class="d-inline-block">
                         <h2 class="text-white">
                             @{
-                                var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", ViewBag.TotalPriceOrder);
-                                @strPrice
+                                if (ViewBag.TotalPriceOrder!=0)
+                                {
+                                    var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", ViewBag.TotalPriceOrder);
+                                    @strPrice
+                                }
+                                else
+                                {
+                                    <span>0đ</span>
+                                }
                             }
                         </h2>
                         <p class="text-white mb-0">Tháng @dateStr.Substring(3, 8)</p>
@@ -62,8 +69,15 @@
                     <div class="d-inline-block">
                         <h2 class="text-white">
                             @{
-                                var strPrice2 = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", ViewBag.TotalPriceInvocie);
-                                @strPrice2
+                                if (ViewBag.TotalPriceInvocie != 0)
+                                {
+                                    var strPrice2 = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", ViewBag.TotalPriceInvocie);
+                                    @strPrice2
+                                }
+                                else
+                                {
+                                    <span>0đ</span>
+                                }
                             }
                         </h2>
                         <p class="text-white mb-0">Tháng @dateStr.Substring(3, 8)</p>

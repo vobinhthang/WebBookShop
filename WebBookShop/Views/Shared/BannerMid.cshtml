@@ -1,0 +1,12 @@
+﻿@model List<WebBookShop.Models.BannerModel>
+<div class="banner2">
+    @foreach (var item in Model.Where(b => b.Sort != null && b.Sort>4).OrderBy(b => b.Sort).Take(2))
+    {
+        <div class="banner2__item">
+            <a href="@item.Link">
+                <img class="hover__img" src="@Url.Content(item.Image)" alt="">
+            </a>
+        </div>
+    }
+</div>
+

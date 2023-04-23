@@ -19,16 +19,19 @@
             <div class="card-title">
                 <h4>Quản lý chi tiết đơn đặt hàng - Mã đơn hàng @TempData["ORDERID"]</h4>
             </div>
-            @{
-                if (!ViewBag.Delivered)
-                {
-                    <div>
-                        <a href="/admin/order/createdetail/@TempData["ORDERID"]" class="btn btn-success my-3">Thêm sản phẩm</a>
-                        <a href="/admin/order/edit/@TempData["ORDERID"]" class="btn btn-warning ml-3">Sửa thông tin</a>
-                    </div>
+                @{
+                    if (ViewBag.Delivered==false || ViewBag.Delivered==null)
+                    {
+                        <div>
+                            <a href="/admin/order/createdetail/@TempData["ORDERID"]" class="btn btn-success my-3">Thêm sản phẩm</a>
+                            <a href="/admin/order/edit/@TempData["ORDERID"]" class="btn btn-warning ml-3">Sửa thông tin</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-success font-weight-bold">Đơn hàng đã giao thành công!</p>
+                    }
                 }
-
-            }
 
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 col-lg-9 ">

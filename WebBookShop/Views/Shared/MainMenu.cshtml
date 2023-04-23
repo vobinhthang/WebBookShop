@@ -1,0 +1,32 @@
+﻿@model List<WebBookShop.Models.CateModel>
+
+
+    <ul class="sidebar__item" style="padding-left:0px">
+        @foreach (var item in Model.OrderBy(c => c.Sort).Where(c => c.ParentID == null && c.Status==true))
+        {
+            var childs = Model.OrderBy(c => c.Sort).Where(x => x.ParentID == item.Id && x.Status == true);
+            var checkClass = childs.Count() > 8 ? "col-6" : "";
+            <li class="sidebar__item--link childmenu">
+                <a class="mx-4 linkmenu text-decoration-none " href="/productcate?id=@item.Id">@item.CategoryName</a>
+                @if(childs.Count() > 0)
+                {
+                    <div class="menu__item">
+                        <div class="menu__block--item">
+                            <ul class="menu__item--link row">
+                                @foreach (var childItem in childs)
+                                {
+                                    <li class="menu__link @checkClass ">
+                                        <a href="/productcate?id=@childItem.Id" class="menu__links">@childItem.CategoryName</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+            
+            </li>
+        }
+    </ul>
+    
+
+

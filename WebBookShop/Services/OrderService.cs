@@ -170,6 +170,23 @@ namespace WebBookShop.Services
             return qr.ToList();
         }
 
+        public List<OrderDetailModel> GetTopSelling()
+        {
+
+            var qr = from od in dbcontext.tbl_OrderDetail
+                     join o in dbcontext.tbl_Order on od.OrderID equals o.Id
+                     join p in dbcontext.tbl_Product on od.ProductID equals p.Id
+                     group od by od.ProductID into x
+                     orderby x.Sum(p=>p.Quantity) descending
+                    
+                     select new OrderDetailModel
+                     {
+                         ProductId= x.Key,         
+                         
+                     };
+            var topselling = qr.Take(10).ToList();
+            return topselling;
+        }
         public OrderDetailModel CreateDetail(tbl_OrderDetail detail)
         {
             var findPrice = dbcontext.tbl_Product.Find(detail.ProductID);
@@ -374,14 +391,21 @@ namespace WebBookShop.Services
 
         public double TotalPriceMonth()
         {
-            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            DateTime endOfMonth = startOfMonth.AddMonths(1);
+            try
+            {
+                DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                DateTime endOfMonth = startOfMonth.AddMonths(1);
 
-            var qr = from o in dbcontext.tbl_Order
-                     where o.OrderDate >= startOfMonth && o.OrderDate < endOfMonth && o.Delivered == true
-                     select o;
+                var qr = from o in dbcontext.tbl_Order
+                         where o.OrderDate >= startOfMonth && o.OrderDate < endOfMonth && o.Delivered == true
+                         select o;
 
-            return (double)qr.Sum(o=>o.TotalPrice);
+                return (double)qr.Sum(o => o.TotalPrice);
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
     }

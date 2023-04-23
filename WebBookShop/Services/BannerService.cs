@@ -31,7 +31,36 @@ namespace WebBookShop.Services
                      };
             return qr.ToPagedList(page, pageSize);
         }
-
+        public List<BannerModel> GetSlide()
+        {
+            var qr = from b in dbcontext.tbl_Banner
+                     where b.Status == true && b.BannerName.StartsWith("slider")
+                     select new BannerModel
+                     {
+                         Id = b.Id,
+                         BannerName = b.BannerName,
+                         Link = b.Link,
+                         Sort = b.Sort,
+                         Image = b.Image,
+                         Status = b.Status,
+                     };
+            return qr.ToList();
+        }
+        public List<BannerModel> GetBanner()
+        {
+            var qr = from b in dbcontext.tbl_Banner
+                     where b.Status == true && b.BannerName.StartsWith("banner")
+                     select new BannerModel
+                     {
+                         Id = b.Id,
+                         BannerName = b.BannerName,
+                         Link = b.Link,
+                         Sort = b.Sort,
+                         Image = b.Image,
+                         Status = b.Status,
+                     };
+            return qr.ToList();
+        }
         public IEnumerable<BannerModel> Search(string keyword, int page, int pageSize)
         {
             if (!string.IsNullOrEmpty(keyword))

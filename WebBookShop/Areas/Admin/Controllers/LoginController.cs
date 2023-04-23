@@ -25,7 +25,7 @@ namespace WebBookShop.Areas.Admin.Controllers
         public ActionResult Index(UserModel user)
         {
             var service = new UserService();
-            var result = service.Login(user.Email,user.Password);
+            var result = service.Login(user.Email,user.Password,"Admin");
 
             if(user.Email!=null && user.Password != null) {
                 if (result)

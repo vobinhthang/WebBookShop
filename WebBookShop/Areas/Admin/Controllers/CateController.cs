@@ -13,7 +13,7 @@ namespace WebBookShop.Areas.Admin.Controllers
     public class CateController : Controller
     {
         // GET: Admin/Cate
-        public ActionResult Index(string sort, string sortBy, string keyword, int page = 1, int pageSize = 5)
+        public ActionResult Index(string sort, string sortBy, string keyword, int page = 1, int pageSize = 10)
         {
             var service = new CateService();
 
@@ -173,6 +173,12 @@ namespace WebBookShop.Areas.Admin.Controllers
             ShowOption();
             return View(cates);
         }
+        public void ListCateId(int? selectId = null)
+        {
+            var service = new CateService();
+            var cates = service.GetAll();
+            ViewBag.CateList = new SelectList(cates.Where(c=>c.ParentID==null), "Id", "CategoryName", selectId);
+        }
         public void ShowOption()
         {
 
@@ -195,11 +201,13 @@ namespace WebBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            ListCateId();
             return View();
         }
         [HttpPost]
         public ActionResult Create(tbl_Category cate, CateModel model)
         {
+            ListCateId();
             var service = new CateService();
 
             var catename = service.FindCateName(model.CategoryName);
@@ -232,6 +240,7 @@ namespace WebBookShop.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var cate = new CateService().GetById(id);
+            ListCateId(cate.Id);
             return View(cate);
         }
 
@@ -239,8 +248,8 @@ namespace WebBookShop.Areas.Admin.Controllers
         public ActionResult Edit(tbl_Category cate, CateModel model)
         {
             var service = new CateService();
-
-            if(model.CategoryName!=null && !model.CategoryName.StartsWith(" ") && model.Sort!=null && model.Status != null)
+            ListCateId(cate.Id);
+            if (model.CategoryName!=null && !model.CategoryName.StartsWith(" ") && model.Sort!=null && model.Status != null)
             {
                 var rs = service.Update(cate);
                 if (rs)

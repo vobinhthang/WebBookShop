@@ -1,31 +1,66 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model List<WebBookShop.Models.ProductModel>
+@using System.Globalization;
+@using WebBookShop.Services
+<div class="container-fluid">
+    <div class="category">
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+        <div class="row padd">
+            <div class="sidebar col-md-3">
+                @{Html.RenderAction("MainMenu", "Home"); }
+            </div>
+                @{Html.RenderAction("MainSlide", "Home"); }
+            
+        </div>
+    @{Html.RenderAction("BannerTop", "Home"); }
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    @{Html.RenderAction("SellingProduct", "Home"); }
+
+    @{Html.RenderAction("BannerMid", "Home"); }
+    <div class="sale text-danger font-weight-bold" style="margin-top:60px">
+        SẢN PHẨM HOT
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <div class="product__hot ">
+        <div class="container-fluid">
+            <div class="row" style="padding-left: 20px;">
+                @foreach (var item in Model.Take(30).Where(p => p.Hot == true && p.Status == true))
+                {
+                    <div class="product-item product__hot--item col-6 col-lg-2 mt-3">
+                        <a href="/productinfor?id=@item.Id" class="product-item--link">
+                            <div class="card" style="width: 100%; height: 100%;">
+                                @{var rs = new ImageProductService().GetByThumbnail(item.Id);
+                                    if (rs != null)
+                                    {
+                                        <img src="@Url.Content(rs)" style="width: 100%" />
+                                    }
+
+                                }
+                                <div class="card-body">
+                                    <h5 class="card-title" style="font-size:15px;color:gray">@item.ProductName</h5>
+                                    <p class="card-text" style="color: #cf0525; font-weight: 600; font-size: 18px;">
+                                        @{
+                                            var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.Price);
+                                            @strPrice
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+
+    @{Html.RenderAction("BannerBot", "Home"); }
+    @{Html.RenderAction("NewProduct", "Home"); }
+        </div>
 </div>

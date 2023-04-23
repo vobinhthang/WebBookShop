@@ -11,7 +11,7 @@ console.log(userName)
 function handleRegister(){
     formRegister.onsubmit = function(e){
         if(password.value != passwordConfirm.value){
-            alert('Nhập lại mật khẩu không đúng!')
+            alert('Mật khẩu nhập lại không đúng!')
             e.preventDefault();
         }
     }
@@ -20,6 +20,7 @@ function handleRegister(){
 function start(){
     // handleSubmit();
     handleRegister();
+
 }
 
 start();

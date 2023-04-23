@@ -11,7 +11,7 @@ namespace WebBookShop.Models
         public int Id { get; set; }
         public int? ProductId { get; set; }
         public string ProductName { get; set; }
-        [Required(ErrorMessage = "Xin mời chọn ảnh")]
+        [Required(ErrorMessage = "Chọn ảnh ")]
         public string Image { get; set; }
         public bool? Thumbnail { get; set; }
     }
