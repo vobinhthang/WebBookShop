@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<WebBookShop.Models.CartItem>
+@using System.Globalization;
+@using WebBookShop.Services
+@using WebBookShop.Models
+<div class="cart" >
+    <div class="container-fluid">
+        <div class="row" >
+            <div class="cart__left col-md-8 pr-5" >
+                <div class="mb-4" style="font-size:20px;font-weight:600">
+                    @{
+                        if (Session["CartSession"] != null)
+                        {
+
+                            var list = (List<CartItem>)Session["CartSession"];
+                            var count = list.Sum(x => x.Quantity);
+                            <spam>Có @count sản phẩm trong giỏ hàng</spam>
+                        }
+                        else
+                        {
+                            <span>Có 0 sản phẩm trong giỏ hàng</span>
+                        }
+                    }
+
+                </div>
+                <div class="cart__title ">
+                    Giỏ hàng
+                </div>
+                @{if (Model.Count > 0)
+                    {
+                        <div class="cart__header ">
+                            <div class="title__product d-flex align-items-center " style="font-size:15px;font-weight:600">Sản phẩm</div>
+                            <div class="title__price d-flex align-items-center  justify-content-center" style="font-size:13px;font-weight:600">Giá</div>
+                            <div class="title__quantity d-flex align-items-center justify-content-center" style="font-size:13px;font-weight:600">Số lượng</div>
+                            <div class="title__money d-flex align-items-center justify-content-center" style="font-size:13px;font-weight:600">Thành tiền</div>
+                        </div>
+
+                        foreach (var item in Model)
+                        {
+                            <div class="cart__info">
+                                <div class="cart__info--box">
+                                    <div class="info__img">
+                                        <a href="/productinfor?id=@item.ProductModel.Id">
+                                            @{var rs = new ImageProductService().GetByThumbnail(item.ProductModel.Id);
+                                                if (rs != null)
+                                                {
+                                                    <img src="@Url.Content(rs)" style="width: 100px; height: 100px " />
+                                                }
+                                            }
+                                        </a>
+                                    </div>
+                                    <div class="info__name">
+                                        <span style="font-size:15px;color:black"><a class="link_name_cart " href="/productinfor?id=@item.ProductModel.Id">@item.ProductModel.ProductName</a></span>
+                                        <br>
+                                        <span style="color: #666;font-size:13px">Tác giả/ Dịch giả: @item.ProductModel.AuthorName</span>
+                                        <br />
+                                        <span style="color: #666;font-size:13px">Nhà xuất bản: @item.ProductModel.PublishCompany</span>
+                                        <br />
+                                        <button  class="btn__delete mt-2" data-id="@item.ProductModel.Id">
+                                            <span> <i class="fa-solid fa-trash"></i>Xóa</span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class="cart__info--price text-center" style="font-size:14px">
+                                    @{
+                                        var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.ProductModel.Price.GetValueOrDefault(0));
+                                        @strPrice
+                                    }
+                                </div>
+                                <div class="cart__info--quantity d-flex justify-content-center">
+                                    <input id="Quantity_@item.ProductModel.Id" data-id="@item.ProductModel.Id" class="ip__quantity form-control" style="font-size:14px;width:50px" type="number" value="@item.Quantity" max="50" min="1">
+                                </div>
+                                <div class="cart__info--money text-center ml-4" style="font-size:14px">
+                                    @{
+                                        var strPrice2 = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.ProductModel.Price.GetValueOrDefault(0) * item.Quantity);
+                                        @strPrice2
+                                    }
+
+                                </div>
+
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center mt-5">
+                            <span style="font-size: 20px; font-weight: 500; color: #b2b2b2">CHƯA CÓ SẢN PHẦM NÀO TRONG GIỎ HÀNG</span>
+                        </div>
+                        <div class="text-center ">
+                            <span class="pt-5" style="font-size:200px;color:#b2b2b2"><i class="fa-solid fa-cart-shopping"></i></span>
+                        </div>
+                    }
+                }
+            </div>
+            @if (Session["CartSession"] != null)
+            {
+                <div class="cart__right col-md-4">
+                    <div class="pay__title " style="font-weight:600">Thông tin đơn hàng</div>
+                    <div class="pay__provisional ">
+                        <span>Tạm tính:</span>
+                        <span style="float: right; font-size: 16px; font-weight:500">
+                            @{
+
+
+                                var list = (List<CartItem>)Session["CartSession"];
+                                var total = list.Sum(x => (x.ProductModel.Price * x.Quantity));
+                                var strPrice3 = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", total);
+
+                                <spam>@strPrice3</spam>
+
+                            }
+                        </span>
+                    </div>
+                    <div class="pay__done  mt-3">
+                        <span style="font-weight:600">Tổng tiền cần thanh toán:</span>
+                        <span class="text-danger font-weight-bold" style="float: right; font-size: 16px; color: #ff0000;">
+
+                            <spam>@strPrice3</spam>
+
+                        </span>
+                    </div>
+
+                    <button class="btn__order ">
+                        Tiến hành đặt hàng
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section CLIENTSCRIPT{
+    <script src="~/Assets/admin/controller/cartController.js"></script>
+    }  

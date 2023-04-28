@@ -10,7 +10,7 @@ using WebBookShop.Services;
 
 namespace WebBookShop.Areas.Admin.Controllers
 {
-    public class CateController : Controller
+    public class CateController : BaseController
     {
         // GET: Admin/Cate
         public ActionResult Index(string sort, string sortBy, string keyword, int page = 1, int pageSize = 10)

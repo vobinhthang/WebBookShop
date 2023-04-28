@@ -22,11 +22,32 @@ html {
     height: auto;
 }
 
-.image_product_child{
-    width:75px;
-    height:75px;
-    border:1px solid #e3e3e3;
+.message_add_cart{
+    position:absolute;
+    top:-493px;
+    left:325px;
+    width:300px;
+    height:130px;
+    font-size:14px;
+}
 
+.arrow-up {
+    position: absolute;
+    top: -9px;
+    left: 135px;
+    width: 0;
+    height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-bottom: 9px solid #868686;
+}
+
+
+
+.image_product_child {
+    width: 75px;
+    height: 75px;
+    border: 1px solid #e3e3e3;
 }
 
 .product__info--detail {
@@ -174,6 +195,7 @@ a:hover {
 .header__logo {
     height: 100%;
     width: 20%;
+    
 }
 
 .header__search {
@@ -257,10 +279,14 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    width: 40%;
+    height: 90%;
+    width: 35%;
     background-color: #f4f6fa;
     border-radius: 6px;
+}
+
+.header__minicart:hover{
+    text-decoration:none;
 }
 
 .order_link {
@@ -268,14 +294,20 @@ a:hover {
     color: #222;
 }
 
-    .order_link:hover {
-        color: #ecaf02;
-        text-decoration: none;
-    }
-
+.order_link:hover {
+    color: #ecaf02;
+    text-decoration: none;
+}
+.link_name_cart{
+    color:black
+}
+.link_name_cart:hover {
+    text-decoration: none;
+    color: #ecaf02;
+    transition: 0.5s
+}
 .cart__quantity {
-    margin-left: 20px;
-    background-color: #c7c7c7;
+    margin-left: 5px;
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -288,7 +320,7 @@ a:hover {
 .category {
     height: auto;
     padding: 20px 50px 0 50px;
-    background: linear-gradient(45deg, white, #faf2ec);
+    background: linear-gradient(360deg, white, #faf2ec);
 }
 
 .padd {
@@ -663,7 +695,7 @@ a:hover {
 }
 
 .title-detail {
-   font-size: 2.8rem;
+   font-size: 26px;
 
 }
 
@@ -704,9 +736,8 @@ a:hover {
 .cart {
     width: auto;
     height: auto;
-    padding: 30px 50px;
-    background-color: #faf2ec;
-    
+    padding: 30px 120px;
+    background: linear-gradient(360deg, white, #faf2ec);
 }
 
 .cart__left {
@@ -724,9 +755,10 @@ a:hover {
 
 .cart__title {
     height: 50px;
-    line-height: 50px;
-    font-size: 1.4rem;
-
+    font-weight:600;
+    font-size: 1.65rem;
+    background-color: #f5f5f5;
+    padding:15px
 }
 .link_sort {
     color: rgb(207, 207, 207)
@@ -741,8 +773,7 @@ a:hover {
 .cart__header {
     display: flex;
     height: 50px;
-    line-height: 50px;
-    padding: 0 10px;
+    
     font-size: 1.4rem;
     font-weight: 500;
     border-top: 1px solid #ccc;
@@ -820,30 +851,33 @@ a:hover {
 }
 
 .btn__delete {
-    width: 4%;
-    height: 30px;
+    padding:5px 7px;
     border: none;
-    background-color: #ecaf02;
+    background-color: white;
     border-radius: 6px;
-    font-size: 16px;
+    border: 1px solid #a0a0a0;
+    font-size: 12px;
+    color: #a0a0a0;
 }
-
-.pay__title {
-    font-size: 2rem;
-    font-weight: 600;
-    height: 60px;
-    line-height: 60px;
-}
+    .btn__delete:hover {
+        border-color: #cc3232;
+        color: #cc3232;
+        transition: 0.5s;
+    }
+    .pay__title {
+        font-size: 2rem;
+        font-weight: 600;
+        height: 60px;
+    }
 .pay__provisional {
     font-size: 1.4rem;
-    font-weight: 500;
-    height: 50px;
-    line-height: 50px;
+   border-bottom:solid 1px #dcdcdc;
+    padding-bottom:5px;
+    
 }
 .pay__done {
-    border-top: 1px solid #000;
     font-size: 1.4rem;
-    font-weight: 500;
+
 }
 
 .btn__order {
@@ -853,16 +887,18 @@ a:hover {
     border-radius: 6px;
     background-color: #ecaf02;
     border: none;
-    line-height: 50px;
+    color: white;
     font-size: 1.6rem;
     font-weight: 500;
 }
-
-.btn__order a {
-    text-decoration: none;
-    color: #000;
-    display: block;
-}
+    .btn__order:hover {
+        background-color: #e3ba45;
+    }
+    .btn__order a {
+        text-decoration: none;
+        color: #000;
+        display: block;
+    }
 
 /* Form Order */
 

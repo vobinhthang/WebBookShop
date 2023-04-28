@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using WebBookShop.Models
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -47,10 +49,11 @@
 
             <div class="header__middle">
                 <div class="header__logo">
-                    <a href="/home"><img src="/Assets/client/img/logo BookHive.png" alt="logoWebsite"></a>
+                    <a href="/home"><img style="width:85%" src="/Assets/client/img/logo BookHive.png" alt="logoWebsite"></a>
                 </div>
-                @{Html.RenderAction("HeaderSearch", "Home"); }
-                
+                @{Html.RenderAction("HeaderSearch", "Home");
+                }
+
                 <div class="header__cart">
                     <div class="header__order">
                         <div>
@@ -64,19 +67,34 @@
                         </div>
                         <a href="./login.html" class="order_link">Đăng nhập<br>Đăng ký</a>
                     </div>
-                    <div class="header__minicart">
+                    <a href="/cart" class="header__minicart">
                         <div>
-                            <i class="fa-solid fa-cart-shopping box__icon"></i>
+                            <i style="color:black" class="fa-solid fa-cart-shopping box__icon"></i>
                         </div>
-                        <a href="./cart.html" class="order_link">Giỏ hàng</a>
-                        <span class="cart__quantity">0</span>
-                    </div>
+                        <span class="order_link">Giỏ hàng</span>
+                        <span class="cart__quantity">
+                            @{
+                                if (Session["CartSession"] != null)
+                                {
+
+                                    var list = (List<CartItem>)Session["CartSession"];
+                                    var count = list.Sum(x => x.Quantity);
+                                    <spam class="bg-danger px-3 py-2" style="border-radius:10px">@count</spam>
+                                }
+                                else
+                                {
+                                    <span class="px-3 py-2" style="border-radius:10px;background-color:#c8c8c8">0</span>
+                                }
+                            }
+
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
-        
-            @RenderBody();
-        
+
+        @RenderBody()
+
         <div class="footer">
             <div class="footer__item">
                 <h2 class="footer__title">BookHive</h2>
@@ -152,5 +170,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/Assets/client/js/app.js"></script>
+    <script src="~/Assets/admin/myscript.js"></script>
+    @RenderSection("CLIENTSCRIPT", false)
 </body>
 </html>

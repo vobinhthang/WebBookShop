@@ -10,7 +10,7 @@ using WebBookShop.Services;
 
 namespace WebBookShop.Areas.Admin.Controllers
 {
-    public class RoleController : Controller
+    public class RoleController : BaseController
     {
         // GET: Admin/Role
         [HttpGet]

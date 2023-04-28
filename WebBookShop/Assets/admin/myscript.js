@@ -7,9 +7,10 @@
     });
 
     $('#alo123').delay(3000).slideUp(500);
+    $('#message_additem').delay(5000).slideUp(500);
 
     $('.alo123').delay(3000).slideUp(500);
-
+    
     //$("#tbSearch").keyup(function () {
     //    var roleName = $.trim($("#tbSearch").val());
     //    $.ajax({

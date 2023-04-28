@@ -144,6 +144,7 @@
     <Compile Include="Areas\Admin\Models\PageListModel.cs" />
     <Compile Include="Areas\Admin\Models\SharedData.cs" />
     <Compile Include="Commons\SharedData.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductCateController.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="EF\tbl_Role.cs" />
     <Compile Include="EF\tbl_User.cs" />
     <Compile Include="Models\BannerModel.cs" />
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\FeedbackModel.cs" />
     <Compile Include="Models\ImageProductModel.cs" />
     <Compile Include="Models\InvoiceDetailModel.cs" />
@@ -628,6 +630,7 @@
     <Content Include="Assets\admin\ckeditor\styles.js" />
     <Content Include="Assets\admin\ckeditor\vendor\promise.js" />
     <Content Include="Assets\admin\controller\bannerController.js" />
+    <Content Include="Assets\admin\controller\cartController.js" />
     <Content Include="Assets\admin\controller\cateController.js" />
     <Content Include="Assets\admin\controller\commentController.js" />
     <Content Include="Assets\admin\controller\imgController.js" />
@@ -5536,6 +5539,7 @@
     <Content Include="Assets\client\img\bg1.png" />
     <Content Include="Assets\client\img\bg2.png" />
     <Content Include="Assets\client\img\bg3.jpg" />
+    <Content Include="Assets\client\img\check %281%29.png" />
     <Content Include="Assets\client\img\imgProductInfo1.jpg" />
     <Content Include="Assets\client\img\img__slider1.jpg" />
     <Content Include="Assets\client\img\img__slider2.jpg" />
@@ -5976,6 +5980,7 @@
     <Content Include="Views\Shared\HeaderSearch.cshtml" />
     <Content Include="Views\ProductCate\Search.cshtml" />
     <Content Include="Views\ProductInfor\Index.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

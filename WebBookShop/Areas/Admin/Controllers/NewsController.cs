@@ -10,7 +10,7 @@ using WebBookShop.Services;
 
 namespace WebBookShop.Areas.Admin.Controllers
 {
-    public class NewsController : Controller
+    public class NewsController : BaseController
     {
         // GET: Admin/News
         public ActionResult Index(string keyword,int page=1 , int pageSize = 10)

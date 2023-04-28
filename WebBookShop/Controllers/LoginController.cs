@@ -27,7 +27,7 @@ namespace WebBookShop.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(UserModel user)
         {
             var service = new UserService();

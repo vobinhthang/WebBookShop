@@ -9,7 +9,7 @@ using WebBookShop.Services;
 
 namespace WebBookShop.Areas.Admin.Controllers
 {
-    public class FeedbackController : Controller
+    public class FeedbackController : BaseController
     {
         // GET: Admin/Feedback
         public ActionResult Index(string keyword,int page=1, int pageSize = 10)
