@@ -1,0 +1,78 @@
+﻿@model List<WebBookShop.Models.CartItem>
+@using System.Globalization;
+@*@using WebBookShop.Services*@
+@using WebBookShop.Models
+
+<div class="cart__title" style="font-size:20px">
+    @if (Session["CartSession"] != null)
+    {
+        var sessionlist = (List<CartItem>)Session["CartSession"];
+        var count = sessionlist.Sum(x => x.Quantity);
+        <span>Đơn hàng của bạn (@count)</span>
+    }
+
+</div>
+<!-- Đổ dữ liệu -->
+@if (Session["CartSession"] != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="order__item container">
+            <div class="row">
+                <div class="col-md-8 order__item--name pb-3">
+                    <span style="font-weight:600">@item.ProductModel.ProductName</span>
+                    <br>
+                    <br>
+                    <span style="font-size: 13px; color: #616161">Số lượng: @item.Quantity</span>
+                </div>
+                <div class="col-md-4 order__item--price">
+                    <span>
+                        @{
+                            var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.ProductModel.Price.GetValueOrDefault(0) * item.Quantity);
+                            @strPrice
+                        }
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+}
+@if (Session["CartSession"] != null)
+{
+    <!-- Đổ dữ liệu -->
+    <div class="order__item container">
+        <div class="row">
+            <div class="col-md-8 order__item--name pb-3">
+                <span style="font-weight:600">Tổng tạm tính</span>
+
+            </div>
+            <div class="col-md-4 order__item--price">
+                <span style="float: right;font-size:17px">
+                    @if (Session["CartSession"] != null)
+                    {
+                        var list1 = (List<CartItem>)Session["CartSession"];
+                        var total1 = list1.Sum(x => (x.ProductModel.Price * x.Quantity));
+                        var strPrice3 = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", total1);
+
+                        <spam>@strPrice3</spam>
+                    }
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="total__price container">
+
+        <span style="font-size: 14px;">Tổng Tiền: </span>
+        <span class="text-danger" style="float: right; font-size: 17px">
+            @{
+                var list2 = (List<CartItem>)Session["CartSession"];
+                var total2 = list2.Sum(x => (x.ProductModel.Price * x.Quantity));
+                var strPrice4 = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", total2);
+
+                <spam>@strPrice4</spam>
+            }
+        </span>
+        
+    </div>
+                }

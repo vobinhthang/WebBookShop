@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Hình thức thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@model WebBookShop.Commons.CustomerAddress
+
+<div class="cart mb-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="cart__left col-md-8 " style="padding-right:100px">
+                <div class="cart__title  border-0" style="font-size:20px">
+                    Hình thức thanh toán
+                </div>
+                @using (Html.BeginForm("payment", "checkout", FormMethod.Post))
+                {
+                    <div>
+                        <div id="check_payment_1" class="form__groups d-flex align-items-center mx-4 my-4 px-3 " style="border:1px solid #d8d8d8 ;padding:40px 0;cursor:pointer">
+
+                            <input type="radio" checked id="ip__checkout-1" class="checkout__control " value="1" name="chose" placeholder="Nhập họ tên">
+                            <img src="~/Assets/client/img/image_128.png" class="ml-3" style="width:8%" />
+                            <span class="checkout__option" style="font-weight: 600; font-size: 17px">Thanh toán khi nhận hàng (COD)</span>
+                        </div>
+
+                        <div id="check_payment_2" class="form__groups  border-1 d-flex align-items-center mx-4 mb-5 px-3 " style="border: 1px solid #d8d8d8; padding: 40px 0; cursor: pointer ">
+                            <input type="radio" id="ip__checkout-2" class="checkout__control" value="2" name="chose" placeholder="Nhập họ tên">
+                            <img src="~/Assets/client/img/logo-momo.png" class="ml-4" style="width:7%" />
+
+                            <span class="checkout__option" style="font-weight: 600; font-size: 17px">Thanh toán bằng VÍ MOMO</span>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row  col-sm-11 m-auto">
+                        <button type="submit" class="btn btn-danger py-3 " style="font-size:15px">Đặt hàng</button>
+                    </div>
+
+                }
+
+            </div>
+
+            <div class="cart__right col-md-4 ">
+                @if (Session["CartSession"] != null)
+                {
+                    <div class="cart__title border-0 " style="font-size:20px">
+                        <span>Địa chỉ nhận hàng</span>
+                        <a href="/checkout/address" class="float-right" style="font-size:14px">Thay đổi</a>
+                    </div>
+                    <div class="px-4 mb-5" style="font-size:14px">
+                        <span style="font-weight:600">@Model._name</span>
+                        <br />
+                        <span>Địa chỉ: @Model._address</span>
+                        <br />
+                        <span>SĐT: @Model._phone</span>
+                        <br />
+                        <span>Email: @Model._email</span>
+                    </div>
+                }
+                @{Html.RenderAction("ItemCheckOut", "Checkout"); }
+
+            </div>
+        </div>
+    </div>
+</div>
+@section CLIENTSCRIPT{
+    <script src="~/Assets/admin/controller/cartController.js"></script>
+}  

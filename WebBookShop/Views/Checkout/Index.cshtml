@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Đăng nhập để thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="cart mb-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="cart__left col-md-8">
+                @if (Session["CartSession"] != null)
+                {
+                    <div class="cart__title ">
+                        Đăng nhập để thanh toán
+                    </div>
+                    using (Html.BeginForm("index", "checkout", FormMethod.Post))
+                    {
+
+                        <div class="box__checkout">
+                            <div class="form__groups">
+
+                                <input type="radio" checked id="ip__checkout-1" class="checkout__control " value="1" name="chose" placeholder="Nhập họ tên">
+                                <span id="txtcheck_1" class="checkout__option" style="cursor:pointer">Mua hàng nhanh - Không cần đăng nhập</span>
+                            </div>
+
+                            <div class="form__groups">
+                                <input type="radio" id="ip__checkout-2" class="checkout__control" value="2" name="chose" placeholder="Nhập họ tên">
+                                <span id="txtcheck_2" class="checkout__option" style="cursor:pointer">Mua hàng bằng tài khoản</span>
+
+                            </div>
+
+                            <div class="box__account" style="display:none">
+                                <div class="form__group">
+                                    <div class="mb-2">
+                                        Vui lòng điền Email
+                                    </div>
+                                    <input class="txtlogin mb-2" style="width:500px;height:40px;padding:10px" type="text" placeholder="Email đăng nhập của bạn" />
+                                </div>
+                                <div class="form__group">
+                                    <div class="mb-2">
+                                        Vui lòng điền mật khẩu
+                                    </div>
+                                    <input class="txtlogin" style="width: 500px; height: 40px; padding: 10px " type="text" placeholder="Mật khẩu của bạn" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-danger " style="font-size:15px;font-weight:600;width:500px;height:50px;border-radius:20px">TIẾN HÀNH ĐẶT HÀNG</button>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="cart__right col-md-4">
+                @{Html.RenderAction("ItemCheckOut", "Checkout"); }
+
+            </div>
+        </div>
+        </div>
+</div>
+@section CLIENTSCRIPT{
+    <script src="~/Assets/client/js/validate.js"></script>
+        <script src="~/Assets/admin/controller/cartController.js"></script>
+
+}

@@ -17,10 +17,38 @@ function handleRegister(){
     }
 }
 
+
+const input1 = document.getElementById('ip__checkout-1');
+const input2 = document.getElementById('ip__checkout-2');
+
+
+const divAccount = document.querySelector('.box__account');
+
+function handleCheckOut() {
+    input1.addEventListener('click', function () {
+
+        if (input1.checked) {
+            divAccount.style.display = 'none';
+            $('.txtlogin').removeAttr('required');
+        }
+    });
+
+    input2.addEventListener('click', function () {
+
+        if (input2.checked) {
+            divAccount.style.display = 'block';
+            $('.txtlogin').prop('required', true);
+            console.log("change input")
+        }
+    });
+  
+}
+
 function start(){
     // handleSubmit();
+    handleCheckOut();
     handleRegister();
-
+   
 }
 
 start();

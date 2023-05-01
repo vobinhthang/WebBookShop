@@ -755,10 +755,11 @@ a:hover {
 
 .cart__title {
     height: 50px;
-    font-weight:600;
-    font-size: 1.65rem;
-    background-color: #f5f5f5;
-    padding:15px
+    font-weight: 600;
+    font-size: 14px;
+    
+    border-bottom:1px solid #e2e2e2;
+    padding: 15px
 }
 .link_sort {
     color: rgb(207, 207, 207)
@@ -884,43 +885,37 @@ a:hover {
     width: 100%;
     height: 50px;
     margin-top: 20px;
-    border-radius: 6px;
-    background-color: #ecaf02;
     border: none;
-    color: white;
-    font-size: 1.6rem;
-    font-weight: 500;
+
 }
     .btn__order:hover {
         background-color: #e3ba45;
     }
+
     .btn__order a {
         text-decoration: none;
         color: #000;
         display: block;
     }
-
 /* Form Order */
 
 .form__group {
-    display: flex;
-    justify-content: space-between;
-    height: 45px;
-    margin-top: 1rem;
+   font-size:14px
 }
 
 .title__form {
     height: 45px;
-    font-size: 1.6rem;
-    line-height: 45px;
+    font-size: 12px;
+  
     font-weight: 500;
 }
 
 .form__control {
-    width: 80%;
-    padding: 10px;
+    
+    
     border: 1px solid #ccc;
-    font-size: 1.4rem;
+    font-size: 12px;
+
 }
 
 .form__control::placeholder {
@@ -931,27 +926,15 @@ a:hover {
     height: 100px;
 }
 
-.btn__ship {
-    width: 100%;
-    height: 50px;
-    border: none;
-    margin-top: 10px;
-    background-color: #ecaf02;
-    border-radius: 6px;
-    font-size: 1.6rem;
-    font-weight: 500;
-    
-}
-
 .order__item {
     height: auto;
     margin-top: 10px;
-    border-top: 1px solid #c7c7c7;
+    border-bottom: 1px solid #e2e2e2;
 }
 
 .order__item--name {
-    font-size: 1.4rem;
-    font-weight: 500;
+    font-size: 14px;
+
 }
 
 .order__item--price {
@@ -964,7 +947,6 @@ a:hover {
     font-size: 1.6rem;
     padding: 6px;
     font-weight: 600;
-    border-top: 1px solid #000;
     margin-top: 10px;
 }
 
@@ -1044,3 +1026,127 @@ a:hover {
     .active a {
         background-color: #ecaf02;
     }
+
+
+/* Check out */
+
+.box__checkout {
+    padding: 30px 120px 20px 160px;
+}
+
+.checkout__control {
+    width: 15px;
+    height: 20px;
+    accent-color: #ce0021;
+    
+}
+
+.form__groups {
+    display: flex;
+    height: 45px;
+
+}
+
+.checkout__option {
+    font-size: 14px;
+    
+    margin-left: 10px;
+}
+
+/* User info */
+
+.user__info {
+    padding: 0 10px;
+}
+
+.user__info--acc {
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.user__name {
+    width: 100%;
+    height: 90px;
+    display: flex;
+}
+
+.name__user {
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 90px;
+    padding-left: 20px;
+}
+
+.user__avt {
+    height: 100%;
+    width: 30%;
+    border-radius: 200%;
+    overflow: hidden;
+}
+
+.img__user {
+    width: 100%;
+    height: 100%;
+}
+
+.name__user {
+    height: 100%;
+    width: 70%;
+}
+
+.user__profile {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.user__profile--item {
+    width: 100%;
+    height: 45px;
+    font-size: 1.8rem;
+    padding: 10px;
+    border-radius: 16px;
+}
+
+    .user__profile--item:hover {
+        background-color: #f4f6fa;
+    }
+
+.user__link {
+    text-decoration: none;
+    color: #000;
+    display: block;
+}
+
+.form__group--user {
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    padding: 0 10px;
+}
+
+.ip__user--profile {
+    width: 100%;
+    height: 40px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 0 10px;
+    font-size: 1.6rem;
+}
+
+.btn__update {
+    width: 300px;
+    height: 40px;
+    margin: 10px 10px;
+    border: none;
+    background-color: #ffc931;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    font-weight: 500;
+}

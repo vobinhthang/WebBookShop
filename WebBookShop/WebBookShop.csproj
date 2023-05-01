@@ -143,8 +143,10 @@
     <Compile Include="Areas\Admin\Controllers\WareHouseController.cs" />
     <Compile Include="Areas\Admin\Models\PageListModel.cs" />
     <Compile Include="Areas\Admin\Models\SharedData.cs" />
+    <Compile Include="Commons\CustomerAddress.cs" />
     <Compile Include="Commons\SharedData.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductCateController.cs" />
@@ -5981,6 +5983,10 @@
     <Content Include="Views\ProductCate\Search.cshtml" />
     <Content Include="Views\ProductInfor\Index.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Shared\ItemCheckOut.cshtml" />
+    <Content Include="Views\Checkout\Address.cshtml" />
+    <Content Include="Views\Checkout\Payment.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

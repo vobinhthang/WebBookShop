@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Địa chỉ nhận hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model WebBookShop.Commons.CustomerAddress
+@{ 
+    var name = Model != null ? Model._name : "";
+    var phone = Model != null ? Model._phone : "";
+    var email = Model != null ? Model._email : "";
+    var address = Model != null ? Model._address : "";
+}
+<div class="cart mb-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="cart__left col-md-8 " style="padding-right:100px">
+                <div class="cart__title " style="font-size:16px">
+                    Thông tin nhận hàng
+                </div>
+                @using (Html.BeginForm("address", "checkout", FormMethod.Post))
+                {
+                    <div class="form-group row mt-4">
+                        <label class="col-sm-2 col-form-label" style="font-size:14px">Họ và tên <span class="text-danger">*</span> </label>
+                        <div class="col-sm-10">
+
+                            <input required class="form-control " value="@name" name="name" style="padding:20px 10px;font-size:14px" placeholder="Nhập họ tên" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <label class="col-sm-2 col-form-label" style="font-size:14px">Số điện thoại <span class="text-danger">*</span> </label>
+                        <div class="col-sm-10">
+                            <input required class="form-control " value="@phone" name="phone" style="padding:20px 10px;font-size:14px" placeholder="Nhập số điện thoại" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <label class="col-sm-2 col-form-label" style="font-size:14px">Email  </label>
+                        <div class="col-sm-10">
+                            <input class="form-control " type="email" value="@email" name="email" style="padding:20px 10px;font-size:14px" placeholder="Nhập Email của bạn" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4 mb-5">
+                        <label class="col-sm-2 col-form-label" style="font-size:14px">Địa chỉ <span class="text-danger">*</span> </label>
+                        <div class="col-sm-10">
+                            <textarea required class="form-control "  name="address" style="padding:20px 10px;font-size:14px" placeholder="Ví dụ: 50, đường Nguyễn Du, Phường, Quận, Thành Phố">@address</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row  col-sm-11 m-auto">
+                        <button type="submit" class="btn btn-danger py-3 " style="font-size:15px">Giao đến địa chỉ này</button>
+                    </div>
+                }
+
+            </div>
+            <div class="cart__right col-md-4">
+                @{Html.RenderAction("ItemCheckOut", "Checkout"); }
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -77,6 +77,8 @@ namespace WebBookShop.Controllers
 
             return PartialView(products);
         }
+
+        [HttpGet]
         [ChildActionOnly]
         public ActionResult HeaderSearch()
         {
