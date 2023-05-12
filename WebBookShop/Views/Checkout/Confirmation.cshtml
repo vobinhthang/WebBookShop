@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Đặt hàng thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<CartItem> listItems = ViewBag.ListItems;
+}
+@model WebBookShop.Commons.CustomerAddress
+@using WebBookShop.Models;
+@using System.Globalization;
+<div class="cart ">
+    <div class="container-fluid">
+        <div class="row bg-white">
+            <div class="col-4 mt-4">
+                <img src="~/Assets/client/img/pay_stage_4.png" style="width:100%" />
+            </div>
+            <div class="col-8 mt-4">
+                <p class="" style="font-size:23px;font-weight:600">Đơn hàng của quý khách đã được đặt thành công !</p>
+                <p style="font-size:14px;color:#696969">
+                    Cảm ơn quý khách đã mua sắm tại website của <a href="/home">BookHive</a>! Chúng tôi sẽ liên hệ với quý khách
+                    để xác nhận đơn hàng trong thời gian sớm nhất
+                </p>
+                <p style="font-size:14px">Mã đơn hàng: <span class="text-danger" style="font-weight:600">@ViewBag.OrderId</span></p>
+                <p style="font-size:14px">
+                    Thành tiền:
+                    @{
+                        var total = listItems.Sum(x => (x.ProductModel.Price * x.Quantity));
+                        var strPrice3 = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", total);
+
+                        <spam>@strPrice3</spam>
+                    }
+                </p>
+                <a href="/register" class="btn btn-danger py-2" style="border-radius:20px;font-size:14px;font-weight:600">ĐĂNG KÝ</a>
+                <span style="font-weight:600;font-size:14px">để nhận những ưu đãi đặc biệt đến từ BookHive</span>
+            </div>
+        </div>
+        <div class=" row bg-white px-5 " style="font-size:14px;margin-bottom:80px">
+            <p class="mt-5" style="font-size:23px;font-weight:600">Chi tiết đơn hàng</p>
+            <p style="font-size:17px">Chi tiết đơn hàng @ViewBag.OrderId , bao gồm @ViewBag.CountItem sản phẩm được đặt</p>
+            <p>@Model._name</p>
+            <p>Địa chỉ: @Model._address</p>
+            <p>Điện thoại: @Model._phone</p>
+            <div class="mt-4">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="text-center" style="background-color: #F4F6FA;font-weight:600">
+                            <th>Tên sản phẩm</th>
+                            <th style="width:220px">Đơn giá</th>
+                            <th style="width:200px">Số lượng</th>
+                            <th style="width:220px">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in listItems)
+                        {
+                            <tr>
+                                <td>@item.ProductModel.ProductName</td>
+                                <td class="text-center">
+                                    @{
+                                        var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.ProductModel.Price.GetValueOrDefault(0));
+                                        @strPrice
+                                    }
+                                </td>
+                                <td class="text-center">@item.Quantity</td>
+                                <td class="text-center">
+                                    @{
+                                        var strPrice2 = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.ProductModel.Price.GetValueOrDefault(0) * item.Quantity);
+                                        @strPrice2
+                                    }
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div style="font-size:14px" class="mt-4">
+                @*<p class="text-right">Được giảm trừ: <span style="font-weight:600;font-size:16px">0đ</span></p>*@
+                <p class="text-right">Tổng số tiền cần thanh toán:
+                    <span class=" text-danger pl-5" style="font-weight:600;font-size:16px">
+                            <spam>@strPrice3</spam>                      
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+

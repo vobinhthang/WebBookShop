@@ -22,13 +22,23 @@ html {
     height: auto;
 }
 
-.message_add_cart{
-    position:absolute;
-    top:-493px;
-    left:325px;
-    width:300px;
-    height:130px;
-    font-size:14px;
+.link_news {
+    color: black
+}
+.link_news:hover{
+    text-decoration:none;
+    color:black
+}
+.img__active {
+    border: 2px solid #ecaf02;
+}
+.message_add_cart {
+    position: absolute;
+    top: -493px;
+    left: 325px;
+    width: 300px;
+    height: 130px;
+    font-size: 14px;
 }
 
 .arrow-up {

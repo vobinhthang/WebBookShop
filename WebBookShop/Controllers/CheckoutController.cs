@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebBookShop.Commons;
 using WebBookShop.Models;
+using WebBookShop.Services;
 
 namespace WebBookShop.Controllers
 {
@@ -13,7 +14,16 @@ namespace WebBookShop.Controllers
         // GET: Checkout
         public ActionResult Index()
         {
-            return View();
+            var cartSession = Session["CartSession"];
+            if (cartSession != null)
+            {
+                return View();
+            }
+            else
+            {
+                return Redirect("/cart");
+            }
+            
         }
 
         [ChildActionOnly]
@@ -32,8 +42,17 @@ namespace WebBookShop.Controllers
         
         public ActionResult Payment()
         {
-            var model = SharedData.customerAddress; 
-            return View(model);
+            var model = SharedData.customerAddress;
+            var cartSession = Session["CartSession"];
+            if (cartSession != null)
+            {
+                return View(model);
+            }
+            else
+            {
+                return Redirect("/cart");
+            }
+            
         }
 
         [HttpPost]
@@ -53,12 +72,22 @@ namespace WebBookShop.Controllers
 
         public ActionResult Address()
         {
-            if (SharedData.customerAddress!=null)
+            
+            var cartSession = Session["CartSession"];
+            if (cartSession != null)
             {
-                var model = SharedData.customerAddress;
-                return View(model);
+                if (SharedData.customerAddress != null)
+                {
+                    var model = SharedData.customerAddress;
+                    return View(model);
+                }
+                return View();
             }
-            return View();
+            else
+            {
+                return Redirect("/cart");
+            }
+            
         }
 
         [HttpPost]
@@ -75,6 +104,54 @@ namespace WebBookShop.Controllers
             SharedData.customerAddress = customerAddress;
 
             return Redirect("/checkout/payment");
+        }
+
+        public ActionResult Confirmation()
+        {
+            var model = SharedData.customerAddress;
+
+            var cartSession = Session["CartSession"];
+            var list = new List<CartItem>();
+            if (cartSession != null)
+            {
+                list = (List<CartItem>)cartSession;
+                var count = list.Sum(x => x.Quantity);
+                ViewBag.CountItem = count;
+                ViewBag.ListItems = list;
+                ViewBag.OrderId = SharedData.OrderId;
+
+                Session["CartSession"] = null;
+                return View(model);
+            }
+            else
+            {
+                return Redirect("/cart");
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult Payment(int chose)
+        {
+            if(chose == 1)
+            {
+                var service = new OrderService();
+
+                var cartSession = Session["CartSession"];
+                var list = new List<CartItem>();
+                if (cartSession != null)
+                {
+                    list = (List<CartItem>)cartSession;
+                }
+
+                var orderId = service.ConfirmPayment(list, SharedData.customerAddress,null);
+                SharedData.OrderId = orderId;
+                return Redirect("/checkout/confirmation");
+            }
+            else 
+            {
+                return Redirect("/chose2");
+            }
         }
     }
 }

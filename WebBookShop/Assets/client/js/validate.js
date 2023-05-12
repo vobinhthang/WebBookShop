@@ -44,6 +44,27 @@ function handleCheckOut() {
   
 }
 
+var mainImg = document.querySelector(".main__img")
+var listImg = document.querySelectorAll(".list__img--item")
+
+// console.log(listImg)
+for (var i = 0; i < listImg.length; i++) {
+    listImg[i].addEventListener('click', function () {
+        var imgSmall = this.src
+        mainImg.src = imgSmall
+    })
+}
+
+listImg.forEach(function (image) {
+    image.addEventListener('click', function () {
+        listImg.forEach(function (img) {
+            img.classList.remove('img__active');
+        });
+        this.classList.add('img__active');
+    });
+});
+
+
 function start(){
     // handleSubmit();
     handleCheckOut();

@@ -134,7 +134,8 @@ namespace WebBookShop.Services
                 Detail = news.Detail,
                 Status = news.Status,
                 Image = news.Image,
-                NewsName = news.NewsName
+                NewsName = news.NewsName,
+                CreateDate = news.CreateDate
             };
         }
 

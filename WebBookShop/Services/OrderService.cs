@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebBookShop.Commons;
 using WebBookShop.EF;
 using WebBookShop.Models;
 
@@ -408,5 +409,37 @@ namespace WebBookShop.Services
             }
         }
 
+        public int ConfirmPayment(List<CartItem> cartItem, CustomerAddress customerAddress, bool? login)
+        {
+            tbl_Order order = new tbl_Order {
+                OrderDate = DateTime.Now,
+                Address = customerAddress._address,
+                Phone = customerAddress._phone,
+                CustomerName = customerAddress._name,
+                Email = customerAddress._email,
+                Discount=0,
+                Delivered=false,
+                Status=true,
+            };
+            
+            dbcontext.tbl_Order.Add(order);
+            dbcontext.SaveChanges();
+
+            tbl_OrderDetail orderDetail = new tbl_OrderDetail();
+
+            foreach (var item in cartItem)
+            {
+                orderDetail.OrderID = order.Id;
+                orderDetail.Price = item.ProductModel.Price;
+                orderDetail.ProductID = item.ProductModel.Id;
+                orderDetail.Quantity = item.Quantity;
+
+                dbcontext.tbl_OrderDetail.Add(orderDetail);
+            }
+    
+            dbcontext.SaveChanges();
+
+            return order.Id;
+        }
     }
 }

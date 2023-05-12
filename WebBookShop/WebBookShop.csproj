@@ -149,6 +149,7 @@
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ProductCateController.cs" />
     <Compile Include="Controllers\ProductInforController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
@@ -5542,6 +5543,7 @@
     <Content Include="Assets\client\img\bg2.png" />
     <Content Include="Assets\client\img\bg3.jpg" />
     <Content Include="Assets\client\img\check %281%29.png" />
+    <Content Include="Assets\client\img\image_128.png" />
     <Content Include="Assets\client\img\imgProductInfo1.jpg" />
     <Content Include="Assets\client\img\img__slider1.jpg" />
     <Content Include="Assets\client\img\img__slider2.jpg" />
@@ -5549,6 +5551,8 @@
     <Content Include="Assets\client\img\img__slider4.png" />
     <Content Include="Assets\client\img\img__slider5.png" />
     <Content Include="Assets\client\img\logo BookHive.png" />
+    <Content Include="Assets\client\img\logo-momo.png" />
+    <Content Include="Assets\client\img\pay_stage_4.png" />
     <Content Include="Assets\client\img\producthot1.jpg" />
     <Content Include="Assets\client\img\producthot2.jpg" />
     <Content Include="Assets\client\img\producthot3.jpg" />
@@ -5948,6 +5952,7 @@
     <Content Include="Areas\Admin\Views\Invoice\EditDetail.cshtml" />
     <Content Include="Areas\Admin\Views\Invoice\Create.cshtml" />
     <Content Include="Areas\Admin\Views\WareHouse\Index.cshtml" />
+    <Content Include="Assets\client\img\news.png" />
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />
     <Content Include="Scripts\jquery-3.6.3.min.js" />
@@ -5987,6 +5992,9 @@
     <Content Include="Views\Shared\ItemCheckOut.cshtml" />
     <Content Include="Views\Checkout\Address.cshtml" />
     <Content Include="Views\Checkout\Payment.cshtml" />
+    <Content Include="Views\Checkout\Confirmation.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\Detail.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

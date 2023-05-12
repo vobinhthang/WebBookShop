@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model WebBookShop.Models.NewsModel
+
+<div class="cart ">
+    <div class="mb-4" style="color:gray">
+        <span style="font-size:15px">
+            <a href="/home">Trang chủ</a> /
+            <a href="/news">Tin tức - Sự kiện</a> / 
+            <span style="color: #616161;font-weight:600">@Model.NewsName</span>
+        </span>
+    </div>
+    <div class="container-fluid">
+        <div class="row bg-white">
+            <div class="col-12 " style="padding:30px 90px">
+                <span style="font-size:36px;font-weight:600;">
+                    @Model.NewsName
+                </span>
+                <br />
+                <br />
+                <span  style="font-size:14px">|</span> <span style="color: gray; font-size: 14px">@Model.CreateDate</span>
+                <div class="my-5 px-5" style="border-left: 3px solid #3E4A59">
+                    <span style="font-size: 19px; font-style: italic; color: #333333; font-family: Noto Serif ">
+                        @Model.Descripton
+                    </span>
+                </div>
+                <div style="font-size:17px;margin-bottom:120px">
+                    @MvcHtmlString.Create(Model.Detail)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

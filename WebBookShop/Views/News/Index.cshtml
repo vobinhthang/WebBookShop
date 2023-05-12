@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Tin tức - Sự kiện";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList
+@using PagedList.Mvc
+
+@model IEnumerable<WebBookShop.Models.NewsModel>
+
+<div class="cart ">
+    <div class="mb-4" style="color:gray">
+        <span style="font-size:15px">
+            <a href="/home">Trang chủ</a> /
+            <span>Tin tức - Sự kiện</span>
+        </span>
+    </div>
+    <div class="container-fluid">
+        <div class="row bg-white">
+            <div class="col-11">
+                @foreach (var item in Model.Where(x=>x.Status==true).OrderByDescending(x=>x.Id))
+                {
+                    <div class="row item_news my-5 mx-4">
+                        <div class="col-4  text-center">
+                            <a href="/news/detail?id=@item.Id"><img style="width:90%" src="@Url.Content(item.Image)" /></a>
+                        </div>
+                        <div class="col-8 ">
+                            <a class="link_news" href="/news/detail?id=@item.Id" style="font-weight: 600; font-size: 20px">@item.NewsName</a>
+                            <br />
+                            <span style="font-size:13px">|</span> <span style="color: gray; font-size: 10px">@item.CreateDate</span>
+                            <br />
+                            <span style="font-size:14px;color:gray">
+                                @item.Descripton
+                            </span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page}), new PagedListRenderOptions
+                    {
+                        LiElementClasses = new string[] { "page-item" },
+                        UlElementClasses = new string[] { "pagination" },
+                        MaximumPageNumbersToDisplay = 3,
+                    })
+            </div>
+        </div>
+
+    </div>
+</div>
