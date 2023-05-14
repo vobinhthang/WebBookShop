@@ -149,6 +149,7 @@
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ProductCateController.cs" />
     <Compile Include="Controllers\ProductInforController.cs" />
@@ -5543,6 +5544,8 @@
     <Content Include="Assets\client\img\bg2.png" />
     <Content Include="Assets\client\img\bg3.jpg" />
     <Content Include="Assets\client\img\check %281%29.png" />
+    <Content Include="Assets\client\img\default-user.jpg" />
+    <Content Include="Assets\client\img\icon_shortcut.png" />
     <Content Include="Assets\client\img\image_128.png" />
     <Content Include="Assets\client\img\imgProductInfo1.jpg" />
     <Content Include="Assets\client\img\img__slider1.jpg" />
@@ -5552,6 +5555,7 @@
     <Content Include="Assets\client\img\img__slider5.png" />
     <Content Include="Assets\client\img\logo BookHive.png" />
     <Content Include="Assets\client\img\logo-momo.png" />
+    <Content Include="Assets\client\img\logo_home.png" />
     <Content Include="Assets\client\img\pay_stage_4.png" />
     <Content Include="Assets\client\img\producthot1.jpg" />
     <Content Include="Assets\client\img\producthot2.jpg" />
@@ -5995,6 +5999,9 @@
     <Content Include="Views\Checkout\Confirmation.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Detail.cshtml" />
+    <Content Include="Views\My\Account.cshtml" />
+    <Content Include="Views\Shared\_MyAcount.cshtml" />
+    <Content Include="Views\My\Order.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

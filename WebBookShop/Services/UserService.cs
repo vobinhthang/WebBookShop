@@ -25,6 +25,7 @@ namespace WebBookShop.Services
                         select new UserModel { 
                             Email = u.Email,
                             Password = u.Password,
+                            Fullname = u.FullName
                         };
 
             if (query.ToList().Count>0)
@@ -134,6 +135,92 @@ namespace WebBookShop.Services
                 return false;
             }
         }
+        public bool UpdateAccount(tbl_User _user)
+        {
+            try
+            {
+                var user = dbcontext.tbl_User.Find(_user.Id);
+
+
+                _user.UpdateDate = DateTime.Now;
+
+                user.UpdateDate = _user.UpdateDate;
+                if (_user.FullName == null)
+                {
+                    user.FullName = string.Empty;
+                }
+                else
+                {
+                    user.FullName = _user.FullName;
+                }
+                if (_user.Address == null)
+                {
+                    user.Address = string.Empty;
+                }
+                else
+                {
+                    user.Address = _user.Address;
+                }
+                if (_user.Phone == null)
+                {
+                    user.Phone = string.Empty;
+                }
+                else
+                {
+                    user.Phone = _user.Phone;
+                }
+                dbcontext.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public UserModel GetByEmail(string email)
+        {
+            var query = from u in dbcontext.tbl_User
+                        join r in dbcontext.tbl_Role on u.RoleId equals r.Id
+                        where u.Email == email
+                        select new UserModel
+                        {
+                            Id = u.Id,
+                            Email = u.Email,
+                            Password = u.Password,
+                            Fullname = u.FullName,
+                            Phone = u.Phone,
+                            Address = u.Address,
+                            CreateDate = u.CreateDate,
+                            UpdateDate = u.UpdateDate,
+                            RoleName = r.RoleName,
+                            RoleID = u.RoleId,
+                        };
+            UserModel user = query.First();
+            return user;
+        }
+
+        public UserModel GetByName(string fullname)
+        {
+            var query = from u in dbcontext.tbl_User
+                        join r in dbcontext.tbl_Role on u.RoleId equals r.Id
+                        where u.FullName == fullname
+                        select new UserModel
+                        {
+                            Id = u.Id,
+                            Email = u.Email,
+                            Password = u.Password,
+                            Fullname = u.FullName,
+                            Phone = u.Phone,
+                            Address = u.Address,
+                            CreateDate = u.CreateDate,
+                            UpdateDate = u.UpdateDate,
+                            RoleName = r.RoleName,
+                            RoleID = u.RoleId,
+                        };
+            UserModel user = query.First();
+            return user;
+        }
 
         public string FindEmail(string _email)
         {
@@ -141,6 +228,18 @@ namespace WebBookShop.Services
             if (email != null)
             {
                 return _email;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public string FindName(string _email)
+        {
+            var email = dbcontext.tbl_User.SingleOrDefault(u => u.Email == _email);
+            if (email != null)
+            {
+                return email.FullName;
             }
             else
             {

@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Thông tin User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model WebBookShop.Models.UserModel
+
+<div class="cart">
+    <div class="container-fluid">
+        <div class="row">
+
+            @RenderPage("~/Views/Shared/_MyAcount.cshtml")
+            <div class="col-md-9">
+                @if (TempData["UPDATE"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" id="alo123" style="font-size:13px">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>Thông báo!</strong> <br />
+                        <span>@TempData["UPDATE"]</span>
+                    </div>
+                }
+                <div class="order__tracking p-4">
+                        <div class="cart__title" style="font-weight:600;font-size:18px">
+                            Thông tin tài khoản
+                        </div>
+                        @using (Html.BeginForm("Account", "My", FormMethod.Post))
+                        {
+                            <div class="form__group--user mb-4">
+                                <label style="height: 20px; font-size: 14px; font-weight: 500; color: #616161" for="">Họ và tên</label>
+                                @Html.TextBoxFor(m => m.Fullname, new { @class = "form-control", @style = "height:50px;font-size:15px;color:black", required = "required" })
+
+                            </div>
+
+                            <div class="form__group--user mb-4">
+                                <label style="height: 20px; font-size: 14px; font-weight: 500; color: #616161" for="">Số điện thoại</label>
+                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @style = "height:50px;font-size:15px;color:black", required = "required" })
+                            </div>
+                            <div class="form__group--user mb-4">
+                                <label style="height: 20px; font-size: 14px; font-weight: 500; color: #616161" for="">Địa chỉ</label>
+                                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @style = "height:50px;font-size:15px;color:black", required = "required" })
+                            </div>
+
+                            <button type="submit" class="btn btn-danger ml-3 mt-3" style="width:400px;height:40px;font-size:16px;font-weight:600">Cập Nhật</button>
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section CLIENTSCRIPT{
+    <style>
+        #account {
+            background-color: #f4f6fa;
+        }
+
+        #icon_account {
+            color: #ce0021;
+        }
+    </style>
+}

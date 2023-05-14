@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>@ViewBag.Title</title>
-
+    <link rel="icon" type="image/png" href="~/Assets/client/img/icon_shortcut.png" />
 </head>
 <body>
     <div class="app">
@@ -41,31 +41,38 @@
                 </div>
 
                 <div class="navbar__right">
-                    <a href="/news" class="news">
-                        <p>Tin tức & Sự kiện</p>
+                    <a href="/news" class="news" style="font-weight:600">
+                        <p>Tin tức - Sự kiện</p>
                     </a>
                 </div>
             </div>
 
             <div class="header__middle">
                 <div class="header__logo">
-                    <a href="/home"><img style="width:85%" src="/Assets/client/img/logo BookHive.png" alt="logoWebsite"></a>
+                    <a href="/home"><img style="width:80%;margin-top:20px;margin-left:30px"  src="~/Assets/client/img/logo_home.png" alt="logoWebsite"></a>
                 </div>
-                @{Html.RenderAction("HeaderSearch", "Home");
-                }
+                @{Html.RenderAction("HeaderSearch", "Home");}
 
                 <div class="header__cart">
                     <div class="header__order">
                         <div>
-                            <i class="fa-solid fa-box box__icon"></i>
+                            <i style="color:#5a5858" class="fa-solid fa-box box__icon"></i>
                         </div>
-                        <a href="./orderTracking.html" class="order_link">Theo dõi<br>đơn hàng</a>
+                        <a href="/my/order" class="order_link">Theo dõi<br>đơn hàng</a>
                     </div>
-                    <div class="header__login">
+                    <div class="header__login mr-5">
                         <div>
                             <i class="fa-regular fa-user box__icon"></i>
                         </div>
-                        <a href="./login.html" class="order_link">Đăng nhập<br>Đăng ký</a>
+                        @{ if (Session["LOGIN_CLIENT"] == null)
+                            {
+                                <a href="/login" class="order_link">Đăng nhập<br>Đăng ký</a>
+                            }
+                            else
+                            {
+                                <a href="/my/account" class="order_link">Chào, <br /> @Session["NameAccount"]</a>
+                            }
+                        }
                     </div>
                     <a href="/cart" class="header__minicart">
                         <div>

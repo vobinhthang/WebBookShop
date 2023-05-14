@@ -37,7 +37,9 @@ namespace WebBookShop.Controllers
             {
                 if (result)
                 {
+                    var name = service.FindName(user.Email);
                     Session["LOGIN_CLIENT"] = user.Email;
+                    Session["NameAccount"] = name;
                     SharedData.Email = null;
                     SharedData.Password = null;
                     return RedirectToAction("index", "home");

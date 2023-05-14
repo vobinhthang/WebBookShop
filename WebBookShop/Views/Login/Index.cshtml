@@ -24,13 +24,13 @@
     {
         <div class="alert alert-danger alert-dismissible fade show mb-0 text-center" id="alo123">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            </button> 
+            </button>
             <strong>Thông báo!</strong> @TempData["MESSAGE"]
         </div>
     }
     @using (Html.BeginForm("index", "login", FormMethod.Post, new { @class = "formLogin box" }))
     {
-
+        @Html.AntiForgeryToken()
         <div class="containers">
 
             <div class="top">

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = ViewBag.CateName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using PagedList
@@ -31,12 +31,12 @@
                 <ul class="menu_cate p-4">
                     <li class="font-weight-bold" style="color:black">DANH MỤC SẢN PHẨM</li>
                     <li class="item_menu_cate">
-                        @{var style = ViewBag.ParentIdCates == (int)TempData["CateId"] ? "style=color:#ecaf02 " : ""; }
+                        @{var style = ViewBag.ParentIdCates == (int)TempData["CateId"] ? "style=color:#ce0021 " : ""; }
                         <a class="link_menu_cate" @style href="/productcate?id=@ViewBag.ParentIdCates">@ViewBag.ParentIdCatesName</a>
                     </li>
                     @foreach (var item in ViewBag.ChildIdCates)
                     {
-                        var check = item.Id == (int)TempData["CateId"] ? "style=color:#ecaf02 " : "";
+                        var check = item.Id == (int)TempData["CateId"] ? "style=color:#ce0021 " : "";
                         <li class="item_menu_cate pl-4">
                             <a class="link_menu_cate" @check href="/productcate?id=@item.Id">@item.CategoryName </a>
                         </li>

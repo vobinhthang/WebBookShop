@@ -260,7 +260,7 @@ namespace WebBookShop.Areas.Admin.Controllers
                 var rs = service.Update(user);
                 if (rs)
                 {
-                    TempData["UPDATEUSER"] = "Cập nhập quyền người dùng có ID: " + user.Id + " thành công.";
+                    TempData["UPDATEUSER"] = "Cập nhập người dùng thành công.";
                     TempData["ALEART"] = "success";
                 }
                 else

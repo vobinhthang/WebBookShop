@@ -409,22 +409,34 @@ namespace WebBookShop.Services
             }
         }
 
-        public int ConfirmPayment(List<CartItem> cartItem, CustomerAddress customerAddress, bool? login)
+        public int ConfirmPayment(List<CartItem> cartItem, CustomerAddress customerAddress,int? userID, bool? login)
         {
-            tbl_Order order = new tbl_Order {
-                OrderDate = DateTime.Now,
-                Address = customerAddress._address,
-                Phone = customerAddress._phone,
-                CustomerName = customerAddress._name,
-                Email = customerAddress._email,
-                Discount=0,
-                Delivered=false,
-                Status=true,
-            };
-            
+            tbl_Order order = new tbl_Order();
+            if (login == false)
+            {
+                order.OrderDate = DateTime.Now;
+                order.Address = customerAddress._address;
+                order.Phone = customerAddress._phone;
+                order.CustomerName = customerAddress._name;
+                order.Email = customerAddress._email;
+                order.Discount = 0;
+                order.Delivered = false;
+                order.Status = true;
+            }
+            else
+            {
+                order.OrderDate = DateTime.Now;
+                order.UserID = userID;
+                order.Address = customerAddress._address;
+                order.Phone = customerAddress._phone;
+                order.CustomerName = customerAddress._name;
+                order.Email = customerAddress._email;
+                order.Discount = 0;
+                order.Delivered = false;
+                order.Status = true;
+            }
             dbcontext.tbl_Order.Add(order);
             dbcontext.SaveChanges();
-
             tbl_OrderDetail orderDetail = new tbl_OrderDetail();
 
             foreach (var item in cartItem)

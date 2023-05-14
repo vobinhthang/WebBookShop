@@ -17,7 +17,15 @@ namespace WebBookShop.Controllers
             var cartSession = Session["CartSession"];
             if (cartSession != null)
             {
-                return View();
+                if(Session["LOGIN_CLIENT"] == null)
+                {
+                    return View();
+                }
+                var service = new UserService();
+                var email = (string)Session["LOGIN_CLIENT"];
+                var account = service.GetByEmail(email);
+                
+                return View(account);
             }
             else
             {
@@ -46,7 +54,25 @@ namespace WebBookShop.Controllers
             var cartSession = Session["CartSession"];
             if (cartSession != null)
             {
-                return View(model);
+                if (Session["LOGIN_CLIENT"] == null)
+                {                   
+                    return View(model);
+                }
+
+                var service = new UserService();
+                var email = (string)Session["LOGIN_CLIENT"];
+                var account = service.GetByEmail(email);
+                var customerAddress = new CustomerAddress
+                {
+                    _name = account.Fullname,
+                    _phone = account.Phone,
+                    _email = account.Email,
+                    _address = account.Address,
+                };
+
+                SharedData.UserId = account.Id;
+                SharedData.customerAddress = customerAddress;
+                return View(customerAddress);
             }
             else
             {
@@ -119,9 +145,27 @@ namespace WebBookShop.Controllers
                 ViewBag.CountItem = count;
                 ViewBag.ListItems = list;
                 ViewBag.OrderId = SharedData.OrderId;
+               
+                if (Session["LOGIN_CLIENT"] == null)
+                {
+                    Session["CartSession"] = null;
+                    return View(model);
+                }
 
+                var service = new UserService();
+                var email = (string)Session["LOGIN_CLIENT"];
+                var account = service.GetByEmail(email);
+                var customerAddress = new CustomerAddress
+                {
+                    _name = account.Fullname,
+                    _phone = account.Phone,
+                    _email = account.Email,
+                    _address = account.Address,
+                };
+
+                SharedData.UserId = account.Id;
                 Session["CartSession"] = null;
-                return View(model);
+                return View(customerAddress);
             }
             else
             {
@@ -142,10 +186,19 @@ namespace WebBookShop.Controllers
                 if (cartSession != null)
                 {
                     list = (List<CartItem>)cartSession;
-                }
 
-                var orderId = service.ConfirmPayment(list, SharedData.customerAddress,null);
-                SharedData.OrderId = orderId;
+                }
+                if (Session["LOGIN_CLIENT"] == null)
+                {
+                    var orderId = service.ConfirmPayment(list, SharedData.customerAddress, null, false);
+                    SharedData.OrderId = orderId;
+                }
+                else
+                {
+                    var orderId = service.ConfirmPayment(list, SharedData.customerAddress, SharedData.UserId, true);
+                    SharedData.OrderId = orderId;
+                }
+                
                 return Redirect("/checkout/confirmation");
             }
             else 
