@@ -44,15 +44,23 @@
                                         <div class="mb-2">
                                             Vui lòng điền Email
                                         </div>
-                                        <input class="txtlogin mb-2" style="width:500px;height:40px;padding:10px" type="text" placeholder="Email đăng nhập của bạn" />
+                                        @Html.TextBoxFor(m => m.Email, new { type = "email", @class = "txtlogin mb-2", @style = "width:500px;height:40px;padding:10px", @placeholder = "Email đăng nhập của bạn" })
                                     </div>
                                     <div class="form__group">
                                         <div class="mb-2">
                                             Vui lòng điền mật khẩu
                                         </div>
-                                        <input class="txtlogin" style="width: 500px; height: 40px; padding: 10px " type="text" placeholder="Mật khẩu của bạn" />
+                                        @Html.TextBoxFor(m => m.Password, new {type="password", @class = "txtlogin ", @style = "width:500px;height:40px;padding:10px", @placeholder = "Mật khẩu của bạn" })
                                     </div>
+                                    
                                 </div>
+                                @if (TempData["MESSAGE"]!=null)
+                                {
+                                       
+                                    <div class="text-danger" style="font-size:14px">
+                                        @TempData["MESSAGE"]
+                                    </div>  
+                                }
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-danger " style="font-size:15px;font-weight:600;width:500px;height:50px;border-radius:20px">TIẾN HÀNH ĐẶT HÀNG</button>

@@ -12,7 +12,7 @@ namespace WebBookShop.Controllers
     public class LoginController : Controller
     {
         // GET: Login
-        public ActionResult Index()
+        public ActionResult Index(bool? outlogin)
         {
             var user = new UserModel
             {
@@ -22,6 +22,10 @@ namespace WebBookShop.Controllers
             if (user.Email != null && user.Password!=null)
             {
                 return View(user);
+            }
+            if(outlogin == true)
+            {
+                Session["LOGIN_CLIENT"] = null;
             }
             return View();
         }

@@ -82,7 +82,7 @@ namespace WebBookShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(int chose)
+        public ActionResult Index(int chose, UserModel user)
         {         
             if (chose == 1)
             {               
@@ -90,8 +90,27 @@ namespace WebBookShop.Controllers
             }
             else if(chose==2)
             {
-                
-                return Redirect("/chose2");
+                var service = new UserService();
+                var result = service.Login(user.Email, user.Password, "Khách hàng");
+
+                if (user.Email != null && user.Password != null)
+                {
+                    if (result)
+                    {
+                        var name = service.FindName(user.Email);
+                        Session["LOGIN_CLIENT"] = user.Email;
+                        Session["NameAccount"] = name;
+                        SharedData.Email = null;
+                        SharedData.Password = null;
+                        
+                    }
+                    else
+                    {
+                        
+                        TempData["MESSAGE"] = "Email hoặc mật khẩu không đúng!";
+                    }
+                }
+                return Redirect("/checkout");
             }
             return View();
         }
