@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebBookShop.Commons;
 using WebBookShop.EF;
+using WebBookShop.Models;
 using WebBookShop.Services;
 
 namespace WebBookShop.Controllers
@@ -50,6 +51,38 @@ namespace WebBookShop.Controllers
 
         public ActionResult Order()
         {
+            var service = new UserService();
+            var orderService = new OrderService();
+            if (Session["LOGIN_CLIENT"] != null)
+            {
+                var email = (string)Session["LOGIN_CLIENT"];
+                var account = service.GetByEmail(email);
+                ViewBag.NameAccount = account.Fullname;
+
+                var orders = orderService.MyOrder(account.Id);
+
+                var listDetail = new List<OrderDetailModel>();
+
+                foreach(var item in orders)
+                {         
+                    var details = orderService.GetDetail(item.Id);
+                    foreach(var d in details)
+                    {
+                        var modelDetail = new OrderDetailModel
+                        {
+                            ProductName = d.ProductName,
+                            Quantity =d.Quantity,
+                            OrderId=d.OrderId,
+                            ProductId=d.ProductId,
+                            Price =d.Price
+                        };
+                        listDetail.Add(modelDetail);
+                    }                   
+                }
+                ViewBag.ListDetailOrder = listDetail;
+
+                return View(orders);
+            }
             return View();
         }
     }

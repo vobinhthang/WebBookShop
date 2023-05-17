@@ -2,38 +2,90 @@
 @{
     ViewBag.Title = "Danh sách đơn hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var details = (List<WebBookShop.Models.OrderDetailModel>)ViewBag.ListDetailOrder;
 }
-
+@model List<WebBookShop.Models.OrderModel>
+@using System.Globalization;
+@using WebBookShop.Services
 <div class="cart">
     <div class="container-fluid">
         <div class="row">
 
             @RenderPage("~/Views/Shared/_MyAcount.cshtml")
             <div class="col-md-9">
-                 <div class="order__tracking px-5 py-4">
+                <div class="order__tracking px-5 py-4">
                     <div class="cart__title" style="font-size:18px;font-weight:600">
                         Quản lý đơn hàng
                     </div>
                     <table class="table table-borderless mt-4">
                         <thead>
                             <tr style="color: #8E8E8E;font-size:13px;font-weight:600">
-                                <th>MÃ ĐƠN HÀNG</th>
+                                <th class="text-center">MÃ ĐƠN HÀNG</th>
                                 <th>NGÀY MUA</th>
-                                <th style="width:280px">SẢN PHẨM</th>
+                                <th class="text-center" style="width:280px">SẢN PHẨM</th>
                                 <th>TỔNG TIỀN</th>
-                                <th>TRẠNG THÁI ĐƠN HÀNG</th>
+                                <th class="text-center">TRẠNG THÁI ĐƠN HÀNG</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>John</td>
-                                <td>Doe</td>
-                                <td>john@example.com</td>
-                            </tr>
+                            @foreach (var item in Model.Where(x => x.Status != false))
+                            {
+                                <tr >
+                                    <td class="text-center" style="font-weight: 600; border-bottom: 1px solid #b3b3b3">@item.Id</td>
+                                    <td style="border-bottom: 1px solid #b3b3b3">
+                                        @{
+                                            var str = item.OrderDate.ToString().Substring(0, 10);
+                                        }
+                                        @str
+                                    </td>
+                                    <td style="border-bottom: 1px solid #b3b3b3">
+                                        @foreach (var d in details.Where(x => x.OrderId == item.Id))
+                                        {
+                                            <div class="row">
+                                                <div class="col-2 mr-2">
+                                                    @{var rs = new ImageProductService().GetByThumbnail((int)d.ProductId);
+                                                        if (rs != null)
+                                                        {
+                                                            <img src="@Url.Content(rs)"width="50" />
+                                                        }
+                                                    }
+                                                </div>
+                                                <div class="col-9">
+                                                    <a class="order_link" href="/productinfor?id=@d.ProductId"><span style="font-weight:600">@d.ProductName</span></a>
+                                                    <br />
+                                                    <span style="font-size:12px">Số lượng: @d.Quantity</span>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        }
+                                    </td>
+                                    <td class="text-danger" style="font-weight: 600; border-bottom: 1px solid #b3b3b3">
+                                        @{
+                                            var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", item.TotalPrice);
+                                            @strPrice
+                                        }
+                                    </td>
+                                    @{ if (item.Status == true && item.Delivered
+                                                == false)
+                                        {
+                                            <td class="text-warning text-center" style="font-weight: 600; border-bottom: 1px solid #b3b3b3">Đang giao</td>
+                                        }
+                                        else if (item.Status == true && item.Delivered == true)
+                                        {
+                                            <td class="text-success text-center" style="font-weight: 600; border-bottom: 1px solid #b3b3b3">Đã giao </td>
+                                        }
+                                        else if (item.Status == false && item.Delivered == true)
+                                        {
+                                            <td class="text-success text-center" style="font-weight: 600; border-bottom: 1px solid #b3b3b3">Đã giao </td>
+                                        }
+                                    }
 
+                                </tr>
+                                
+                            }
                         </tbody>
                     </table>
-                </div> 
+                </div>
 
             </div>
         </div>

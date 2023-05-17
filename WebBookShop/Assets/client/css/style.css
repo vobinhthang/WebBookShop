@@ -305,6 +305,7 @@ a:hover {
 .order_link:hover {
     color: #ce0021;
     text-decoration: none;
+    transition:0.3s
 }
 .link_name_cart{
     color:black

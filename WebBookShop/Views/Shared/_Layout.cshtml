@@ -58,7 +58,16 @@
                         <div>
                             <i style="color:#5a5858" class="fa-solid fa-box box__icon"></i>
                         </div>
-                        <a href="/my/order" class="order_link">Theo dõi<br>đơn hàng</a>
+                        @{ if (Session["LOGIN_CLIENT"] == null)
+                            {
+                                <a href="/login" class="order_link">Theo dõi<br>đơn hàng</a>
+                            }
+                            else
+                            {
+                                <a href="/my/order" class="order_link">Theo dõi<br>đơn hàng</a>
+                            }
+                        }
+                        
                     </div>
                     <div class="header__login mr-5">
                         <div>

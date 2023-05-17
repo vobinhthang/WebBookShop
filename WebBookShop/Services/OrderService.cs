@@ -286,7 +286,7 @@ namespace WebBookShop.Services
                 Price =detail.Price,
             };
         }
-
+       
         public bool DeleteDetail(int id)
         {
             try
@@ -344,6 +344,46 @@ namespace WebBookShop.Services
             };
         }
 
+        public List<OrderModel> MyOrder(int userId)
+        {
+            var qr = from o in dbcontext.tbl_Order
+
+                     orderby o.OrderDate descending
+                     where o.UserID == userId
+                     select new OrderModel
+                     {
+                         Id = o.Id,
+                         OrderDate = o.OrderDate,
+                         Status = o.Status,
+                         DeliveredDate = o.DeliveredDate,
+                         Delivered = o.Delivered,
+                         CustomerName = o.CustomerName,
+                         UserID = o.UserID,
+
+                         Discount = o.Discount,
+                         TotalPrice = o.TotalPrice,
+                         Address = o.Address,
+                         Phone = o.Phone,
+                         Email = o.Email,
+
+                     };
+            foreach (var o in qr.ToList())
+            {
+                var orderdetail = new OrderService().GetDetail((int)o.Id);
+                var order = dbcontext.tbl_Order.Find(o.Id);
+                if (order.Discount != null)
+                {
+                    order.TotalPrice = orderdetail.Sum(od => od.Price * od.Quantity) * (100 - order.Discount) / 100;
+                }
+                else
+                {
+                    order.TotalPrice = orderdetail.Sum(od => od.Price * od.Quantity);
+                }
+            }
+            dbcontext.SaveChanges();
+
+            return qr.ToList();
+        }
         public bool Delete(int id)
         {
             try
@@ -437,10 +477,11 @@ namespace WebBookShop.Services
             }
             dbcontext.tbl_Order.Add(order);
             dbcontext.SaveChanges();
-            tbl_OrderDetail orderDetail = new tbl_OrderDetail();
+            
 
             foreach (var item in cartItem)
             {
+                tbl_OrderDetail orderDetail = new tbl_OrderDetail();
                 orderDetail.OrderID = order.Id;
                 orderDetail.Price = item.ProductModel.Price;
                 orderDetail.ProductID = item.ProductModel.Id;
