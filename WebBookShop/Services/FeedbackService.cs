@@ -83,5 +83,22 @@ namespace WebBookShop.Services
                 return false;
             }
         }
+
+
+        public FeedbackModel Create(tbl_Feedback feedback)
+        {
+            dbcontext.tbl_Feedback.Add(feedback);
+            dbcontext.SaveChanges();
+            var model = new FeedbackModel
+            {
+                Id = feedback.Id,
+                Address =feedback.Address,
+                Phone =feedback.Phone,
+                Email =feedback.Email,
+                Name =feedback.Name,
+                Detail =feedback.Detail,
+            };
+            return model;
+        }
     }
 }

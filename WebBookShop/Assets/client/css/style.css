@@ -641,10 +641,11 @@ a:hover {
     text-decoration: none;
 }
 
-.ft--link a:hover {
-    color: #dda200;
-    text-decoration: underline;
-}
+    .ft--link a:hover {
+        color: #ce0021;
+        text-decoration: none;
+        transition:0.35s
+    }
 
 /* Copyright */
 .copyright {

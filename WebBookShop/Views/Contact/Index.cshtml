@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model WebBookShop.Models.FeedbackModel
+<div class="cart">
+    @if (TempData["CREATE"] != null)
+    {
+        <div style="font-size:14px" class="alert alert-@TempData["ALEART"] alert-dismissible fade show" id="alo123">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Thông báo!</strong> <br />
+            <span>@TempData["CREATE"].</span>
+        </div>
+    }
+    <div class="container-fluid bg-white">
+        <div class="row" style="padding:30px 50px">
+            <div class="col-7">
+                <div class="p-3 mb-4" style="border-bottom: 1px solid #cdcdcd; border-top: 1px solid #cdcdcd">
+                    <span style="font-size:20px;font-weight:600">Liên hệ với BookHive</span>
+                </div>
+                <div style="font-size:14px">
+                    <p><span style="font-weight:600;color:#494949">Địa chỉ:</span> Trường Đại học Điện Lực.</p>
+                    <p><span style="font-weight: 600; color: #494949">Điện thoại:</span> 023456789 – Fax:(024) 5678999.</p>
+                    <p><span style="font-weight: 600; color: #494949">Email:</span> bookhive@bookhive.com</p>
+                </div>
+                @using (Html.BeginForm("index", "contact", FormMethod.Post))
+                {
+                    <div>
+                        @Html.TextBoxFor(m => m.Name, new { @style = "font-size:14px;height:40px", @class = "form-control mb-3 px-4", @placeholder = "Họ và Tên", required = "required" })
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                @Html.TextBoxFor(m => m.Phone, new { @style = "font-size:14px;height:40px", @class = "form-control px-4", @placeholder = "Số điện thoại", required = "required" })
+                            </div>
+                            <div class="col-6 mb-3">
+                                @Html.TextBoxFor(m => m.Name, new { type = "email", @style = "font-size:14px;height:40px", @class = "form-control px-4", @placeholder = "Email" })
+                            </div>
+                        </div>
+                        @Html.TextAreaFor(m => m.Detail, new { @style = "font-size: 14px; height: 120px", @class = "form-control px-4", @placeholder = "Nội dung", required = "required" })
+
+                    </div>
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-danger" style="font-size:14px;font-weight:600;width:160px;height:40px">Gửi liên hệ</button>
+                    </div>
+                }
+            </div>
+            <div class="col-5">
+                <img src="~/Assets/client/img/clip-reading-of-books-1.png" style="width:100%" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -147,6 +147,7 @@
     <Compile Include="Commons\SharedData.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MyController.cs" />
@@ -5544,6 +5545,7 @@
     <Content Include="Assets\client\img\bg2.png" />
     <Content Include="Assets\client\img\bg3.jpg" />
     <Content Include="Assets\client\img\check %281%29.png" />
+    <Content Include="Assets\client\img\clip-reading-of-books-1.png" />
     <Content Include="Assets\client\img\default-user.jpg" />
     <Content Include="Assets\client\img\icon_shortcut.png" />
     <Content Include="Assets\client\img\image_128.png" />
@@ -6002,6 +6004,7 @@
     <Content Include="Views\My\Account.cshtml" />
     <Content Include="Views\Shared\_MyAcount.cshtml" />
     <Content Include="Views\My\Order.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
