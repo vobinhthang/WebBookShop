@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebBookShop.Areas.Admin.Commons;
 using WebBookShop.Commons;
 using WebBookShop.EF;
 using WebBookShop.Models;
@@ -28,6 +29,7 @@ namespace WebBookShop.Controllers
             }
             if (model.Email != null && model.Email != findEmail && model.Password != null && model.Password.Length >= 6)
             {
+                user.Password = Encryptor.GetMd5Hash(user.Password);
                 var rs = service.CreateClient(user);
                 if (rs != null)
                 {

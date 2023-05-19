@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebBookShop.Areas.Admin.Commons;
 using WebBookShop.EF;
 using WebBookShop.Models;
 
@@ -39,7 +40,7 @@ namespace WebBookShop.Services
         {
             var query = from u in dbcontext.tbl_User
                         join r in dbcontext.tbl_Role on u.RoleId equals r.Id
-                        orderby u.CreateDate ascending
+                        orderby u.Id descending
                         select new UserModel
                         {
                             Id = u.Id,
@@ -124,8 +125,6 @@ namespace WebBookShop.Services
                 {
                     user.Phone = _user.Phone;
                 }
-                user.Email = _user.Email;
-                user.Password = _user.Password; 
                 user.RoleId = _user.RoleId;
                 dbcontext.SaveChanges();
                 return true;
@@ -250,6 +249,7 @@ namespace WebBookShop.Services
         public UserModel Create(tbl_User _user)
         {
             _user.CreateDate = DateTime.Now;
+
             dbcontext.tbl_User.Add(_user);
             dbcontext.SaveChanges();
             var user = new UserModel
@@ -263,6 +263,7 @@ namespace WebBookShop.Services
                 Phone=_user.Phone,
                 CreateDate=_user.CreateDate,
             };
+            
             return user;
         }
         public UserModel CreateClient(tbl_User _user)

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using WebBookShop.Areas.Admin.Commons;
 using WebBookShop.Areas.Admin.Models;
 using WebBookShop.EF;
 using WebBookShop.Models;
@@ -162,7 +163,7 @@ namespace WebBookShop.Areas.Admin.Controllers
                 default:
                     break;
             }
-
+            
             return View(users);
         }
 
@@ -212,6 +213,7 @@ namespace WebBookShop.Areas.Admin.Controllers
             if(model.Email!=null && !model.Email.StartsWith(" ") && model.Email!=email && model.Password!=null && !model.Password.StartsWith(" ")
                 && model.Password.Length>=6)
             {
+                user.Password = Encryptor.GetMd5Hash(user.Password);
                 var _user = service.Create(user);
                 if (_user != null)
                 {
@@ -254,9 +256,6 @@ namespace WebBookShop.Areas.Admin.Controllers
             var service = new UserService();
             ListRoleId(user.RoleId);
 
-            if (model.Email != null && !model.Email.StartsWith(" ") && model.Password != null && !model.Password.StartsWith(" ")
-                 && model.Password.Length >= 6)
-            {
                 var rs = service.Update(user);
                 if (rs)
                 {
@@ -268,7 +267,7 @@ namespace WebBookShop.Areas.Admin.Controllers
                     TempData["UPDATEUSER"] = "Cập nhập thất bại";
                     TempData["ALEART"] = "danger";
                 }
-            }
+
             return View();
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebBookShop.Areas.Admin.Commons;
 using WebBookShop.Commons;
 using WebBookShop.Models;
 using WebBookShop.Services;
@@ -35,7 +36,7 @@ namespace WebBookShop.Controllers
         public ActionResult Index(UserModel user)
         {
             var service = new UserService();
-            var result = service.Login(user.Email, user.Password,"Khách hàng");
+            var result = service.Login(user.Email,Encryptor.GetMd5Hash(user.Password),"Khách hàng");
 
             if (user.Email != null && user.Password != null)
             {
