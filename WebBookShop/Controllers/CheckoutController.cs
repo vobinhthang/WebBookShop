@@ -209,12 +209,12 @@ namespace WebBookShop.Controllers
                 }
                 if (Session["LOGIN_CLIENT"] == null)
                 {
-                    var orderId = service.ConfirmPayment(list, SharedData.customerAddress, null, false);
+                    var orderId = service.ConfirmPayment(list, SharedData.customerAddress, null, false,1);
                     SharedData.OrderId = orderId;
                 }
                 else
                 {
-                    var orderId = service.ConfirmPayment(list, SharedData.customerAddress, SharedData.UserId, true);
+                    var orderId = service.ConfirmPayment(list, SharedData.customerAddress, SharedData.UserId, true,1);
                     SharedData.OrderId = orderId;
                 }
                 

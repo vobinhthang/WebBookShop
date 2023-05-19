@@ -14,6 +14,9 @@ namespace WebBookShop.EF
 
         public bool? Status { get; set; }
 
+        [StringLength(250)]
+        public string Payments { get; set; }
+
         public bool? Delivered { get; set; }
 
         public DateTime? DeliveredDate { get; set; }

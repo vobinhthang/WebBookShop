@@ -39,10 +39,10 @@
                                     <h3 class="text-center">BOOKHIVE <span style="font-size:18px">admin</span></h3>
                                     <div class="mt-5 mb-5 login-input">
                                         <div class="form-group">
-                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email", @placeholder = "Email" })
+                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email", @placeholder = "Email" , required = "required" })
                                         </div>
                                         <div class="form-group">
-                                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @type = "password", @placeholder = "Password" })
+                                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @type = "password", @placeholder = "Password" , required = "required" })
                                         </div>
                                         <button type="submit" class="btn login-form__btn submit w-100">Đăng nhập</button>
                                     </div>

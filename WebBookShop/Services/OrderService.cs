@@ -30,7 +30,7 @@ namespace WebBookShop.Services
                          Delivered = o.Delivered,
                          CustomerName = o.CustomerName,
                          UserID = o.UserID,
-
+                         Payments = o.Payments,
                          Discount = o.Discount,
                          TotalPrice = o.TotalPrice,
                          Address = o.Address,
@@ -74,7 +74,7 @@ namespace WebBookShop.Services
                              Delivered = o.Delivered,
                              CustomerName = o.CustomerName,
                              UserID = o.UserID,
-
+                             Payments = o.Payments,
                              Discount = o.Discount,
                              TotalPrice = o.TotalPrice,
                              Address = o.Address,
@@ -449,7 +449,7 @@ namespace WebBookShop.Services
             }
         }
 
-        public int ConfirmPayment(List<CartItem> cartItem, CustomerAddress customerAddress,int? userID, bool? login)
+        public int ConfirmPayment(List<CartItem> cartItem, CustomerAddress customerAddress,int? userID, bool? login,int payments)
         {
             tbl_Order order = new tbl_Order();
             if (login == false)
@@ -462,6 +462,14 @@ namespace WebBookShop.Services
                 order.Discount = 0;
                 order.Delivered = false;
                 order.Status = true;
+                if (payments == 1)
+                {
+                    order.Payments = "COD";
+                }
+                else
+                {
+                    order.Payments ="Chuyển khoản";
+                }
             }
             else
             {
@@ -474,6 +482,14 @@ namespace WebBookShop.Services
                 order.Discount = 0;
                 order.Delivered = false;
                 order.Status = true;
+                if (payments == 1)
+                {
+                    order.Payments = "COD";
+                }
+                else
+                {
+                    order.Payments = "Chuyển khoản";
+                }
             }
             dbcontext.tbl_Order.Add(order);
             dbcontext.SaveChanges();
