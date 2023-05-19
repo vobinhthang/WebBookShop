@@ -4,9 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var details = (List<WebBookShop.Models.OrderDetailModel>)ViewBag.ListDetailOrder;
 }
-@model List<WebBookShop.Models.OrderModel>
+@model IEnumerable<WebBookShop.Models.OrderModel>
 @using System.Globalization;
 @using WebBookShop.Services
+@using PagedList
+@using PagedList.Mvc
 <div class="cart">
     <div class="container-fluid">
         <div class="row">
@@ -30,7 +32,7 @@
                         <tbody>
                             @foreach (var item in Model.Where(x => x.Status != false))
                             {
-                                <tr >
+                                <tr>
                                     <td class="text-center" style="font-weight: 600; border-bottom: 1px solid #b3b3b3">@item.Id</td>
                                     <td style="border-bottom: 1px solid #b3b3b3">
                                         @{
@@ -46,7 +48,7 @@
                                                     @{var rs = new ImageProductService().GetByThumbnail((int)d.ProductId);
                                                         if (rs != null)
                                                         {
-                                                            <img src="@Url.Content(rs)"width="50" />
+                                                            <img src="@Url.Content(rs)" width="50" />
                                                         }
                                                     }
                                                 </div>
@@ -66,7 +68,7 @@
                                         }
                                     </td>
                                     @{ if (item.Status == true && item.Delivered
-                                                == false)
+                                                  == false)
                                         {
                                             <td class="text-warning text-center" style="font-weight: 600; border-bottom: 1px solid #b3b3b3">Đang giao</td>
                                         }
@@ -81,10 +83,19 @@
                                     }
 
                                 </tr>
-                                
+
                             }
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-center mt-5">
+
+                        @Html.PagedListPager((IPagedList)Model, page => Url.Action("order", new { page }), new PagedListRenderOptions
+                            {
+                                LiElementClasses = new string[] { "page-item" },
+                                UlElementClasses = new string[] { "pagination" },
+                                MaximumPageNumbersToDisplay = 3,
+                            })
+                    </div>
                 </div>
 
             </div>

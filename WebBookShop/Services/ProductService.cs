@@ -910,5 +910,27 @@ namespace WebBookShop.Services
                      };
             return qr.ToList();
         }
+
+
+        public void UpdateQuantity(int orderid)
+        {
+            var details = from d in dbcontext.tbl_OrderDetail
+                     where d.OrderID == orderid
+                     select new OrderDetailModel
+                     {
+                         Id =d.Id,
+                         ProductId =d.ProductID,
+                         Quantity=d.Quantity
+                     };          
+
+            foreach(var item in details.ToList())
+            {
+                var orderDetail = dbcontext.tbl_OrderDetail.Find(item.Id);
+
+                var product = dbcontext.tbl_Product.Find(item.ProductId);
+                product.Quantity+= orderDetail.Quantity;
+            }
+            dbcontext.SaveChanges();
+        }
     }
 }

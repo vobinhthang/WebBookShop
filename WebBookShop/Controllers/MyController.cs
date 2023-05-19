@@ -49,7 +49,7 @@ namespace WebBookShop.Controllers
             return Redirect("/my/account");
         }
 
-        public ActionResult Order()
+        public ActionResult Order(int page=1,int pageSize =5)
         {
             var service = new UserService();
             var orderService = new OrderService();
@@ -59,7 +59,7 @@ namespace WebBookShop.Controllers
                 var account = service.GetByEmail(email);
                 ViewBag.NameAccount = account.Fullname;
 
-                var orders = orderService.MyOrder(account.Id);
+                var orders = orderService.MyOrder(account.Id, page, pageSize);
 
                 var listDetail = new List<OrderDetailModel>();
 
@@ -83,7 +83,7 @@ namespace WebBookShop.Controllers
 
                 return View(orders);
             }
-            return View();
+            return Redirect("/login");
         }
     }
 }

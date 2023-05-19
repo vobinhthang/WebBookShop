@@ -22,6 +22,14 @@ html {
     height: auto;
 }
 
+.outofstock{
+    position:absolute;
+    top:0;
+    left:0;
+    
+}
+
+
 .link_news {
     color: black
 }

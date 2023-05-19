@@ -13,10 +13,14 @@
             <div class="product-item">
                 <a href="/productinfor?id=@item.Id" class="product-item--link">
                     <div class="card" style="width: 100%; height: 100%;">
+                        @if (item.Quantity == 0)
+                        {
+                            <img src="~/Assets/client/img/out-of-stock.png" class="outofstock" style="width:50%" />
+                        }
                         @{var rs = new ImageProductService().GetByThumbnail((int)item.Id);
                             if (rs != null)
                             {
-                                <img src="@Url.Content(rs)"  style="width:100%" />
+                                <img src="@Url.Content(rs)" style="width:100%" />
                             }
                         }
                         <div class="card-body">

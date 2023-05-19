@@ -234,7 +234,11 @@ namespace WebBookShop.Areas.Admin.Controllers
                 var rs = service.Update(order);
                 if (rs)
                 {
-
+                    if (model.Status == false)
+                    {
+                        var productService = new ProductService();
+                        productService.UpdateQuantity(model.Id);
+                    }
                     TempData["CREATE"] = "Cập nhập thông tin đơn hàng thành công";
                     TempData["ALEART"] = "success";
                 }

@@ -63,10 +63,20 @@
                         </div>
                     </p>
                     <input style="display:none" name="productId" value="@Model.Id" />
-                    <button type="submit" class="btn btn-danger p-3 font-weight-bold" style="font-size:14px;">
-                        <i class="fa fa-shopping-cart"></i>
-                        Thêm vào giỏ hàng
-                    </button>
+                    if (Model.Quantity != 0)
+                    {
+                        <button type="submit" class="btn btn-danger p-3 font-weight-bold" style="font-size:14px;">
+                            <i class="fa fa-shopping-cart"></i>
+                            Thêm vào giỏ hàng
+                        </button>
+                    }
+                    else
+                    {
+                        <span class="text-danger" style="font-size:15px;font-weight:600">
+                            Sản phẩm hiện đã hết hàng!
+                        </span>
+                    }
+                    
                 }
 
                 @if (TempData["Alert"] != null)

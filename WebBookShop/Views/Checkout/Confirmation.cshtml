@@ -30,8 +30,12 @@
                         <spam>@strPrice3</spam>
                     }
                 </p>
-                <a href="/register" class="btn btn-danger py-2" style="border-radius:20px;font-size:14px;font-weight:600">ĐĂNG KÝ</a>
-                <span style="font-weight:600;font-size:14px">để nhận những ưu đãi đặc biệt đến từ BookHive</span>
+                @if (Session["LOGIN_CLIENT"] == null)
+                {
+                    <a href="/register" class="btn btn-danger py-2" style="border-radius:20px;font-size:14px;font-weight:600">ĐĂNG KÝ</a>
+                    <span style="font-weight:600;font-size:14px">để nhận những ưu đãi đặc biệt đến từ BookHive</span>
+                }
+
             </div>
         </div>
         <div class=" row bg-white px-5 " style="font-size:14px;margin-bottom:80px">

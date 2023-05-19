@@ -344,7 +344,7 @@ namespace WebBookShop.Services
             };
         }
 
-        public List<OrderModel> MyOrder(int userId)
+        public IEnumerable<OrderModel> MyOrder(int userId, int page, int pageSize)
         {
             var qr = from o in dbcontext.tbl_Order
 
@@ -382,7 +382,7 @@ namespace WebBookShop.Services
             }
             dbcontext.SaveChanges();
 
-            return qr.ToList();
+            return qr.ToPagedList(page,pageSize);
         }
         public bool Delete(int id)
         {
@@ -488,8 +488,10 @@ namespace WebBookShop.Services
                 orderDetail.Quantity = item.Quantity;
 
                 dbcontext.tbl_OrderDetail.Add(orderDetail);
+                var product = dbcontext.tbl_Product.Find(orderDetail.ProductID);
+                product.Quantity -= orderDetail.Quantity;
             }
-    
+            
             dbcontext.SaveChanges();
 
             return order.Id;

@@ -5558,6 +5558,7 @@
     <Content Include="Assets\client\img\logo BookHive.png" />
     <Content Include="Assets\client\img\logo-momo.png" />
     <Content Include="Assets\client\img\logo_home.png" />
+    <Content Include="Assets\client\img\out-of-stock.png" />
     <Content Include="Assets\client\img\pay_stage_4.png" />
     <Content Include="Assets\client\img\producthot1.jpg" />
     <Content Include="Assets\client\img\producthot2.jpg" />
