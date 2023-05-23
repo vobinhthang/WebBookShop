@@ -23,29 +23,13 @@
                     <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6 col-sm-6">
-            <div class="card gradient-3">
-                <div class="card-body">
-                    <h3 class="card-title text-white">Người dùng mới</h3>
-                    <div class="d-inline-block">
-                        <h2 class="text-white">@ViewBag.CountUser</h2>
-                        <p class="text-white mb-0">
-                            <span>Tháng @dateStr.Substring(3, 8)</span>
-                        </p>
-                    </div>
-                    <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12 col-sm-6">
             <div class="card gradient-2">
                 <div class="card-body">
                     <h3 class="card-title text-white">Doanh thu</h3>
                     <div class="d-inline-block">
                         <h2 class="text-white">
                             @{
-                                if (ViewBag.TotalPriceOrder!=0)
+                                if (ViewBag.TotalPriceOrder != 0)
                                 {
                                     var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## đ}", ViewBag.TotalPriceOrder);
                                     @strPrice
@@ -62,7 +46,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12 col-sm-6">
+
+
+        <div class="col-lg-6 col-sm-6">
+            <canvas id="chart" style="width:100%"></canvas>
+        </div>
+
+        <div class="col-lg-6 col-sm-6">
             <div class="card gradient-4">
                 <div class="card-body">
                     <h3 class="card-title text-white">Tiền nhập hàng</h3>
@@ -86,9 +76,57 @@
                 </div>
             </div>
         </div>
-
+        <div class="col-lg-6 col-sm-6">
+            <div class="card gradient-3">
+                <div class="card-body">
+                    <h3 class="card-title text-white">Người dùng mới</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">@ViewBag.CountUser</h2>
+                        <p class="text-white mb-0">
+                            <span>Tháng @dateStr.Substring(3, 8)</span>
+                        </p>
+                    </div>
+                    <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                </div>
+            </div>
+        </div>
 
     </div>
 
 </div>
 <!-- #/ container -->
+
+@section ADMINSCRIPT{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script>
+    var ctx = document.getElementById('chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [@foreach(var soldProduct in ViewBag.SoldProducts){@Html.Raw("'" + soldProduct.ProductName + "',")}],
+            datasets: [{
+                label: 'Số lượng',
+                data: [@foreach(var soldProduct in ViewBag.SoldProducts){@Html.Raw(soldProduct.Quantity + ",")}],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
+            }],
+
+        },
+
+        options: {
+            title: { display: true, text: 'SỐ LƯỢNG SẢN PHẨM ĐÃ BÁN' },  
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        stepSize: 1,
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{ gridLines: { display: false }, display: false, scaleLabel: { display: false, labelString: 'sd' } }],  
+
+            }
+        }
+    });
+    </script>
+}

@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "PaymentOnlineConfirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Globalization;
+
+
+<div class="cart ">
+    <div class="container-fluid d-flex justify-content-center">
+        <div style="margin:100px 0">
+            <h2>@ViewBag.Message</h2>
+        </div>
+        @if (ViewBag.Success != null)
+        {
+            <div class="bg-white row" style="height:480px;width:370px">
+                <div class="text-center">
+                    <i class="fa-sharp fa-regular fa-circle-check mt-5 mb-3" style="font-size:110px;color:#38c201"></i>
+                    <br />
+                    <span style="font-size:22px;font-weight:600">Hoàn tất thanh toán trực tuyến</span>
+
+                    <p class="mt-5" style="font-size:14px;color:gray;">Cảm ơn bạn, thanh toán của bạn đã thành công.</p>
+                    <br />
+                    <span style="font-size:14px;font-weight:600">Tổng tiền thanh toán</span>
+                    <br />
+                    <span style="font-size:28px;font-weight:600">
+                        @{
+                            var strPrice = string.Format(new CultureInfo("vi-VN"), "{0:#,## VNĐ}", ViewBag.TotalPrice);
+                            @strPrice
+                        }
+
+                    </span>
+                    <br />
+                    <span style="font-size:14px;font-weight:600">Mã giao dịch</span>
+                    <br />
+                    <span style="font-size:20px;font-weight:600">@ViewBag.TranId</span>
+                    <p style="font-size:14px;font-weight:600;padding-top:80px"><a href="/home">Quay lại trang chủ</a></p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

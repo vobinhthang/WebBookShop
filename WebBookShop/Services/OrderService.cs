@@ -56,6 +56,8 @@ namespace WebBookShop.Services
             return qr.ToPagedList(page,pageSize);
         }
 
+       
+
         public IEnumerable<OrderModel> Search(string keyword, int page, int pageSize)
         {
             if (keyword!=null)
@@ -494,6 +496,8 @@ namespace WebBookShop.Services
             dbcontext.tbl_Order.Add(order);
             dbcontext.SaveChanges();
             
+            
+            
 
             foreach (var item in cartItem)
             {
@@ -512,5 +516,42 @@ namespace WebBookShop.Services
 
             return order.Id;
         }
+        
+        public double UpdateTotalPrice(int orderId)
+        {
+            var order = dbcontext.tbl_Order.Find(orderId);
+            var detail = new OrderService().GetDetail(orderId);
+
+            if (order.Discount != 0)
+            {
+                order.TotalPrice = detail.Sum(od => od.Price * od.Quantity) * (100 - order.Discount) / 100;
+            }
+            else
+            {
+                order.TotalPrice = detail.Sum(od => od.Price * od.Quantity);
+            }
+            dbcontext.SaveChanges();
+
+            return (double)order.TotalPrice;
+        }
+    
+        //public List<OrderDetailModel> SoldProductsChart()
+        //{
+
+
+        //    //var qr = from od in dbcontext.tbl_OrderDetail
+        //    //         join p in dbcontext.tbl_Product on od.ProductID equals p.Id
+        //    //         group od by od.ProductID into x
+        //    //         orderby x.Sum(p => p.Quantity) descending
+                     
+        //    //         select new OrderDetailModel
+        //    //         {
+        //    //             ProductName = x.SingleOrDefault(x=>x.ProductID=x.ProductID),
+        //    //             Quantity =  x.(p => p.Quantity),
+        //    //             Delivered=true
+        //    //         };
+           
+        //    //return qr.ToList();
+        //}
     }
 }

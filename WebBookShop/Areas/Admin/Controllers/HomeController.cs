@@ -20,6 +20,9 @@ namespace WebBookShop.Areas.Admin.Controllers
             ViewBag.CountUser = countUser;
             ViewBag.TotalPriceOrder = TotalPriceOrder;
             ViewBag.TotalPriceInvocie = TotalPriceInvocie;
+
+            //var soldProducts = new OrderService().SoldProductsChart();
+            //ViewBag.SoldProducts = soldProducts.Distinct();
             return View();
         }
 

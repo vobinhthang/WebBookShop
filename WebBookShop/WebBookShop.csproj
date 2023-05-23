@@ -181,6 +181,9 @@
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\ProductCommentModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="PaymentService\PayCompare.cs" />
+    <Compile Include="PaymentService\PayLib.cs" />
+    <Compile Include="PaymentService\Ultil.cs" />
     <Compile Include="Services\BannerService.cs" />
     <Compile Include="Services\CateService.cs" />
     <Compile Include="Services\CommentService.cs" />
@@ -5559,6 +5562,7 @@
     <Content Include="Assets\client\img\logo BookHive.png" />
     <Content Include="Assets\client\img\logo-momo.png" />
     <Content Include="Assets\client\img\logo_home.png" />
+    <Content Include="Assets\client\img\logo_vnpay.png" />
     <Content Include="Assets\client\img\out-of-stock.png" />
     <Content Include="Assets\client\img\pay_stage_4.png" />
     <Content Include="Assets\client\img\producthot1.jpg" />
@@ -5962,6 +5966,8 @@
     <Content Include="Areas\Admin\Views\WareHouse\Index.cshtml" />
     <Content Include="Assets\client\img\news.png" />
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
+    <Content Include="Scripts\chart.js" />
+    <Content Include="Scripts\chart.min.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />
     <Content Include="Scripts\jquery-3.6.3.min.js" />
     <Content Include="Scripts\jquery-3.6.3.slim.js" />
@@ -6007,6 +6013,7 @@
     <Content Include="Views\Shared\_MyAcount.cshtml" />
     <Content Include="Views\My\Order.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Checkout\PaymentOnlineConfirm.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
