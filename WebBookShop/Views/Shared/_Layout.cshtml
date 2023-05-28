@@ -75,7 +75,11 @@
                         </div>
                         @{ if (Session["LOGIN_CLIENT"] == null)
                             {
-                                <a href="/login" class="order_link">Đăng nhập<br>Đăng ký</a>
+                                <div>
+                                    <a href="/login" class="order_link">Đăng nhập</a>
+                                    <br/>
+                                    <a href="/register" class="order_link">Đăng ký</a>
+                                </div>
                             }
                             else
                             {
@@ -85,9 +89,9 @@
                     </div>
                     <a href="/cart" class="header__minicart">
                         <div>
-                            <i style="color:black" class="fa-solid fa-cart-shopping box__icon"></i>
+                            <i style="color: #ce0021" class="fa-solid fa-cart-shopping box__icon"></i>
                         </div>
-                        <span class="order_link">Giỏ hàng</span>
+                        <span class="order_link" style="font-weight:600">Giỏ hàng</span>
                         <span class="cart__quantity">
                             @{
                                 if (Session["CartSession"] != null)
@@ -95,11 +99,11 @@
 
                                     var list = (List<CartItem>)Session["CartSession"];
                                     var count = list.Sum(x => x.Quantity);
-                                    <spam class="bg-danger px-3 py-2" style="border-radius:10px">@count</spam>
+                                    <spam class="bg-danger px-3 py-2" style="border-radius:10px;font-weight:600">@count</spam>
                                 }
                                 else
                                 {
-                                    <span class="px-3 py-2" style="border-radius:10px;background-color:#c8c8c8">0</span>
+                                    <span class="px-3 py-2" style="border-radius: 10px; background-color: #c8c8c8; font-weight: 600">0</span>
                                 }
                             }
 

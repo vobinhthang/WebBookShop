@@ -52,6 +52,7 @@ namespace WebBookShop.Controllers
                 else
                 {
                     TempData["MESSAGE"] = "Email hoặc mật khẩu không đúng.";
+                    return RedirectToAction("index", "login");
                 }
             }
 

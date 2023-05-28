@@ -5965,6 +5965,7 @@
     <Content Include="Areas\Admin\Views\Invoice\Create.cshtml" />
     <Content Include="Areas\Admin\Views\WareHouse\Index.cshtml" />
     <Content Include="Assets\client\img\news.png" />
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\chart.min.js" />
@@ -5982,6 +5983,38 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="UploadImg\Banner\banner1.jpg" />
+    <Content Include="UploadImg\Banner\banner2.png" />
+    <Content Include="UploadImg\Banner\banner3.png" />
+    <Content Include="UploadImg\Banner\banner4.png" />
+    <Content Include="UploadImg\Banner\bannerdai2.png" />
+    <Content Include="UploadImg\Banner\bannerduoi1.png" />
+    <Content Include="UploadImg\Banner\bg2.png" />
+    <Content Include="UploadImg\Banner\img__slider1.jpg" />
+    <Content Include="UploadImg\Banner\img__slider2.jpg" />
+    <Content Include="UploadImg\Banner\img__slider3.png" />
+    <Content Include="UploadImg\Banner\img__slider4.png" />
+    <Content Include="UploadImg\Banner\img__slider5.png" />
+    <Content Include="UploadImg\Banner\logo BookHive.png" />
+    <Content Include="UploadImg\News\0106_hinh-nen-4k-may-tinh24.jpg" />
+    <Content Include="UploadImg\News\sang-trong-voi-mau-xanh-la-cay-cho-phong-khach-son-nuoc-cao-cap-forich-add.jpg" />
+    <Content Include="UploadImg\News\Screenshot_20221115_094915.png" />
+    <Content Include="UploadImg\Product\0106_hinh-nen-4k-may-tinh24.jpg" />
+    <Content Include="UploadImg\Product\0106_hinh-nen-4k-may-tinh59.jpg" />
+    <Content Include="UploadImg\Product\bannerdai1.png" />
+    <Content Include="UploadImg\Product\girl.jpg" />
+    <Content Include="UploadImg\Product\girl2.jpg" />
+    <Content Include="UploadImg\Product\google.jpg" />
+    <Content Include="UploadImg\Product\image_1920 %281%29.jpg" />
+    <Content Include="UploadImg\Product\image_1920 %282%29.jpg" />
+    <Content Include="UploadImg\Product\image_1920.jpg" />
+    <Content Include="UploadImg\Product\image_1921.jpg" />
+    <Content Include="UploadImg\Product\imgProductInfo1.jpg" />
+    <Content Include="UploadImg\Product\logo.png" />
+    <Content Include="UploadImg\Product\producthot3.jpg" />
+    <Content Include="UploadImg\Product\sang-trong-voi-mau-xanh-la-cay-cho-phong-khach-son-nuoc-cao-cap-forich-add.jpg" />
+    <Content Include="UploadImg\Product\Screenshot 2022-06-05 105910.png" />
+    <Content Include="UploadImg\Product\Screenshot_20221115_094915.png" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -6025,9 +6058,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="UploadImg\Banner\" />
-    <Folder Include="UploadImg\News\" />
-    <Folder Include="UploadImg\Product\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

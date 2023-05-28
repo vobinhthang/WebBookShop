@@ -23,6 +23,23 @@
                     <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
                 </div>
             </div>
+
+        </div>
+        <div class="col-lg-6 col-sm-6">
+            <div class="card gradient-3">
+                <div class="card-body">
+                    <h3 class="card-title text-white">Người dùng mới</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">@ViewBag.CountUser</h2>
+                        <p class="text-white mb-0">
+                            <span>Tháng @dateStr.Substring(3, 8)</span>
+                        </p>
+                    </div>
+                    <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-6">
             <div class="card gradient-2">
                 <div class="card-body">
                     <h3 class="card-title text-white">Doanh thu</h3>
@@ -45,11 +62,6 @@
                     <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
                 </div>
             </div>
-        </div>
-
-
-        <div class="col-lg-6 col-sm-6">
-            <canvas id="chart" style="width:100%"></canvas>
         </div>
 
         <div class="col-lg-6 col-sm-6">
@@ -75,20 +87,7 @@
                     <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6 col-sm-6">
-            <div class="card gradient-3">
-                <div class="card-body">
-                    <h3 class="card-title text-white">Người dùng mới</h3>
-                    <div class="d-inline-block">
-                        <h2 class="text-white">@ViewBag.CountUser</h2>
-                        <p class="text-white mb-0">
-                            <span>Tháng @dateStr.Substring(3, 8)</span>
-                        </p>
-                    </div>
-                    <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
-                </div>
-            </div>
+
         </div>
 
     </div>
@@ -97,7 +96,7 @@
 <!-- #/ container -->
 
 @section ADMINSCRIPT{
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script>
     var ctx = document.getElementById('chart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -128,5 +127,5 @@
             }
         }
     });
-    </script>
+    </script>*@
 }
