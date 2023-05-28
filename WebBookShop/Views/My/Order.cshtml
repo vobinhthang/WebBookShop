@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Where(x => x.Status != false))
+                            @foreach (var item in Model.Where(x => x.Status ==true))
                             {
                                 <tr>
                                     <td class="text-center" style="font-weight: 600; border-bottom: 1px solid #b3b3b3">@item.Id</td>

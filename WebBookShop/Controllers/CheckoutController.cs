@@ -150,7 +150,7 @@ namespace WebBookShop.Controllers
             };
             
             SharedData.customerAddress = customerAddress;
-
+           
             return Redirect("/checkout/payment");
         }
 
@@ -184,7 +184,7 @@ namespace WebBookShop.Controllers
                     _email = account.Email,
                     _address = account.Address,
                 };
-
+                
                 SharedData.UserId = account.Id;
                 Session["CartSession"] = null;
                 return View(customerAddress);
@@ -239,7 +239,17 @@ namespace WebBookShop.Controllers
                 list = (List<CartItem>)cartSession;
 
             }
-            var orderId = service.ConfirmPayment(list, SharedData.customerAddress, null, false, 2);
+            int orderId;
+            if (Session["LOGIN_CLIENT"] == null)
+            {
+                orderId = service.ConfirmPayment(list, SharedData.customerAddress, SharedData.UserId, false, 2);
+            }
+            else
+            {
+                orderId = service.ConfirmPayment(list, SharedData.customerAddress, SharedData.UserId, true, 2);
+
+            }
+
             SharedData.OrderId = orderId;
             var order = service.GetOrderById(orderId);
             var totalPrice = service.UpdateTotalPrice(orderId);
@@ -302,7 +312,7 @@ namespace WebBookShop.Controllers
                         ViewBag.Success = "success";
                         ViewBag.TranId =  Convert.ToString(vnpayTranId);
                         ViewBag.TotalPrice = totalPrice;
-
+                        Session["CartSession"] = null;
                     }
                     else
                     {

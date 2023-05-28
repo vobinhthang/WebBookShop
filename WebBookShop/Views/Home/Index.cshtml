@@ -28,7 +28,7 @@
     <div class="product__hot ">
         <div class="container-fluid">
             <div class="row" style="padding-left: 20px;">
-                @foreach (var item in Model.Take(30).Where(p => p.Hot == true && p.Status == true))
+                @foreach (var item in Model.Take(24).Where(p => p.Hot == true && p.Status == true))
                 {
                     <div class="product-item product__hot--item col-6 col-lg-2 mt-3">
                         <a href="/productinfor?id=@item.Id" class="product-item--link">

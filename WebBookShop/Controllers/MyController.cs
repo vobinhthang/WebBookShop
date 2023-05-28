@@ -74,7 +74,8 @@ namespace WebBookShop.Controllers
                             Quantity =d.Quantity,
                             OrderId=d.OrderId,
                             ProductId=d.ProductId,
-                            Price =d.Price
+                            Price =d.Price,
+                            
                         };
                         listDetail.Add(modelDetail);
                     }                   

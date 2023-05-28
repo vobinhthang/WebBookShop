@@ -361,7 +361,7 @@ namespace WebBookShop.Services
                          Delivered = o.Delivered,
                          CustomerName = o.CustomerName,
                          UserID = o.UserID,
-
+                         Payments=o.Payments,
                          Discount = o.Discount,
                          TotalPrice = o.TotalPrice,
                          Address = o.Address,
