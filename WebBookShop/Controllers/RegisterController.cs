@@ -27,8 +27,18 @@ namespace WebBookShop.Controllers
             {
                 TempData["MESSAGE"] = "Email đã tồn tại";
             }
+            if (model.Password.Length < 6)
+            {
+
+                TempData["PassError"] = "Mật khẩu phải nhiều hơn 5 ký tự";
+            }
+            if (model.Phone.Length >= 15 || model.Phone.Length <= 10)
+            {
+
+                TempData["PhoneError"] = "Độ dài phải lớn hơn 10 và nhỏ hơn 15";
+            }
             if (model.Email != null && !model.Email.StartsWith(" ") && model.Email != findEmail && model.Password != null && !model.Password.StartsWith(" ")
-                && model.Password.Length >= 6 && model.Phone.Length < 15 && model.Phone.Length > 10)
+                && model.Password.Length >5 && model.Phone.Length > 10 && model.Phone.Length < 15 && model.Fullname!=null)
             {
                 user.Password = Encryptor.GetMd5Hash(user.Password);
                 var rs = service.CreateClient(user);
@@ -39,16 +49,7 @@ namespace WebBookShop.Controllers
                     return RedirectToAction("index", "login");
                 }
             }
-            if(model.Password.Length < 6)
-            {
-
-                TempData["PassError"] = "Mật khẩu phải nhiều hơn 5 ký tự";
-            }
-            if (model.Phone.Length > 15 || model.Phone.Length < 10)
-            {
-
-                TempData["PhoneError"] = "Độ dài phải lớn hơn 10 và nhỏ hơn 15";
-            }
+            
 
             return RedirectToAction("index", "register");
         }
